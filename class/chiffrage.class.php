@@ -67,6 +67,9 @@ class Chiffrage extends CommonObject
 	const STATUS_DRAFT = 0;
 	const STATUS_VALIDATED = 1;
 	const STATUS_CANCELED = 9;
+	const STATUS_ESTIMATED = 10;
+	const STATUS_PROPOSED = 11;
+	const STATUS_SOLD = 12;
 
 
 	/**
@@ -106,7 +109,7 @@ class Chiffrage extends CommonObject
 		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
 		'qty' => array('type'=>'real', 'label'=>'Qty', 'enabled'=>'1', 'position'=>45, 'notnull'=>0, 'visible'=>1, 'default'=>'0', 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"Help text for quantity",),
 		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>50, 'notnull'=>-1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToThirparty",),
-		'fk_project' => array('type'=>'integer:Project:projet/class/project.class.php:1', 'label'=>'Project', 'enabled'=>'1', 'position'=>52, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,),
+		'fk_project' => array('type'=>'integer:Project:projet/class/project.class.php:1', 'label'=>'Project', 'enabled'=>'1', 'position'=>59, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,),
 		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3,),
 		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
 		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>62, 'notnull'=>0, 'visible'=>0,),
@@ -117,15 +120,15 @@ class Chiffrage extends CommonObject
 		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
 		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
 		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'),),
-		'commercial_text' => array('type'=>'text', 'label'=>'CommercialText', 'enabled'=>'1', 'position'=>64, 'notnull'=>-1, 'visible'=>1,),
-		'tech_detail' => array('type'=>'text', 'label'=>'TechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>1,),
-		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'DevEstimate', 'enabled'=>'1', 'position'=>66, 'notnull'=>1, 'visible'=>1,),
-		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'POEstimate', 'enabled'=>'1', 'position'=>67, 'notnull'=>1, 'visible'=>1,),
-		'day_gty' => array('type'=>'real', 'label'=>'DayQty', 'enabled'=>'1', 'position'=>68, 'notnull'=>0, 'visible'=>1, 'isameasure'=>'1', 'css'=>'maxwidth75imp',),
-		'module_name' => array('type'=>'varchar(128)', 'label'=>'ModuleName', 'enabled'=>'1', 'position'=>69, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,),
-		'keywords' => array('type'=>'text', 'label'=>'Keywords', 'enabled'=>'1', 'position'=>70, 'notnull'=>0, 'visible'=>1,),
-		'estimate_date' => array('type'=>'datetime', 'label'=>'EstimateDate', 'enabled'=>'1', 'position'=>71, 'notnull'=>1, 'visible'=>1,),
+		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;', '10'=>'CHIEstimated', '11'=>'CHIProposed', '12'=>'CHISold'),),
+		'commercial_text' => array('type'=>'text', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>64, 'notnull'=>-1, 'visible'=>1,),
+		'tech_detail' => array('type'=>'text', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>1,),
+		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'CHIDevEstimate', 'enabled'=>'1', 'position'=>51, 'notnull'=>1, 'visible'=>1,),
+		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'CHIPOEstimate', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1,),
+		'day_gty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>71, 'notnull'=>0, 'visible'=>1, 'isameasure'=>'1', 'css'=>'maxwidth75imp',),
+		'module_name' => array('type'=>'varchar(128)', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>69, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,),
+		'keywords' => array('type'=>'text', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>70, 'notnull'=>0, 'visible'=>1,),
+		'estimate_date' => array('type'=>'datetime', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>1, 'visible'=>1,),
 	);
 	public $rowid;
 	public $ref;
