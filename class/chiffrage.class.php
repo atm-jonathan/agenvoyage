@@ -126,7 +126,7 @@ class Chiffrage extends CommonObject
 		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'CHIDevEstimate', 'enabled'=>'1', 'position'=>51, 'notnull'=>1, 'visible'=>1,),
 		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'CHIPOEstimate', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1,),
 		'day_gty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>71, 'notnull'=>0, 'visible'=>1, 'isameasure'=>'1', 'css'=>'maxwidth75imp',),
-		'module_name' => array('type'=>'varchar(128)', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>69, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,),
+		'module_name' => array('type'=>'varchar(128)', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,),
 		'keywords' => array('type'=>'text', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>70, 'notnull'=>0, 'visible'=>1,),
 		'estimate_date' => array('type'=>'datetime', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>1, 'visible'=>1,),
 	);
