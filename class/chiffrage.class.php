@@ -847,9 +847,15 @@ class Chiffrage extends CommonObject
 			$this->labelStatus[self::STATUS_DRAFT] = $langs->trans('Draft');
 			$this->labelStatus[self::STATUS_VALIDATED] = $langs->trans('Enabled');
 			$this->labelStatus[self::STATUS_CANCELED] = $langs->trans('Disabled');
+			$this->labelStatus[self::STATUS_ESTIMATED] = $langs->trans('CHIEstimated');
+			$this->labelStatus[self::STATUS_PROPOSED] = $langs->trans('CHIProposed');
+			$this->labelStatus[self::STATUS_SOLD] = $langs->trans('CHISold');
 			$this->labelStatusShort[self::STATUS_DRAFT] = $langs->trans('Draft');
 			$this->labelStatusShort[self::STATUS_VALIDATED] = $langs->trans('Enabled');
 			$this->labelStatusShort[self::STATUS_CANCELED] = $langs->trans('Disabled');
+			$this->labelStatusShort[self::STATUS_ESTIMATED] = $langs->trans('CHIEstimated');
+			$this->labelStatusShort[self::STATUS_PROPOSED] = $langs->trans('CHIProposed');
+			$this->labelStatusShort[self::STATUS_SOLD] = $langs->trans('CHISold');
 		}
 
 		$statusType = 'status'.$status;
