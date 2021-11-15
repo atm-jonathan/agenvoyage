@@ -36,9 +36,8 @@ CREATE TABLE llx_chiffrage_chiffrage(
 	status smallint NOT NULL, 
 	commercial_text text, 
 	tech_detail text, 
-	dev_estimate integer NOT NULL, 
-	po_estimate integer NOT NULL, 
-	day_gty real, 
+	dev_estimate integer,
+	po_estimate integer NOT NULL,
 	module_name varchar(128), 
 	keywords varchar(128),
 	estimate_date datetime

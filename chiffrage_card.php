@@ -269,6 +269,10 @@ if ($action == 'create') {
 	//dol_set_focus('input[name="ref"]');
 }
 
+if ($action == 'add' || $action == 'edit' && $object->status == $object::STATUS_PROPOSED) {
+	$object->estimate_date = dol_print_date();
+}
+
 // Part to edit record
 if (($id || $ref) && $action == 'edit') {
 	print load_fiche_titre($langs->trans("Chiffrage"), '', 'object_'.$object->picto);
