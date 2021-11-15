@@ -33,12 +33,12 @@ CREATE TABLE llx_chiffrage_chiffrage(
 	last_main_doc varchar(255), 
 	import_key varchar(14), 
 	model_pdf varchar(255), 
-	status smallint NOT NULL, 
+	status smallint,
 	commercial_text text, 
 	tech_detail text, 
 	dev_estimate integer,
 	po_estimate integer NOT NULL,
-	module_name varchar(128), 
+	module_name integer,
 	keywords varchar(128),
 	estimate_date datetime
 	-- END MODULEBUILDER FIELDS
