@@ -107,7 +107,7 @@ class Chiffrage extends CommonObject
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
 		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>2, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"Help text", 'showoncombobox'=>'2',),
 		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>2, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
-		'qty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>45, 'notnull'=>0, 'visible'=>1, 'default'=>'0', 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"Help text for quantity",),
+		'qty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>45, 'notnull'=>0, 'visible'=>5, 'default'=>'0', 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"Help text for quantity",),
 		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>50, 'notnull'=>-1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToThirparty",),
 		'fk_project' => array('type'=>'integer:Project:projet/class/project.class.php:1', 'label'=>'Project', 'enabled'=>'1', 'position'=>59, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,),
 		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>2,),
@@ -470,6 +470,16 @@ class Chiffrage extends CommonObject
 	 */
 	public function update(User $user, $notrigger = false)
 	{
+		// Set status to estimated if qty is more than 0 and status is already set to validated
+		if ($this->status == $this::STATUS_VALIDATED && $this->qty > 0) {
+			$this->status = $this::STATUS_ESTIMATED;
+		}
+
+		// Set status to validated if qty is equal to 0 or null
+		if ($this->qty == 0 || $this->qty == null) {
+			$this->status = $this::STATUS_VALIDATED;
+		}
+
 		return $this->updateCommon($user, $notrigger);
 	}
 

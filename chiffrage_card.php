@@ -284,6 +284,12 @@ if (($id || $ref) && $action == 'edit') {
 		print '<input type="hidden" name="backtopageforcancel" value="'.$backtopageforcancel.'">';
 	}
 
+	// Make qty field visible if status is validated or estimated
+	if ($object->status == $object::STATUS_VALIDATED || $object->status == $object::STATUS_ESTIMATED) {
+		$object->fields['qty']['visible'] = 1;
+	}
+
+	// Set estimate_date if status is validated and estimate_date is not already define
 	if ($object->status == $object::STATUS_VALIDATED && $object->estimate_date == null) {
 		$nowYear = dol_print_date(dol_now(), '%Y');
 		$nowMonth = dol_print_date(dol_now(), '%m');
