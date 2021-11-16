@@ -127,7 +127,7 @@ class Chiffrage extends CommonObject
 		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'CHIPOEstimate', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1,),
 		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,),
 		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>70, 'notnull'=>0, 'visible'=>1,),
-		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>0,),
+		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5,),
 	);
 	public $rowid;
 	public $ref;
