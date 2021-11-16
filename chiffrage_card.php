@@ -269,10 +269,6 @@ if ($action == 'create') {
 	//dol_set_focus('input[name="ref"]');
 }
 
-//if ($action == 'add' || $action == 'edit' && $object->status == $object::STATUS_PROPOSED) {
-//	$object->estimate_date = dol_print_date();
-//}
-
 // Part to edit record
 if (($id || $ref) && $action == 'edit') {
 	print load_fiche_titre($langs->trans("Chiffrage"), '', 'object_'.$object->picto);
@@ -286,6 +282,17 @@ if (($id || $ref) && $action == 'edit') {
 	}
 	if ($backtopageforcancel) {
 		print '<input type="hidden" name="backtopageforcancel" value="'.$backtopageforcancel.'">';
+	}
+
+	if ($object->status == $object::STATUS_VALIDATED && $object->estimate_date == null) {
+		$nowYear = dol_print_date(dol_now(), '%Y');
+		$nowMonth = dol_print_date(dol_now(), '%m');
+		$nowDay = dol_print_date(dol_now(), '%d');
+
+		print '<input name="estimate_dateyear" value="'.$nowYear.'">';
+		print '<input name="estimate_datemonth" value="'.$nowMonth.'">';
+		print '<input name="estimate_dateday" value="'.$nowDay.'">';
+		print '<input name="estimate_date" value="">';
 	}
 
 	print dol_get_fiche_head();
