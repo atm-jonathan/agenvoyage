@@ -33,7 +33,7 @@ CREATE TABLE llx_chiffrage_chiffrage(
 	last_main_doc varchar(255), 
 	import_key varchar(14), 
 	model_pdf varchar(255), 
-	status smallint,
+	status smallint DEFAULT 0,
 	commercial_text text, 
 	tech_detail text, 
 	dev_estimate integer,

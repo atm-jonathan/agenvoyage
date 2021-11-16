@@ -120,7 +120,7 @@ class Chiffrage extends CommonObject
 		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
 		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
 		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'visible'=>2, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;', '10'=>'CHIEstimated', '11'=>'CHIProposed', '12'=>'CHISold'),),
+		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'notnull'=>1, 'position'=>1000, 'visible'=>5, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;', '10'=>'CHIEstimated', '11'=>'CHIProposed', '12'=>'CHISold'),),
 		'commercial_text' => array('type'=>'text', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>64, 'notnull'=>-1, 'visible'=>1,),
 		'tech_detail' => array('type'=>'text', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>1,),
 		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'CHIDevEstimate', 'enabled'=>'1', 'position'=>51, 'notnull'=>0, 'visible'=>0,),
