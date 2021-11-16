@@ -287,7 +287,13 @@ if (($id || $ref) && $action == 'edit') {
 	// Make qty field visible if status is validated or estimated
 	if ($object->status == $object::STATUS_VALIDATED || $object->status == $object::STATUS_ESTIMATED) {
 		$object->fields['qty']['visible'] = 1;
-	}
+		$object->fields['dev_estimate']['visible'] = 1;
+		$object->fields['tech_detail']['visible'] = 1;
+	} else {
+        $object->fields['qty']['visible'] = 5;
+        $object->fields['dev_estimate']['visible'] = 5;
+        $object->fields['tech_detail']['visible'] = 5;
+    }
 
 	// Set estimate_date if status is validated and estimate_date is not already define
 	if ($object->status == $object::STATUS_VALIDATED && $object->estimate_date == null) {
