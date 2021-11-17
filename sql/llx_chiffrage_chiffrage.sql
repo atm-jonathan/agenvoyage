@@ -40,6 +40,7 @@ CREATE TABLE llx_chiffrage_chiffrage(
 	po_estimate integer NOT NULL,
 	module_name integer,
 	keywords varchar(128),
-	estimate_date date
+	estimate_date date,
+    fk_propal integer
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;

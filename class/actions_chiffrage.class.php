@@ -355,4 +355,32 @@ class ActionsChiffrage
 	}
 
 	/* Add here any other hooked methods... */
+
+	public function printObjectLine($parameters, $action, $hookmanager) {
+		global $user, $db;
+
+		$contextArray = explode(':', $parameters['context']) ;
+
+		if (in_array('propalcard', $contextArray )) {
+			print '<td><a class="butAction" href="'.dol_buildpath('/chiffrage/chiffrage_card.php?action=create', 1) .'">'.'AddNewChiffrage'.'</a></td>';
+			print '<td><select id="chiffrage-select" name="chiffrage-select">';
+
+			include_once 'chiffrage.class.php';
+
+			$chiffrage = new Chiffrage($db);
+
+			$Tchiffrage = $chiffrage->fetchAll();
+
+			if (!$Tchiffrage) {
+				print '<option>Nothing found</option>';
+			}
+			foreach ($Tchiffrage as $chiffrageid => $chiffrageLine) {
+				print '<option value='.$chiffrageid.'>'.$chiffrageLine->ref.'</option>';
+			}
+
+			print '</select></td>';
+		}
+
+		return 0;
+	}
 }

@@ -128,6 +128,7 @@ class Chiffrage extends CommonObject
 		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,),
 		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>70, 'notnull'=>0, 'visible'=>1,),
 		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5,),
+		'fk_propal' => array('type'=>'integer:Propal:propal/class/propal.class.php', 'label'=>'Propal', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
 	);
 	public $rowid;
 	public $ref;
