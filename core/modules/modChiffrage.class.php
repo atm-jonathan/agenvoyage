@@ -83,7 +83,7 @@ class modChiffrage extends DolibarrModules
 		// If file is in theme/yourtheme/img directory under name object_pictovalue.png, use this->picto='pictovalue'
 		// If file is in module/img directory under name object_pictovalue.png, use this->picto='pictovalue@module'
 		// To use a supported fa-xxx css style of font awesome, use this->picto='xxx'
-		$this->picto = 'generic';
+		$this->picto = 'chiffragemodule@module';
 
 		// Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
 		$this->module_parts = array(
@@ -286,29 +286,30 @@ class modChiffrage extends DolibarrModules
 		$r = 0;
 		// Add here entries to declare new menus
 		/* BEGIN MODULEBUILDER TOPMENU */
-		$this->menu[$r++] = array(
-			'fk_menu'=>'', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-			'type'=>'top', // This is a Top menu entry
-			'titre'=>'ModuleChiffrageName',
-			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
-			'mainmenu'=>'chiffrage',
-			'leftmenu'=>'',
-			'url'=>'/chiffrage/chiffrageindex.php',
-			'langs'=>'chiffrage@chiffrage', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-			'position'=>1000 + $r,
-			'enabled'=>'$conf->chiffrage->enabled', // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled.
-			'perms'=>'1', // Use 'perms'=>'$user->rights->chiffrage->chiffrage->read' if you want your menu with a permission rules
-			'target'=>'',
-			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
-		);
+//		$this->menu[$r++] = array(
+//			'fk_menu'=>'', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+//			'type'=>'top', // This is a Top menu entry
+//			'titre'=>'ModuleChiffrageName',
+//			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
+//			'mainmenu'=>'chiffrage',
+//			'leftmenu'=>'',
+//			'url'=>'/chiffrage/chiffrageindex.php',
+//			'langs'=>'chiffrage@chiffrage', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+//			'position'=>1000 + $r,
+//			'enabled'=>'$conf->chiffrage->enabled', // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled.
+//			'perms'=>'1', // Use 'perms'=>'$user->rights->chiffrage->chiffrage->read' if you want your menu with a permission rules
+//			'target'=>'',
+//			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
+//		);
 		/* END MODULEBUILDER TOPMENU */
-		/* BEGIN MODULEBUILDER LEFTMENU CHIFFRAGE
+
+		// BEGIN MODULEBUILDER LEFTMENU CHIFFRAGE
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=chiffrage',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=project',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',                          // This is a Top menu entry
 			'titre'=>'Chiffrage',
 			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
-			'mainmenu'=>'chiffrage',
+			'mainmenu'=>'project',
 			'leftmenu'=>'chiffrage',
 			'url'=>'/chiffrage/chiffrageindex.php',
 			'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
@@ -316,13 +317,14 @@ class modChiffrage extends DolibarrModules
 			'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled.
 			'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
 			'target'=>'',
+            'prefix' => '<span class="fas fa-comment-dollar em092 pictofixedwidth chiffrage-left-menu-picto" style="color: #7e7772;"></span>',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=chiffrage,fk_leftmenu=chiffrage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
 			'titre'=>'List_Chiffrage',
-			'mainmenu'=>'chiffrage',
+			'mainmenu'=>'project',
 			'leftmenu'=>'chiffrage_chiffrage_list',
 			'url'=>'/chiffrage/chiffrage_list.php',
 			'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
@@ -333,10 +335,10 @@ class modChiffrage extends DolibarrModules
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=chiffrage,fk_leftmenu=chiffrage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
 			'titre'=>'New_Chiffrage',
-			'mainmenu'=>'chiffrage',
+			'mainmenu'=>'project',
 			'leftmenu'=>'chiffrage_chiffrage_new',
 			'url'=>'/chiffrage/chiffrage_card.php?action=create',
 			'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
@@ -346,69 +348,91 @@ class modChiffrage extends DolibarrModules
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
-		*/
 
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=chiffrage',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'Chiffrage',
-            'mainmenu'=>'chiffrage',
-            'leftmenu'=>'chiffrage_chiffrage',
-            'url'=>'/chiffrage/chiffrageindex.php',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'chiffrage@chiffrage',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->chiffrage->enabled',
-            // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
-            'perms'=>'1',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2,
-        );
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=chiffrage,fk_leftmenu=chiffrage_chiffrage',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'Nouveau Chiffrage',
-            'mainmenu'=>'chiffrage',
-            'leftmenu'=>'chiffrage',
-            'url'=>'/chiffrage/chiffrage_card.php?action=create',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'chiffrage@chiffrage',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->chiffrage->enabled',
-            // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
-            'perms'=>'1',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2
-        );
 
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=chiffrage,fk_leftmenu=chiffrage_chiffrage',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'Liste',
-            'mainmenu'=>'chiffrage',
-            'leftmenu'=>'chiffrage',
-            'url'=>'/chiffrage/chiffrage_list.php',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'chiffrage@chiffrage',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->chiffrage->enabled',
-            // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
-            'perms'=>'1',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2
-        );
+//        $this->menu[$r++]=array(
+//            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+//            'fk_menu'=>'fk_mainmenu=chiffrage',
+//            // This is a Left menu entry
+//            'type'=>'left',
+//            'titre'=>'Chiffrage',
+//            'mainmenu'=>'chiffrage',
+//            'leftmenu'=>'chiffrage_chiffrage',
+//            'url'=>'/chiffrage/chiffrageindex.php',
+//            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+//            'langs'=>'chiffrage@chiffrage',
+//            'position'=>1100+$r,
+//            // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+//            'enabled'=>'$conf->chiffrage->enabled',
+//            // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+//            'perms'=>'1',
+//            'target'=>'',
+//            // 0=Menu for internal users, 1=external users, 2=both
+//            'user'=>2,
+//        );
+//        $this->menu[$r++]=array(
+//            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+//            'fk_menu'=>'fk_mainmenu=chiffrage,fk_leftmenu=chiffrage_chiffrage',
+//            // This is a Left menu entry
+//            'type'=>'left',
+//            'titre'=>'Nouveau Chiffrage',
+//            'mainmenu'=>'chiffrage',
+//            'leftmenu'=>'chiffrage',
+//            'url'=>'/chiffrage/chiffrage_card.php?action=create',
+//            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+//            'langs'=>'chiffrage@chiffrage',
+//            'position'=>1100+$r,
+//            // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+//            'enabled'=>'$conf->chiffrage->enabled',
+//            // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+//            'perms'=>'1',
+//            'target'=>'',
+//            // 0=Menu for internal users, 1=external users, 2=both
+//            'user'=>2
+//        );
+
+//        $this->menu[$r++]=array(
+//            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+//            'fk_menu'=>'fk_mainmenu=chiffrage,fk_leftmenu=chiffrage_chiffrage',
+//            // This is a Left menu entry
+//            'type'=>'left',
+//            'titre'=>'Liste',
+//            'mainmenu'=>'chiffrage',
+//            'leftmenu'=>'chiffrage',
+//            'url'=>'/chiffrage/chiffrage_list.php',
+//            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+//            'langs'=>'chiffrage@chiffrage',
+//            'position'=>1100+$r,
+//            // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+//            'enabled'=>'$conf->chiffrage->enabled',
+//            // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+//            'perms'=>'1',
+//            'target'=>'',
+//            // 0=Menu for internal users, 1=external users, 2=both
+//            'user'=>2
+//        );
+
+//
+//        // INSTANCE WEB
+//        $this->menu[$r++]=array(
+//            'fk_menu'=>'fk_mainmenu=chifrage',			                // Put 0 if this is a top menu
+//            'type'=>'left',			                // This is a Top menu entry
+//            'titre'=>$langs->trans('TopMenuWebInstance'),
+//            'mainmenu'=>'chiffrage',
+//            'leftmenu'=>'chiffrage',
+//            'url'=>'/webhost/webinstance_list.php',
+//            'langs'=>'webhost@webhost',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+//            'position'=>1100+$r,
+//            'enabled'=>'$conf->webhost->enabled',	// Define condition to show or hide menu entry. Use '$conf->missionorder->enabled' if entry must be visible if module is enabled.
+//            'perms'=>'$user->rights->webhost->instance->read',			                // Use 'perms'=>'$user->rights->missionorder->level1->level2' if you want your menu with a permission rules
+//            'target'=>'',
+//            'prefix' => '<span class="fas fa-globe em092 pictofixedwidth webhost-left-menu-picto" style="color: #7e7772;"></span>',
+//            'user'=>2
+//        );
+
+
+
+
 
 		/* END MODULEBUILDER LEFTMENU CHIFFRAGE */
 		// Exports profiles provided by this module
