@@ -301,10 +301,10 @@ if (($id || $ref) && $action == 'edit') {
 		$nowMonth = dol_print_date(dol_now(), '%m');
 		$nowDay = dol_print_date(dol_now(), '%d');
 
-		print '<input name="estimate_dateyear" value="'.$nowYear.'">';
-		print '<input name="estimate_datemonth" value="'.$nowMonth.'">';
-		print '<input name="estimate_dateday" value="'.$nowDay.'">';
-		print '<input name="estimate_date" value="">';
+		print '<input type="hidden" name="estimate_dateyear" value="'.$nowYear.'">';
+		print '<input type="hidden" name="estimate_datemonth" value="'.$nowMonth.'">';
+		print '<input type="hidden" name="estimate_dateday" value="'.$nowDay.'">';
+		print '<input type="hidden" name="estimate_date" value="">';
 	}
 
 	print dol_get_fiche_head();
