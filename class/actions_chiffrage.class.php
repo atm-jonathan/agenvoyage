@@ -355,26 +355,26 @@ class ActionsChiffrage
 	}
 
 	/* Add here any other hooked methods... */
-
-	public function printObjectLine($parameters, $action, $hookmanager) {
-		global $user, $db;
-
-		$contextArray = explode(':', $parameters['context']) ;
-
-		if (in_array('propalcard', $contextArray )) {
-			print '<td>';
-
-			include_once 'chiffrage.class.php';
-
-			$chiffrage = new Chiffrage($db);
-
-			$Tchiffrage = $chiffrage->fetchAll();
-
-			foreach ($Tchiffrage as $chiffrageid => $chiffrageLine) {
-				print '<a id="chiffrage-link" href="'.dol_buildpath('/chiffrage/chiffrage_card.php', 1). '?id=' . $chiffrageid.'" value='.$chiffrageid.'>'.$chiffrageLine->ref.'</a>';
-			}
-		}
-
-		return 0;
-	}
+//TODO delete this when module ready
+	//public function printObjectLine($parameters, $action, $hookmanager) {
+	//	global $user, $db;
+//
+	//	$contextArray = explode(':', $parameters['context']) ;
+//
+	//	if (in_array('propalcard', $contextArray )) {
+	//		print '<td>';
+//
+	//		include_once 'chiffrage.class.php';
+//
+	//		$chiffrage = new Chiffrage($db);
+//
+	//		$Tchiffrage = $chiffrage->fetchAll();
+//
+	//		foreach ($Tchiffrage as $chiffrageid => $chiffrageLine) {
+	//			print '<a id="chiffrage-link" href="'.dol_buildpath('/chiffrage/chiffrage_card.php', 1). '?id=' . $chiffrageid.'" value='.$chiffrageid.'>'.$chiffrageLine->ref.'</a>';
+	//		}
+	//	}
+//
+	//	return 0;
+	//}
 }

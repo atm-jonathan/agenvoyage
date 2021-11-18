@@ -138,6 +138,7 @@ class Chiffrage extends CommonObject
 	public $qty;
 	public $fk_soc;
 	public $fk_project;
+	public $fk_product;
 	public $description;
 	public $note_public;
 	public $note_private;

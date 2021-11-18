@@ -503,8 +503,13 @@ class modChiffrage extends DolibarrModules
 		}
 
 		// Create extrafields during init
-		//include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
-		//$extrafields = new ExtraFields($this->db);
+		include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
+		$extrafields = new ExtraFields($this->db);
+
+		$param = array ( 'options' => array ( 'Chiffrage:chiffrage/class/chiffrage.class.php' => NULL, ), );
+
+		$extrafields->addExtraField('fkchiffrage', 'chiffrage', 'link', 100, '', 'propaldet', 0, 0, '', $param, 1);
+
 		//$result1=$extrafields->addExtraField('chiffrage_myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
 		//$result2=$extrafields->addExtraField('chiffrage_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
 		//$result3=$extrafields->addExtraField('chiffrage_myattr3', "New Attr 3 label", 'varchar', 1, 10, 'bank_account', 0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
