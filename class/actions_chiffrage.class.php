@@ -371,7 +371,6 @@ class ActionsChiffrage
 			$Tchiffrage = $chiffrage->fetchAll();
 
 			foreach ($Tchiffrage as $chiffrageid => $chiffrageLine) {
-				//if ($chiffrageLine->fk_product == )
 				print '<a id="chiffrage-link" href="'.dol_buildpath('/chiffrage/chiffrage_card.php', 1). '?id=' . $chiffrageid.'" value='.$chiffrageid.'>'.$chiffrageLine->ref.'</a>';
 			}
 		}
