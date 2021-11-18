@@ -362,8 +362,7 @@ class ActionsChiffrage
 		$contextArray = explode(':', $parameters['context']) ;
 
 		if (in_array('propalcard', $contextArray )) {
-			print '<td><a class="butAction" href="'.dol_buildpath('/chiffrage/chiffrage_card.php?action=create', 1) .'">'.'AddNewChiffrage'.'</a></td>';
-			print '<td><select id="chiffrage-select" name="chiffrage-select">';
+			print '<td>';
 
 			include_once 'chiffrage.class.php';
 
@@ -371,14 +370,10 @@ class ActionsChiffrage
 
 			$Tchiffrage = $chiffrage->fetchAll();
 
-			if (!$Tchiffrage) {
-				print '<option>Nothing found</option>';
-			}
 			foreach ($Tchiffrage as $chiffrageid => $chiffrageLine) {
-				print '<option value='.$chiffrageid.'>'.$chiffrageLine->ref.'</option>';
+				//if ($chiffrageLine->fk_product == )
+				print '<a id="chiffrage-link" href="'.dol_buildpath('/chiffrage/chiffrage_card.php', 1). '?id=' . $chiffrageid.'" value='.$chiffrageid.'>'.$chiffrageLine->ref.'</a>';
 			}
-
-			print '</select></td>';
 		}
 
 		return 0;
