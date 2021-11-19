@@ -432,7 +432,8 @@ $param .= $hookmanager->resPrint;
 
 // List of mass actions available
 $arrayofmassactions = array(
-	'validate'=>img_picto('', 'check', 'class="pictofixedwidth"').$langs->trans("Ajouter à une propal"),
+	//TODO Mass action from chiffrage to propal lines
+	//'preaddpropal'=>img_picto('', 'check', 'class="pictofixedwidth"').$langs->trans("Ajouter à une propal"),
 	//'generate_doc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("ReGeneratePDF"),
 	//'builddoc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("PDFMerge"),
 	//'presend'=>img_picto('', 'email', 'class="pictofixedwidth"').$langs->trans("SendByMail"),
@@ -467,6 +468,29 @@ $modelmail = "chiffrage";
 $objecttmp = new Chiffrage($db);
 $trackid = 'xxxx'.$object->id;
 include DOL_DOCUMENT_ROOT.'/core/tpl/massactions_pre.tpl.php';
+
+//TODO Mass action from chiffrage list to propal lines
+//if ($massaction == 'preaddpropal') {
+//	include DOL_DOCUMENT_ROOT.'/comm/propal/class/propal.class.php';
+//
+//	print '<td><select id="propal-select" name="propal-select">';
+//
+//	$propal = new Propal($db);
+//	$Tpropal = $propal->fetchAll();
+//
+//	if (!$Tpropal) {
+//		print '<option>Nothing found</option>';
+//	}
+//	foreach ($Tpropal as $propalid => $propalLine) {
+//		print '<option value='.$propalid.'>'.$propalLine->ref.'</option>';
+//	}
+//
+//	print '</select></td>';
+//}
+//
+//if ($massaction == 'addpropal') {
+//
+//}
 
 if ($search_all) {
 	foreach ($fieldstosearchall as $key => $val) {
