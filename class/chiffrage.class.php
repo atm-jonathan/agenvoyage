@@ -505,7 +505,7 @@ class Chiffrage extends CommonObject
 		}
 
 		// Set status to validated if qty is equal to 0 or null
-		if ($this->qty == 0 || $this->qty == null) {
+		if (($this->qty == 0 || $this->qty == null) && $this->status != $this::STATUS_DRAFT) {
 			$this->status = $this::STATUS_VALIDATED;
 		}
 
