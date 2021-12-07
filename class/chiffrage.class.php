@@ -104,8 +104,9 @@ class Chiffrage extends CommonObject
 	 */
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
-		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
-		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>2, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"Help text", 'showoncombobox'=>'2',),
+		'ref' => array('type'=>'varchar(40)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
+		'label' => array('type'=>'varchar(160)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>2, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"Help text", 'showoncombobox'=>'2',),
+		'group_title' => array('type'=>'varchar(160)', 'label'=>'GroupTitle', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"GroupTitleHelpText", 'showoncombobox'=>'0',),
 		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>2, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
 		'qty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>45, 'notnull'=>0, 'visible'=>5, 'default'=>'0', 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"Help text for quantity",),
 		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>50, 'notnull'=>-1, 'visible'=>4, 'index'=>1, 'help'=>"LinkToThirparty",),
@@ -122,12 +123,12 @@ class Chiffrage extends CommonObject
 		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
 		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
 		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'notnull'=>1, 'position'=>1000, 'visible'=>5, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;', '10'=>'CHIEstimated', '11'=>'CHIProposed', '12'=>'CHISold'),),
-		'commercial_text' => array('type'=>'text', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>64, 'notnull'=>-1, 'visible'=>1,),
-		'tech_detail' => array('type'=>'text', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>5,),
+		'commercial_text' => array('type'=>'html', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>64, 'notnull'=>-1, 'visible'=>1,),
+		'tech_detail' => array('type'=>'html', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>5,),
 		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIDevEstimate', 'enabled'=>'1', 'position'=>51, 'notnull'=>0, 'visible'=>5,),
 		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIPOEstimate', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1,),
 		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,),
-		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>70, 'notnull'=>0, 'visible'=>1,),
+		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>70, 'notnull'=>0, 'visible'=>1,'showoncombobox'=>'0'),
 		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5,),
 		'fk_propal' => array('type'=>'integer:Propal:propal/class/propal.class.php', 'label'=>'Propal', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
 	);
@@ -767,6 +768,18 @@ class Chiffrage extends CommonObject
 		$label .= '<br>';
 		$label .= '<b>'.$langs->trans('Ref').':</b> '.$this->ref;
 
+		if(!empty($this->commercial_text)){
+			$label .= '<br>';
+			$label .= '<b>'.$langs->trans($this->fields['commercial_text']['label']).':</b> '.$this->commercial_text;
+		}
+
+		if(!empty($this->tech_detail)){
+			$label .= '<br>';
+			$label .= '<b>'.$langs->trans($this->fields['tech_detail']['label']).':</b> '.$this->tech_detail;
+		}
+
+
+
 		$url = dol_buildpath('/chiffrage/chiffrage_card.php', 1).'?id='.$this->id;
 
 		if ($option != 'nolink') {
@@ -1080,34 +1093,53 @@ class Chiffrage extends CommonObject
 		return $result;
 	}
 
+
 	/**
-	 * Action executed by scheduler
-	 * CAN BE A CRON TASK. In such a case, parameters come from the schedule job setup field 'Parameters'
-	 * Use public function doScheduledJob($param1, $param2, ...) to get parameters
+	 * Return HTML string to put an input field into a page
+	 * Code very similar with showInputField of extra fields
 	 *
-	 * @return	int			0 if OK, <>0 if KO (this function is used also by cron so only 0 is OK)
+	 * @param  array   		$val	       Array of properties for field to show
+	 * @param  string  		$key           Key of attribute
+	 * @param  string  		$value         Preselected value to show (for date type it must be in timestamp format, for amount or price it must be a php numeric value)
+	 * @param  string  		$moreparam     To add more parameters on html input tag
+	 * @param  string  		$keysuffix     Prefix string to add into name and id of field (can be used to avoid duplicate names)
+	 * @param  string  		$keyprefix     Suffix string to add into name and id of field (can be used to avoid duplicate names)
+	 * @param  string|int	$morecss       Value for css to define style/length of field. May also be a numeric.
+	 * @return string
 	 */
-	public function doScheduledJob()
+	public function showInputField($val, $key, $value, $moreparam = '', $keysuffix = '', $keyprefix = '', $morecss = 0, $nonewbutton = 0)
 	{
-		global $conf, $langs;
+		global $conf, $langs, $form, $action;
 
-		//$conf->global->SYSLOG_FILE = 'DOL_DATA_ROOT/dolibarr_mydedicatedlofile.log';
+		if(in_array($key, array('allowed_disk_space')) && !empty($value)){
+			$value =  bytes2ShorthandFileSize($value);
+		}
 
-		$error = 0;
-		$this->output = '';
-		$this->error = '';
+		if($key == 'group_title'){
+			$out = '<input type="text" class="flat '.$morecss.' maxwidthonsmartphone" list="datalist_'.$keyprefix.$key.$keysuffix.'" name="'.$keyprefix.$key.$keysuffix.'" id="'.$keyprefix.$key.$keysuffix.'" value="'.dol_escape_htmltag($value).'" '.($moreparam ? $moreparam : '').'>';
 
-		dol_syslog(__METHOD__, LOG_DEBUG);
 
-		$now = dol_now();
 
-		$this->db->begin();
+				$sql = 'SELECT DISTINCT group_title FROM '.MAIN_DB_PREFIX.$this->table_element ;
+				$sql.= ' WHERE fk_project IN(0, '.intval($this->fk_project).')';
+				$sql.= ' AND CHAR_LENGTH(group_title) > 0';
+				$listobj = $this->db->getRows($sql);
 
-		// ...
+				$out.='<datalist id="datalist_'.$keyprefix.$key.$keysuffix.'" >';
+				if(!empty($listobj)){
+					foreach ($listobj as $obj){
+						$out.='<option value="'.dol_escape_htmltag($obj->group_title).'">';
+					}
+				}
+				$out.='</datalist>';
+		}
+		else
+		{
+			$out = parent::showInputField($val, $key, $value, $moreparam, $keysuffix, $keyprefix, $morecss, $nonewbutton);
+		}
 
-		$this->db->commit();
 
-		return $error;
+		return $out;
 	}
 }
 
