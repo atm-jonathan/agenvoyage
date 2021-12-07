@@ -391,7 +391,22 @@ class Chiffrage extends CommonObject
 	 */
 	public function getFieldListRetrocompatibility($alias = '')
 	{
-		return $this->getFieldList($alias);
+		// retrocompatibility
+		if(intval(DOL_VERSION) <= 14){
+			$keys = array_keys($this->fields);
+			if (!empty($alias)) {
+				$keys_with_alias = array();
+				foreach ($keys as $fieldname) {
+					$keys_with_alias[] = $alias . '.' . $fieldname;
+				}
+				return implode(',', $keys_with_alias);
+			} else {
+				return implode(',', $keys);
+			}
+		}
+
+		// For V14 and above
+		return parent::getFieldList($alias);
 	}
 
 	/**
