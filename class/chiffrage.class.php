@@ -124,8 +124,8 @@ class Chiffrage extends CommonObject
 		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'notnull'=>1, 'position'=>1000, 'visible'=>5, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;', '10'=>'CHIEstimated', '11'=>'CHIProposed', '12'=>'CHISold'),),
 		'commercial_text' => array('type'=>'text', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>64, 'notnull'=>-1, 'visible'=>1,),
 		'tech_detail' => array('type'=>'text', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>5,),
-		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'CHIDevEstimate', 'enabled'=>'1', 'position'=>51, 'notnull'=>0, 'visible'=>5,),
-		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'CHIPOEstimate', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1,),
+		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIDevEstimate', 'enabled'=>'1', 'position'=>51, 'notnull'=>0, 'visible'=>5,),
+		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIPOEstimate', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1,),
 		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,),
 		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>70, 'notnull'=>0, 'visible'=>1,),
 		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5,),
@@ -383,6 +383,31 @@ class Chiffrage extends CommonObject
 		return $result;
 	}
 
+	/**
+	 * Function to concat keys of fields
+	 *
+	 * @param   string   $alias   	String of alias of table for fields. For example 't'.
+	 * @return  string				list of alias fields
+	 */
+	public function getFieldListRetrocompatibility($alias = '')
+	{
+		// retrocompatibility
+		if(intval(DOL_VERSION) <= 14){
+			$keys = array_keys($this->fields);
+			if (!empty($alias)) {
+				$keys_with_alias = array();
+				foreach ($keys as $fieldname) {
+					$keys_with_alias[] = $alias . '.' . $fieldname;
+				}
+				return implode(',', $keys_with_alias);
+			} else {
+				return implode(',', $keys);
+			}
+		}
+
+		// For V14 and above
+		return parent::getFieldList($alias);
+	}
 
 	/**
 	 * Load list of objects in memory from the database.
