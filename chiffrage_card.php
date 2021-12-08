@@ -248,8 +248,14 @@ if ($action == 'create') {
 
 	print '<table class="border centpercent tableforfieldcreate">'."\n";
 
+    // Ref
+//    print '<tr><td class="titlefieldcreate fieldrequired">'.$langs->trans('Ref').'</td><td>'.$langs->trans("Draft").'</td></tr>';
+//    $object->fields['ref']['visible'] = 0;
+    $object->ref = "Brouillon";
+
 	// Common attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/commonfields_add.tpl.php';
+
 
 	// Other attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_add.tpl.php';
