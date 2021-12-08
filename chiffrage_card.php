@@ -202,7 +202,6 @@ if (empty($reshook)) {
  *
  * Put here all code to build page
  */
-
 $form = new Form($db);
 $formfile = new FormFile($db);
 $formproject = new FormProjets($db);
@@ -337,6 +336,9 @@ if (($id || $ref) && $action == 'edit') {
 // Part to show record
 if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'create'))) {
 	$res = $object->fetch_optionals();
+    $object->fields['commercial_text']['position'] = 999;
+    $object->fields['tech_detail']['position'] = 1000;
+
 
 	$head = chiffragePrepareHead($object);
 	print dol_get_fiche_head($head, 'card', $langs->trans("Workstation"), -1, $object->picto);
@@ -438,7 +440,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 	print '<table class="border centpercent tableforfield">'."\n";
 
 	// Common attributes
-	//$keyforbreak='fieldkeytoswitchonsecondcolumn';	// We change column just before this field
+	$keyforbreak='commercial_text';	// We change column just before this field
 	//unset($object->fields['fk_project']);				// Hide field already shown in banner
 	//unset($object->fields['fk_soc']);					// Hide field already shown in banner
 	include DOL_DOCUMENT_ROOT.'/core/tpl/commonfields_view.tpl.php';
