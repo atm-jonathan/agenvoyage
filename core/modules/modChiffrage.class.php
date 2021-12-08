@@ -52,7 +52,7 @@ class modChiffrage extends DolibarrModules
 
 		// Family can be 'base' (core modules),'crm','financial','hr','projects','products','ecm','technic' (transverse modules),'interface' (link with external tools),'other','...'
 		// It is used to group modules by family in module setup page
-		$this->family = "other";
+		$this->family = "ATM";
 
 		// Module position in the family on 2 digits ('01', '10', '20', ...)
 		$this->module_position = '90';
@@ -63,13 +63,13 @@ class modChiffrage extends DolibarrModules
 		$this->name = preg_replace('/^mod/i', '', get_class($this));
 
 		// Module description, used if translation string 'ModuleChiffrageDesc' not found (Chiffrage is name of module).
-		$this->description = "ChiffrageDescription";
+		$this->description = "CHIChiffrageDescription";
 		// Used only if file README.md and README-LL.md not found.
-		$this->descriptionlong = "ChiffrageDescription";
+		$this->descriptionlong = "CHIChiffrageDescription";
 
 		// Author
-		$this->editor_name = 'Editor name';
-		$this->editor_url = 'https://www.example.com';
+		$this->editor_name = 'ATM-Consulting';
+		$this->editor_url = 'https://www.atm-consulting.fr';
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
 		$this->version = '1.1.0';

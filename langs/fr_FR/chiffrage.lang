@@ -18,3 +18,4 @@ CHICancel = Annulé
 Create = Créer
 List_Chiffrage = Liste
 New_Chiffrage = Nouveau chiffrage
+CHIChiffrageDescription = Le module chiffrage permet d'appliquer un chiffrage et d'accéder a ses informations par la suite
