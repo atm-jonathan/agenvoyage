@@ -36,7 +36,7 @@ class mod_chiffrage_standard extends ModeleNumRefChiffrage
 	 */
 	public $version = 'dolibarr'; // 'development', 'experimental', 'dolibarr'
 
-	public $prefix = 'CHIFFRAGE';
+	public $prefix = 'CHI';
 
 	/**
 	 * @var string Error code (or message)
