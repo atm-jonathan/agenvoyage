@@ -300,18 +300,6 @@ if (($id || $ref) && $action == 'edit') {
         $object->fields['tech_detail']['visible'] = 5;
     }
 
-	// Set estimate_date if status is validated and estimate_date is not already define
-	if ($object->status == $object::STATUS_VALIDATED && $object->estimate_date == null) {
-		$nowYear = dol_print_date(dol_now(), '%Y');
-		$nowMonth = dol_print_date(dol_now(), '%m');
-		$nowDay = dol_print_date(dol_now(), '%d');
-
-		print '<input type="hidden" name="estimate_dateyear" value="'.$nowYear.'">';
-		print '<input type="hidden" name="estimate_datemonth" value="'.$nowMonth.'">';
-		print '<input type="hidden" name="estimate_dateday" value="'.$nowDay.'">';
-		print '<input type="hidden" name="estimate_date" value="">';
-	}
-
 	print dol_get_fiche_head();
 
 	print '<table class="border centpercent tableforfieldedit">'."\n";
