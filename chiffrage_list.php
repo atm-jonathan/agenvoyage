@@ -217,6 +217,97 @@ if (empty($reshook)) {
 	// Selection of new fields
 	include DOL_DOCUMENT_ROOT.'/core/actions_changeselectedfields.inc.php';
 
+
+    if($action == "confirm-add-propal"){
+
+        if(empty($toselect) || !is_array($toselect)){
+            setEventMessage('il faut select un truc a minima', 'errors');
+        }else{
+
+            // TODO : trigger : lors de la suppression d'une ligne de propale, dé-référencer la propal sur le chiffrage correspondant + voir pour autre status ligne perdue ?
+
+
+
+
+            include_once DOL_DOCUMENT_ROOT . '/comm/propal/class/propal.class.php';
+            $propal = new Propal($db);
+            $res = $propal->fetch(GETPOST('fk_propal', 'int'));
+            if($res > 0){
+                if($propal->status == Propal::STATUS_DRAFT){
+                    if(empty($user->rights->propal->cree)){
+                        foreach ($toselect as $chiffrageId){
+                            $chiffrage = new Chiffrage($db);
+                            $res = $chiffrage->fetch($chiffrageId);
+                            if($res > 0){
+                                //var_dump($chiffrage);
+                                if(empty($chiffrage->fk_propal)){
+
+                                    // TODO : 1 -ajouter une ligne à la propale
+
+                                   $resAddline = $propal->addline(
+                                       $desc,
+                                       $pu_ht,
+                                       $qty,
+                                       $txtva,
+                                       $txlocaltax1 = 0.0,
+                                       $txlocaltax2 = 0.0,
+                                       $fk_product = 0,
+                                       $remise_percent = 0.0,
+                                       $price_base_type = 'HT',
+                                       $pu_ttc = 0.0,
+                                       $info_bits = 0,
+                                       $type = 0,
+                                       $rang = -1,
+                                       $special_code = 0,
+                                       $fk_parent_line = 0,
+                                       $fk_fournprice = 0,
+                                       $pa_ht = 0,
+                                       $label = '',
+                                       $date_start = '',
+                                       $date_end = '',
+                                       $array_options = 0,
+                                       $fk_unit = null,
+                                       $origin = '',
+                                       $origin_id = 0,
+                                       $pu_ht_devise = 0,
+                                       $fk_remise_except = 0
+                                   );
+
+                                    if($resAddline>0){
+
+
+//                                    $chiffrage->fk_propal = $propal->id;
+//                                    $chiffrage->update($user);
+                                    }else{
+                                        setEventMessage('error : '.$propal->errorsToString(), 'errors');
+                                    }
+                                }
+                                else{
+                                    setEventMessage('deja associé à la propal X', 'errors');
+                                }
+                            }
+                            else{
+                                setEventMessage('Ya eune erreur ', 'errors');
+                            }
+                        }
+                    }
+                    else{
+                        setEventMessage('interdit car pas les droits', 'errors');
+                    }
+                }
+                else{
+                    setEventMessage('interdit car pas pas en brouillion', 'errors');
+                }
+            }
+            else{
+                setEventMessage('Ya eune erreur ', 'errors');
+            }
+        }
+
+
+    }
+
+
 	// Purge search criteria
 	if (GETPOST('button_removefilter_x', 'alpha') || GETPOST('button_removefilter.x', 'alpha') || GETPOST('button_removefilter', 'alpha')) { // All tests are required to be compatible with all browsers
 		foreach ($object->fields as $key => $val) {
@@ -433,7 +524,7 @@ $param .= $hookmanager->resPrint;
 // List of mass actions available
 $arrayofmassactions = array(
 	//TODO Mass action from chiffrage to propal lines
-	//'preaddpropal'=>img_picto('', 'check', 'class="pictofixedwidth"').$langs->trans("Ajouter à une propal"),
+	'preaddpropal'=>img_picto('', 'check', 'class="pictofixedwidth"').$langs->trans("CHIAddToPropal"),
 	//'generate_doc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("ReGeneratePDF"),
 	//'builddoc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("PDFMerge"),
 	//'presend'=>img_picto('', 'email', 'class="pictofixedwidth"').$langs->trans("SendByMail"),
@@ -470,27 +561,26 @@ $trackid = 'xxxx'.$object->id;
 include DOL_DOCUMENT_ROOT.'/core/tpl/massactions_pre.tpl.php';
 
 //TODO Mass action from chiffrage list to propal lines
-//if ($massaction == 'preaddpropal') {
-//	include DOL_DOCUMENT_ROOT.'/comm/propal/class/propal.class.php';
-//
-//	print '<td><select id="propal-select" name="propal-select">';
-//
-//	$propal = new Propal($db);
-//	$Tpropal = $propal->fetchAll();
-//
-//	if (!$Tpropal) {
-//		print '<option>Nothing found</option>';
-//	}
-//	foreach ($Tpropal as $propalid => $propalLine) {
-//		print '<option value='.$propalid.'>'.$propalLine->ref.'</option>';
-//	}
-//
-//	print '</select></td>';
-//}
-//
-//if ($massaction == 'addpropal') {
-//
-//}
+if ($massaction == 'preaddpropal') {
+    $tmpPropalFieldVisibility = $objecttmp->fields['fk_propal']['visible'];
+    $objecttmp->fields['fk_propal']['visible'] = 1;
+
+    print '<input type="hidden" name="token" value="'.newToken().'" />';
+    print '<div class="select-mass-action-container warning"  >';
+    print '<h4>confir nanani nanana</h4>';
+    print $objecttmp->showInputField( $objecttmp->fields['fk_propal'], 'fk_propal', '');
+
+    print '<button class="button" type="submit" name="action" value="confirm-add-propal"  >'.$langs->trans('Valid').'</button>';
+    print '<button class="button" type="submit" name="action" value="cancel"  >'.$langs->trans('Cancel').'</button>';
+
+    print '</div>';
+
+    $tmpPropalFieldVisibility = $objecttmp->fields['fk_propal']['visible'];
+}
+
+if ($massaction == 'addpropal') {
+
+}
 
 if ($search_all) {
 	foreach ($fieldstosearchall as $key => $val) {

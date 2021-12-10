@@ -15,6 +15,7 @@ CHIHelpQty = Si supérieur à 0, change le statut en "chiffré".
 CHIHelpEstimateDate = Définie automatiquement lors de l'enregistrement en statut "chiffré".
 CHIHelpGroupTitle = Permet de regrouper les chiffrage sous un nom commun.
 CHICancel = Annulé
+CHIAddToPropal = Ajouter à une proposition commerciale
 Create = Créer
 List_Chiffrage = Liste
 New_Chiffrage = Nouveau chiffrage

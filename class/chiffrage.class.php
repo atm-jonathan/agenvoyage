@@ -130,7 +130,7 @@ class Chiffrage extends CommonObject
 		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
 		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>54, 'notnull'=>0, 'visible'=>1,'showoncombobox'=>'0','css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
 		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5, 'help'=>"CHIHelpEstimateDate",),
-		'fk_propal' => array('type'=>'integer:Propal:propal/class/propal.class.php', 'label'=>'Propal', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
+		'fk_propal' => array('type'=>'integer:Propal:comm/propal/class/propal.class.php', 'label'=>'Propal', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>1,),
 	);
 	public $rowid;
 	public $ref;
@@ -527,6 +527,12 @@ class Chiffrage extends CommonObject
 		return $this->deleteCommon($user, $notrigger);
 		//return $this->deleteCommon($user, $notrigger, 1);
 	}
+
+    public function addChiffrageToPropal(User $user, $notrigger = false)
+    {
+        return $this->deleteCommon($user, $notrigger);
+        //return $this->deleteCommon($user, $notrigger, 1);
+    }
 
 	/**
 	 *  Delete a line of object in database
@@ -1114,9 +1120,6 @@ class Chiffrage extends CommonObject
 	{
 		global $conf, $langs, $form, $action;
 
-		if(in_array($key, array('allowed_disk_space')) && !empty($value)){
-			$value =  bytes2ShorthandFileSize($value);
-		}
 
 		if($key == 'group_title'){
 			$out = '<input type="text" class="flat '.$morecss.' maxwidthonsmartphone" list="datalist_'.$keyprefix.$key.$keysuffix.'" name="'.$keyprefix.$key.$keysuffix.'" id="'.$keyprefix.$key.$keysuffix.'" value="'.dol_escape_htmltag($value).'" '.($moreparam ? $moreparam : '').'>';
