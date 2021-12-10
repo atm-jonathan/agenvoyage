@@ -224,11 +224,6 @@ if (empty($reshook)) {
             setEventMessage('il faut select un truc a minima', 'errors');
         }else{
 
-            // TODO : trigger : lors de la suppression d'une ligne de propale, dé-référencer la propal sur le chiffrage correspondant + voir pour autre status ligne perdue ?
-
-
-
-
             include_once DOL_DOCUMENT_ROOT . '/comm/propal/class/propal.class.php';
             $propal = new Propal($db);
             $res = $propal->fetch(GETPOST('fk_propal', 'int'));
@@ -237,50 +232,35 @@ if (empty($reshook)) {
                     if(empty($user->rights->propal->cree)){
                         foreach ($toselect as $chiffrageId){
                             $chiffrage = new Chiffrage($db);
+							$product = new Product($db);
                             $res = $chiffrage->fetch($chiffrageId);
                             if($res > 0){
-                                //var_dump($chiffrage);
+								$resprod = $product->fetch($chiffrage->fk_product);
                                 if(empty($chiffrage->fk_propal)){
-
-                                    // TODO : 1 -ajouter une ligne à la propale
-
                                    $resAddline = $propal->addline(
-                                       $desc,
-                                       $pu_ht,
-                                       $qty,
-                                       $txtva,
-                                       $txlocaltax1 = 0.0,
-                                       $txlocaltax2 = 0.0,
-                                       $fk_product = 0,
-                                       $remise_percent = 0.0,
-                                       $price_base_type = 'HT',
-                                       $pu_ttc = 0.0,
-                                       $info_bits = 0,
-                                       $type = 0,
-                                       $rang = -1,
-                                       $special_code = 0,
-                                       $fk_parent_line = 0,
-                                       $fk_fournprice = 0,
-                                       $pa_ht = 0,
-                                       $label = '',
-                                       $date_start = '',
-                                       $date_end = '',
-                                       $array_options = 0,
-                                       $fk_unit = null,
-                                       $origin = '',
-                                       $origin_id = 0,
-                                       $pu_ht_devise = 0,
-                                       $fk_remise_except = 0
+									   $chiffrage->commercial_text,
+                                       $product->price,
+                                       $chiffrage->qty,
+                                       $product->tva_tx,
+                                      0,
+                                       0,
+                                       $chiffrage->fk_product,
+                                       0.0,
+                                       'HT',
+                                       0.0,
+                                       0,
+                                       $product->type,
+                                       -1,
+                                      0,
+                                       0,
+                                      0,
+                                       $product->cost_price,
+                                       '',
+                                       '',
+                                       '',
+                                       array('options_fkchiffrage' => $chiffrage->id)
                                    );
 
-                                    if($resAddline>0){
-
-
-//                                    $chiffrage->fk_propal = $propal->id;
-//                                    $chiffrage->update($user);
-                                    }else{
-                                        setEventMessage('error : '.$propal->errorsToString(), 'errors');
-                                    }
                                 }
                                 else{
                                     setEventMessage('deja associé à la propal X', 'errors');
@@ -303,8 +283,6 @@ if (empty($reshook)) {
                 setEventMessage('Ya eune erreur ', 'errors');
             }
         }
-
-
     }
 
 
