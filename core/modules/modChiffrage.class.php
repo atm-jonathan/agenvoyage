@@ -554,7 +554,7 @@ class modChiffrage extends DolibarrModules
 
 		$param = array ( 'options' => array ( 'Chiffrage:chiffrage/class/chiffrage.class.php' => NULL, ), );
 
-		$extrafields->addExtraField('fkchiffrage', 'chiffrage', 'link', 100, '', 'propaldet', 0, 0, '', $param, 1);
+		$extrafields->addExtraField('fk_chiffrage', 'chiffrage', 'link', 100, '', 'propaldet', 0, 0, '', $param, 1);
 
 		//$result1=$extrafields->addExtraField('chiffrage_myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
 		//$result2=$extrafields->addExtraField('chiffrage_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');

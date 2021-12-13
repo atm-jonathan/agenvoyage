@@ -258,7 +258,7 @@ if (empty($reshook)) {
                                        '',
                                        '',
                                        '',
-                                       array('options_fkchiffrage' => $chiffrage->id)
+                                       array('options_fk_chiffrage' => $chiffrage->id)
                                    );
 
                                 }
