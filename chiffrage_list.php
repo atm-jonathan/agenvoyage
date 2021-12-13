@@ -221,7 +221,7 @@ if (empty($reshook)) {
     if($action == "confirm-add-propal"){
 
         if(empty($toselect) || !is_array($toselect)){
-            setEventMessage('il faut select un truc a minima', 'errors');
+            setEventMessage('CHIErrorMinSelect', 'errors');
         }else{
 
             include_once DOL_DOCUMENT_ROOT . '/comm/propal/class/propal.class.php';
@@ -263,24 +263,24 @@ if (empty($reshook)) {
 
                                 }
                                 else{
-                                    setEventMessage('deja associé à la propal X', 'errors');
+                                    setEventMessage('CHIErrorAlreadyUseInPropal', 'errors');
                                 }
                             }
                             else{
-                                setEventMessage('Ya eune erreur ', 'errors');
+                                setEventMessage('CHIErrorRequest', 'errors');
                             }
                         }
                     }
                     else{
-                        setEventMessage('interdit car pas les droits', 'errors');
+                        setEventMessage('CHIErrorRights', 'errors');
                     }
                 }
                 else{
-                    setEventMessage('interdit car pas pas en brouillion', 'errors');
+                    setEventMessage('CHIErrorDraft', 'errors');
                 }
             }
             else{
-                setEventMessage('Ya eune erreur ', 'errors');
+                setEventMessage('CHIErrorRequest', 'errors');
             }
         }
     }
@@ -545,7 +545,7 @@ if ($massaction == 'preaddpropal') {
 
     print '<input type="hidden" name="token" value="'.newToken().'" />';
     print '<div class="select-mass-action-container warning"  >';
-    print '<h4>confir nanani nanana</h4>';
+    print '<h4>' .$langs->trans('CHIMassActionValidation'). '</h4>';
     print $objecttmp->showInputField( $objecttmp->fields['fk_propal'], 'fk_propal', '');
 
     print '<button class="button" type="submit" name="action" value="confirm-add-propal"  >'.$langs->trans('Valid').'</button>';
