@@ -165,6 +165,32 @@ if (empty($reshook)) {
 
 	$triggermodname = 'CHIFFRAGE_CHIFFRAGE_MODIFY'; // Name of trigger action code to execute when we modify record
 
+
+    // Action clone object and redirect to edit mode
+    if ($action == 'confirm_clone' && $confirm == 'yes' && !empty($permissiontoadd))
+    {
+        if (1 == 0 && !GETPOST('clone_content') && !GETPOST('clone_receivers'))
+        {
+            setEventMessages($langs->trans("NoCloneOptionsSpecified"), null, 'errors');
+        } else {
+            $objectutil = dol_clone($object, 1); // To avoid to denaturate loaded object when setting some properties for clone or if createFromClone modifies the object. We use native clone to keep this->db valid.
+            $result = $objectutil->createFromClone($user, (($object->id > 0) ? $object->id : $id));
+            if (is_object($result) || $result > 0)
+            {
+                $newid = 0;
+                if (is_object($result)) $newid = $result->id;
+                else $newid = $result;
+                header("Location: ".$_SERVER['PHP_SELF'].'?id='.$newid.'&action=edit'); // Open record of new object
+                exit;
+            } else {
+                setEventMessages($objectutil->error, $objectutil->errors, 'errors');
+                $action = '';
+            }
+        }
+    }
+
+
+
 	// Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
 	include DOL_DOCUMENT_ROOT.'/core/actions_addupdatedelete.inc.php';
 
