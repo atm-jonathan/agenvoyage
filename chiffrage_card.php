@@ -191,6 +191,16 @@ if (empty($reshook)) {
 
 
 
+	$addNew = GETPOSTISSET('addnew');
+	if ($action == 'add' && $addNew)
+	{
+		$backtopage = dol_buildpath('/chiffrage/chiffrage_card.php', 1).'?action=create';
+		$backtopage.= '&po_estimated='.GETPOST('po_estimated');
+		$backtopage.= '&fk_soc='.GETPOST('fk_soc');
+		$backtopage.= '&fk_project='.GETPOST('fk_project');
+		$backtopage.= '&fk_product='.GETPOST('fk_product');
+	}
+
 	// Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
 	include DOL_DOCUMENT_ROOT.'/core/actions_addupdatedelete.inc.php';
 
@@ -291,6 +301,7 @@ if ($action == 'create') {
 
 	print '<div class="center">';
 	print '<input type="submit" class="button" name="add" value="'.dol_escape_htmltag($langs->trans("Create")).'">';
+	print '<input type="submit" class="button" name="addnew" value="'.dol_escape_htmltag($langs->trans("CHICreate&New")).'">';
 	print '&nbsp; ';
 	print '<input type="'.($backtopage ? "submit" : "button").'" class="button button-cancel" name="cancel" value="'.dol_escape_htmltag($langs->trans("Cancel")).'"'.($backtopage ? '' : ' onclick="javascript:history.go(-1)"').'>'; // Cancel for create does not post form if we don't know the backtopage
 	print '</div>';
