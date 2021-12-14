@@ -219,68 +219,93 @@ if (empty($reshook)) {
 
 
     if($action == "confirm-add-propal"){
+		$target_fk_propal = GETPOST('target_fk_propal', 'int');
 
-        if(empty($toselect) || !is_array($toselect)){
+		if(empty($target_fk_propal)){
+			setEventMessage('CHIErrorSelectAtLeastPropal', 'errors');
+		}elseif(empty($toselect) || !is_array($toselect)){
             setEventMessage('CHIErrorMinSelect', 'errors');
         }else{
+			//TODO Apply to propal
+			//include DOL_DOCUMENT_ROOT.'/comm/propal/class/propal.class.php';
+			//$propal = new Propal($db);
+			//$Tpropal = $propal->liste_array();
+
+			//foreach ($Tpropal as $currentPropal) {
+			//	var_dump($currentPropal['ref']);
+			//}
+			//var_dump($propal->liste_array());
+			//$TpropalLength = count($propal->liste_array());
+
+
+			$numberLineCreate = $numberLineError = 0;
 
             include_once DOL_DOCUMENT_ROOT . '/comm/propal/class/propal.class.php';
             $propal = new Propal($db);
-            $res = $propal->fetch(GETPOST('fk_propal', 'int'));
+            $res = $propal->fetch($target_fk_propal);
             if($res > 0){
                 if($propal->status == Propal::STATUS_DRAFT){
                     if(empty($user->rights->propal->cree)){
                         foreach ($toselect as $chiffrageId){
                             $chiffrage = new Chiffrage($db);
-							$product = new Product($db);
                             $res = $chiffrage->fetch($chiffrageId);
                             if($res > 0){
+								$product = new Product($db);
 								$resprod = $product->fetch($chiffrage->fk_product);
-                                if(empty($chiffrage->fk_propal)){
-                                   $resAddline = $propal->addline(
-									   $chiffrage->commercial_text,
-                                       $product->price,
-                                       $chiffrage->qty,
-                                       $product->tva_tx,
-                                      0,
-                                       0,
-                                       $chiffrage->fk_product,
-                                       0.0,
-                                       'HT',
-                                       0.0,
-                                       0,
-                                       $product->type,
-                                       -1,
-                                      0,
-                                       0,
-                                      0,
-                                       $product->cost_price,
-                                       '',
-                                       '',
-                                       '',
-                                       array('options_fk_chiffrage' => $chiffrage->id)
-                                   );
 
-                                }
-                                else{
-                                    setEventMessage('CHIErrorAlreadyUseInPropal', 'errors');
-                                }
+								// Ajout de la ligne à la propale avec extrafield : fk_chiffrage pour la liaison avec le chiffrage
+								$resAddline = $propal->addline(
+									$chiffrage->commercial_text,
+									$product->price,
+									$chiffrage->qty,
+									$product->tva_tx,
+									0,
+									0,
+									$chiffrage->fk_product,
+									0.0,
+									'HT',
+									0.0,
+									0,
+									$product->type,
+									-1,
+									0,
+									0,
+									0,
+									$product->cost_price,
+									'',
+									'',
+									'',
+									array('options_fk_chiffrage' => $chiffrage->id)
+								);
+								if($resAddline>0){
+									$numberLineCreate ++;
+								}
+								else{
+									$numberLineError++;
+									setEventMessage($langs->trans('CHIErrorAddChiffrageLine') . ' : '.$propal->errorsToString(), 'errors');
+								}
                             }
                             else{
-                                setEventMessage('CHIErrorRequest', 'errors');
+                                setEventMessage($langs->trans('CHIErrorFetchChiffrage') . ' : '.$chiffrage->errorsToString(), 'errors');
                             }
                         }
+
+						if($numberLineCreate>0){
+							setEventMessage($langs->trans('CHISuccessAddChiffrageLines', $numberLineCreate));
+						}
+
+
                     }
                     else{
-                        setEventMessage('CHIErrorRights', 'errors');
+                        setEventMessage('CHIErrorNotEnoughtRights', 'errors');
                     }
                 }
                 else{
-                    setEventMessage('CHIErrorDraft', 'errors');
+                    setEventMessage('CHIErrorPropalNotDraft', 'errors');
                 }
             }
             else{
-                setEventMessage('CHIErrorRequest', 'errors');
+                setEventMessage('CHIErrorFetchPropal' . ' : '.$propal->errorsToString(), 'errors');
             }
         }
     }
@@ -540,24 +565,27 @@ include DOL_DOCUMENT_ROOT.'/core/tpl/massactions_pre.tpl.php';
 
 //TODO Mass action from chiffrage list to propal lines
 if ($massaction == 'preaddpropal') {
-    $tmpPropalFieldVisibility = $objecttmp->fields['fk_propal']['visible'];
-    $objecttmp->fields['fk_propal']['visible'] = 1;
+    //$tmpPropalFieldVisibility = $objecttmp->fields['fk_propal']['visible'];
+    //$objecttmp->fields['fk_propal']['visible'] = 1;
+	include DOL_DOCUMENT_ROOT.'/comm/propal/class/propal.class.php';
+	$propal = new Propal($db);
+	$Tpropal = $propal->liste_array();
 
+
+	$objectStaticForMassAction = new Chiffrage($db);
     print '<input type="hidden" name="token" value="'.newToken().'" />';
     print '<div class="select-mass-action-container warning"  >';
     print '<h4>' .$langs->trans('CHIMassActionValidation'). '</h4>';
-    print $objecttmp->showInputField( $objecttmp->fields['fk_propal'], 'fk_propal', '');
+
+	print $form->selectForForms('Propal:comm/propal/class/propal.class.php:1:t.fk_statut='.Chiffrage::STATUS_DRAFT, 'target_fk_propal', '', 1, '', '');
+
 
     print '<button class="button" type="submit" name="action" value="confirm-add-propal"  >'.$langs->trans('Valid').'</button>';
     print '<button class="button" type="submit" name="action" value="cancel"  >'.$langs->trans('Cancel').'</button>';
 
     print '</div>';
 
-    $tmpPropalFieldVisibility = $objecttmp->fields['fk_propal']['visible'];
-}
-
-if ($massaction == 'addpropal') {
-
+    //$tmpPropalFieldVisibility = $objecttmp->fields['fk_propal']['visible'];
 }
 
 if ($search_all) {
