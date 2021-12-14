@@ -26,3 +26,4 @@ CHIErrorDraft = Impossible de réaliser cette action hors brouillon.
 CHIErrorRequest = Erreur de requête.
 CHIErrorMinSelect = Sélectionner un élément minimum.
 CHIMassActionValidation = A quelle proposition commerciale souhaitez-vous ajouter les éléments sélectionnés ?
+CHICreate&New = Créer et nouveau
