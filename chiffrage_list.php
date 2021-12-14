@@ -227,19 +227,7 @@ if (empty($reshook)) {
             setEventMessage('CHIErrorMinSelect', 'errors');
         }else{
 			//TODO Apply to propal
-			//include DOL_DOCUMENT_ROOT.'/comm/propal/class/propal.class.php';
-			//$propal = new Propal($db);
-			//$Tpropal = $propal->liste_array();
-
-			//foreach ($Tpropal as $currentPropal) {
-			//	var_dump($currentPropal['ref']);
-			//}
-			//var_dump($propal->liste_array());
-			//$TpropalLength = count($propal->liste_array());
-
-
 			$numberLineCreate = $numberLineError = 0;
-
             include_once DOL_DOCUMENT_ROOT . '/comm/propal/class/propal.class.php';
             $propal = new Propal($db);
             $res = $propal->fetch($target_fk_propal);
@@ -289,12 +277,9 @@ if (empty($reshook)) {
                                 setEventMessage($langs->trans('CHIErrorFetchChiffrage') . ' : '.$chiffrage->errorsToString(), 'errors');
                             }
                         }
-
 						if($numberLineCreate>0){
 							setEventMessage($langs->trans('CHISuccessAddChiffrageLines', $numberLineCreate));
 						}
-
-
                     }
                     else{
                         setEventMessage('CHIErrorNotEnoughtRights', 'errors');
