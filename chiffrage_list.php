@@ -260,6 +260,7 @@ if (empty($reshook)) {
                                        '',
                                        array('options_fk_chiffrage' => $chiffrage->id)
                                    );
+                                    header("Location: ".dol_buildpath('comm/propal/card.php', 1).'?id='.$propal->id);
 
                                 }
                                 else{
