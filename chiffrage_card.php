@@ -189,7 +189,9 @@ if (empty($reshook)) {
         }
     }
 
-
+    if($action == 'create'){
+        $object->fields['po_estimate']['default'] = $user->id;
+    }
 
 	$addNew = GETPOSTISSET('addnew');
 	if ($action == 'add' && $addNew)
@@ -279,14 +281,14 @@ if ($action == 'create') {
 	print dol_get_fiche_head(array(), '');
 
 	// Set some default values
-	//if (! GETPOSTISSET('fieldname')) $_POST['fieldname'] = 'myvalue';
+    //if (! GETPOSTISSET('fieldname')) $_POST['fieldname'] = 'myvalue';
 
 	print '<table class="border centpercent tableforfieldcreate">'."\n";
 
     // Ref
 //    print '<tr><td class="titlefieldcreate fieldrequired">'.$langs->trans('Ref').'</td><td>'.$langs->trans("Draft").'</td></tr>';
 //    $object->fields['ref']['visible'] = 0;
-    $object->ref = "Brouillon";
+    $object->ref = $langs->trans("Draft");
 
 	// Common attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/commonfields_add.tpl.php';
