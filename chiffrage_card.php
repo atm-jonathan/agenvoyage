@@ -202,7 +202,22 @@ if (empty($reshook)) {
 		$backtopage.= '&fk_project='.GETPOST('fk_project');
 		$backtopage.= '&fk_product='.GETPOST('fk_product');
 	}
+    if($action === 'update'){
 
+        $qty =  GETPOST('qty','int');
+        $dev = GETPOST('dev_estimate','int');
+        $textDev = GETPOST('tech_detail');
+
+        if ($qty > 0 && $dev == -1){
+            setEventMessage($langs->trans("CHIErrorDevEstimate"),'errors');
+            $action = 'edit';
+        }
+        var_dump($textDev);
+        if ($qty > 0 && empty($textDev)){
+            setEventMessage($langs->trans("CHIErrorTechDetail"),'errors');
+            $action = 'edit';
+        }
+    }
 	// Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
 	include DOL_DOCUMENT_ROOT.'/core/actions_addupdatedelete.inc.php';
 

@@ -32,3 +32,5 @@ CHIErrorFetchChiffrage = Impossible de récupérer le chiffrage
 CHIErrorFetchPropal = Impossible de récupérer la propal
 CHIErrorNotEnoughtRights = Vous n'avez pas les droits de modification.
 CHIErrorPropalNotDraft = Impossible de réaliser cette action hors brouillon.
+CHIErrorDevEstimate = Veuillez renseigner Chiffreur DEV.
+CHIErrorTechDetail = Veuillez compléter Détail technique.
