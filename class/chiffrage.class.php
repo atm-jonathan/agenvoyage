@@ -595,6 +595,10 @@ class Chiffrage extends CommonObject
 			return 0;
 		}
 
+		if ($this->status == self::STATUS_ESTIMATED) {
+			return 0;
+		}
+
 		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->chiffrage->write))
 		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->chiffrage->chiffrage_advance->validate))))
 		 {
