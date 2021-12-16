@@ -946,6 +946,9 @@ class Chiffrage extends CommonObject
 		if ($status == self::STATUS_CANCELED) {
 			$statusType = 'status6';
 		}
+		if ($status == self::STATUS_ESTIMATED) {
+			$statusType = 'status7';
+		}
 
 		return dolGetStatus($this->labelStatus[$status], $this->labelStatusShort[$status], '', $statusType, $mode);
 	}
