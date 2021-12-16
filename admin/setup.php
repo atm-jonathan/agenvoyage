@@ -75,8 +75,10 @@ $scandir = GETPOST('scan_dir', 'alpha');
 $type = 'myobject';
 
 $arrayofparameters = array(
-	'CHIFFRAGE_MYPARAM1'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
-	'CHIFFRAGE_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
+	'CHIDefaultProduct'=>array('type'=>'product', 'enabled'=>1),
+	'CHINumMask'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
+	//'CHIFFRAGE_MYPARAM1'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
+	//'CHIFFRAGE_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
 	//'CHIFFRAGE_MYPARAM3'=>array('type'=>'category:'.Categorie::TYPE_CUSTOMER, 'enabled'=>1),
 	//'CHIFFRAGE_MYPARAM4'=>array('type'=>'emailtemplate:thirdparty', 'enabled'=>1),
 	//'CHIFFRAGE_MYPARAM5'=>array('type'=>'yesno', 'enabled'=>1),
@@ -372,6 +374,7 @@ if ($action == 'edit') {
 						print $langs->trans("NorProspectNorCustomer");
 					}
 				} elseif ($val['type'] == 'product') {
+					include DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 					$product = new Product($db);
 					$resprod = $product->fetch($conf->global->{$constname});
 					if ($resprod > 0) {

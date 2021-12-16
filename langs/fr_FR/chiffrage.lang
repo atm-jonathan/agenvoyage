@@ -36,3 +36,5 @@ CHIErrorDevEstimate = Veuillez renseigner Chiffreur DEV.
 CHIErrorTechDetail = Veuillez compléter Détail technique.
 CHICreateToClone = Clonage effectué
 CHIUpdateDateEstmated = Mise à jour : Date du chiffrage
+CHIDefaultProduct = Produit par défaut
+CHINumMask = Masque de numérotation par défaut
