@@ -266,6 +266,7 @@ class Chiffrage extends CommonObject
 	 */
 	public function createFromClone(User $user, $fromid)
 	{
+
 		global $langs, $extrafields;
 		$error = 0;
 
@@ -369,6 +370,7 @@ class Chiffrage extends CommonObject
 
 		// End
 		if (!$error) {
+            setEventMessage("CHICreateToClone");
 			$this->db->commit();
 			return $object;
 		} else {
@@ -527,6 +529,8 @@ class Chiffrage extends CommonObject
 			$this->status = $this::STATUS_ESTIMATED;
 			if ($this->estimate_date == null) {
 				$this->estimate_date = dol_now();
+                //TODO Pourquoi le langs trans ne marche pas ?
+                setEventMessage('CHIUpdateDateEstmated');
 			}
 		}
 
