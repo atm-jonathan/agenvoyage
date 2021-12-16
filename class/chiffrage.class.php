@@ -249,6 +249,7 @@ class Chiffrage extends CommonObject
 	 */
 	public function create(User $user, $notrigger = false)
 	{
+        $this->keywords = strtoupper($this->keywords);
 		$resultcreate = $this->createCommon($user, $notrigger);
 
 		//$resultvalidate = $this->validate($user, $notrigger);
@@ -265,6 +266,7 @@ class Chiffrage extends CommonObject
 	 */
 	public function createFromClone(User $user, $fromid)
 	{
+
 		global $langs, $extrafields;
 		$error = 0;
 
@@ -368,6 +370,7 @@ class Chiffrage extends CommonObject
 
 		// End
 		if (!$error) {
+            setEventMessage("CHICreateToClone");
 			$this->db->commit();
 			return $object;
 		} else {
@@ -520,11 +523,14 @@ class Chiffrage extends CommonObject
 	 */
 	public function update(User $user, $notrigger = false)
 	{
+        $this->keywords = strtoupper($this->keywords);
 		// Set status to estimated if qty is more than 0 and status is already set to validated
 		if ($this->status == $this::STATUS_VALIDATED && $this->qty > 0) {
 			$this->status = $this::STATUS_ESTIMATED;
 			if ($this->estimate_date == null) {
 				$this->estimate_date = dol_now();
+                //TODO Pourquoi le langs trans ne marche pas ?
+                setEventMessage('CHIUpdateDateEstmated');
 			}
 		}
 
@@ -1148,7 +1154,9 @@ class Chiffrage extends CommonObject
 	{
 		global $conf, $langs, $form, $action;
 
-
+        if($key == 'keywords') {
+            return '<input  name="keywords" style="text-transform: uppercase" type="text" value="'.dol_escape_htmltag($value).'"/>';
+        }
 		if($key == 'group_title'){
 			$out = '<input type="text" class="flat '.$morecss.' maxwidthonsmartphone" list="datalist_'.$keyprefix.$key.$keysuffix.'" name="'.$keyprefix.$key.$keysuffix.'" id="'.$keyprefix.$key.$keysuffix.'" value="'.dol_escape_htmltag($value).'" '.($moreparam ? $moreparam : '').'>';
 
