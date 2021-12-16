@@ -76,6 +76,7 @@ $type = 'myobject';
 
 $arrayofparameters = array(
 	'CHIDefaultProduct'=>array('type'=>'product', 'enabled'=>1),
+	'CHINumMask'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
 	//'CHIFFRAGE_MYPARAM1'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
 	//'CHIFFRAGE_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
 	//'CHIFFRAGE_MYPARAM3'=>array('type'=>'category:'.Categorie::TYPE_CUSTOMER, 'enabled'=>1),
