@@ -513,14 +513,14 @@ $param .= $hookmanager->resPrint;
 // List of mass actions available
 $arrayofmassactions = array(
 	//TODO Mass action from chiffrage to propal lines
-	'validate'=>img_picto('', 'check', 'class="pictofixedwidth"').$langs->trans("CHIValidate"),
-	'preaddpropal'=>$langs->trans("CHIAddToPropal"),
+	'validate'=>img_picto('', 'check', 'class="pictofixedwidth"').' '.$langs->trans("CHIValidate"),
+	'preaddpropal'=>img_picto('','filenew','class="pictofixedwidth"').' '.$langs->trans("CHIAddToPropal"),
 	//'generate_doc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("ReGeneratePDF"),
 	//'builddoc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("PDFMerge"),
 	//'presend'=>img_picto('', 'email', 'class="pictofixedwidth"').$langs->trans("SendByMail"),
 );
 if ($permissiontodelete) {
-	$arrayofmassactions['predelete'] = img_picto('', 'delete', 'class="pictofixedwidth"').$langs->trans("Delete");
+	$arrayofmassactions['predelete'] = img_picto('', 'delete', 'class="pictofixedwidth"').' '.$langs->trans("Delete");
 }
 if (GETPOST('nomassaction', 'int') || in_array($massaction, array('presend', 'predelete'))) {
 	$arrayofmassactions = array();
