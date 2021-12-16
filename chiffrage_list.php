@@ -265,6 +265,7 @@ if (empty($reshook)) {
 									'',
 									array('options_fk_chiffrage' => $chiffrage->id)
 								);
+                                header("location: ".dol_buildpath('comm/propal/card.php',1).'?id='.$propal->id);
 								if($resAddline>0){
 									$numberLineCreate ++;
 								}
