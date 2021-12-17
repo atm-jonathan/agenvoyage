@@ -810,12 +810,12 @@ class Chiffrage extends CommonObject
 
 		if(!empty($this->commercial_text)){
 			$label .= '<br>';
-			$label .= '<b>'.$langs->trans($this->fields['commercial_text']['label']).':</b> '.$this->commercial_text;
+			$label .= '<b>'.$langs->trans($this->fields['commercial_text']['label']).':</b> '.str_replace("\r\n","",$this->commercial_text);
 		}
 
 		if(!empty($this->tech_detail)){
 			$label .= '<br>';
-			$label .= '<b>'.$langs->trans($this->fields['tech_detail']['label']).':</b> '.$this->tech_detail;
+			$label .= '<b>'.$langs->trans($this->fields['tech_detail']['label']).':</b> '.str_replace("\r\n","",$this->tech_detail);
 		}
 
 
