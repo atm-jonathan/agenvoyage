@@ -37,7 +37,6 @@ CHIErrorTechDetail = Veuillez compléter Détail technique.
 CHICreateToClone = Clonage effectué
 CHIUpdateDateEstmated = Mise à jour : Date du chiffrage
 CHIDefaultProduct = Produit par défaut
-CHINumMask = Masque de numérotation par défaut
 CHIErrorQty = Quantité en jour ne peut être négatif
 DeleteobjectsofChiffrage = Supprimer les chiffrages
 CreateUpdateobjectsofChiffrage = Créer/Modifier les chiffrages

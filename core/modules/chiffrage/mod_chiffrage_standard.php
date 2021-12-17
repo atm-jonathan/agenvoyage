@@ -30,23 +30,13 @@ dol_include_once('/chiffrage/core/modules/chiffrage/modules_chiffrage.php');
  */
 class mod_chiffrage_standard extends ModeleNumRefChiffrage
 {
-	function __construct()
-	{
-		global $conf;
-		$this->prefix = $conf->global->CHINumMask;
-		if ($conf->global->CHINumMask == '')
-		{
-			$this->prefix = 'CHI';
-		}
-	}
-
 	/**
 	 * Dolibarr version of the loaded document
 	 * @var string
 	 */
 	public $version = 'dolibarr'; // 'development', 'experimental', 'dolibarr'
 
-	public $prefix;
+	public $prefix = 'CHI';
 
 	/**
 	 * @var string Error code (or message)
