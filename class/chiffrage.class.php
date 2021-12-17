@@ -51,7 +51,7 @@ class Chiffrage extends CommonObject
 	 * @var int  Does this object support multicompany module ?
 	 * 0=No test on entity, 1=Test with field entity, 'field@table'=Test with link by field@table
 	 */
-	public $ismultientitymanaged = 0;
+	public $ismultientitymanaged = 1;
 
 	/**
 	 * @var int  Does object support extrafields ? 0=No, 1=Yes
@@ -131,6 +131,7 @@ class Chiffrage extends CommonObject
 		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>54, 'notnull'=>0, 'visible'=>3,'showoncombobox'=>'0','css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
 		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5, 'help'=>"CHIHelpEstimateDate",),
 		//'fk_propal' => array('type'=>'integer:Propal:comm/propal/class/propal.class.php', 'label'=>'Propal', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>5,),
+        'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>1, 'visible'=>0, 'notnull'=> 1, 'default'=>1, 'index'=>1, 'position'=>20),
 	);
 	public $rowid;
 	public $ref;
@@ -158,6 +159,7 @@ class Chiffrage extends CommonObject
 	public $module_name;
 	public $keywords;
 	public $estimate_date;
+    public $entity;
 	// END MODULEBUILDER PROPERTIES
 
 
