@@ -374,7 +374,7 @@ if ($action == 'edit') {
 						print $langs->trans("NorProspectNorCustomer");
 					}
 				} elseif ($val['type'] == 'product') {
-					include DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
+					include_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 					$product = new Product($db);
 					$resprod = $product->fetch($conf->global->{$constname});
 					if ($resprod > 0) {
