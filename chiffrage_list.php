@@ -554,7 +554,7 @@ include DOL_DOCUMENT_ROOT.'/core/tpl/massactions_pre.tpl.php';
 if ($massaction == 'preaddpropal') {
     //$tmpPropalFieldVisibility = $objecttmp->fields['fk_propal']['visible'];
     //$objecttmp->fields['fk_propal']['visible'] = 1;
-	include DOL_DOCUMENT_ROOT.'/comm/propal/class/propal.class.php';
+	include_once DOL_DOCUMENT_ROOT.'/comm/propal/class/propal.class.php';
 	$propal = new Propal($db);
 	$Tpropal = $propal->liste_array();
 
