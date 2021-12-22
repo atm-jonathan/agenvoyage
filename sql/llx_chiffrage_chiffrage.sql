@@ -18,7 +18,7 @@ CREATE TABLE llx_chiffrage_chiffrage(
 	-- BEGIN MODULEBUILDER FIELDS
 	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 	ref varchar(40) DEFAULT '(PROV)' NOT NULL,
-	entity integer,
+	entity integer DEFAULT 1,
 	label varchar(160),
     group_title varchar(160),
 	amount double DEFAULT NULL,
