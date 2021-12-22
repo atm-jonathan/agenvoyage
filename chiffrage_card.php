@@ -262,6 +262,10 @@ $title = $langs->trans("Chiffrage");
 $help_url = '';
 llxHeader('', $title, $help_url);
 
+// fields fk_soc & fk_project in view
+$object->fields['fk_soc']['visible'] = 0;
+$object->fields['fk_project']['visible'] = 0;
+
 // Example : Adding jquery code
 // print '<script type="text/javascript" language="javascript">
 // jQuery(document).ready(function() {
@@ -279,6 +283,8 @@ llxHeader('', $title, $help_url);
 
 // Part to create
 if ($action == 'create') {
+    $object->fields['fk_soc']['visible'] = 1;
+    $object->fields['fk_project']['visible'] = 1;
     print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("Chiffrage")), '', 'object_' . $object->picto);
 
     print '<form method="POST" action="' . $_SERVER["PHP_SELF"] . '">';
@@ -325,6 +331,8 @@ if ($action == 'create') {
 
 // Part to edit record
 if (($id || $ref) && $action == 'edit') {
+    $object->fields['fk_soc']['visible'] = 1;
+    $object->fields['fk_project']['visible'] = 1;
     print load_fiche_titre($langs->trans("Chiffrage"), '', 'object_' . $object->picto);
 
     print '<form method="POST" action="' . $_SERVER["PHP_SELF"] . '">';
