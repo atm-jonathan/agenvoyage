@@ -41,3 +41,5 @@ CHIErrorQty = Quantité en jour ne peut être négatif
 DeleteobjectsofChiffrage = Supprimer les chiffrages
 CreateUpdateobjectsofChiffrage = Créer/Modifier les chiffrages
 ReadobjectsofChiffrage = Consulter les chiffrages
+CHISettings = Paramètres
+CHIAbout = A propos

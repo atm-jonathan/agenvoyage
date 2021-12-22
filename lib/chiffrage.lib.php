@@ -36,8 +36,8 @@ function chiffrageAdminPrepareHead()
 	$head = array();
 
 	$head[$h][0] = dol_buildpath("/chiffrage/admin/setup.php", 1);
-	$head[$h][1] = $langs->trans("Settings");
-	$head[$h][2] = 'settings';
+	$head[$h][1] = $langs->trans("CHISettings");
+	$head[$h][2] = 'Settings';
 	$h++;
 
 	/*
@@ -48,7 +48,7 @@ function chiffrageAdminPrepareHead()
 	*/
 
 	$head[$h][0] = dol_buildpath("/chiffrage/admin/about.php", 1);
-	$head[$h][1] = $langs->trans("About");
+	$head[$h][1] = $langs->trans("CHIAbout");
 	$head[$h][2] = 'about';
 	$h++;
 
