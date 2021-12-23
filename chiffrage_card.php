@@ -189,7 +189,7 @@ if (empty($reshook)) {
 
     if ($action == 'create') {
         $object->fields['po_estimate']['default'] = $user->id;
-		$object->fields['fk_product']['default'] = $conf->global->CHIDefaultProduct;
+        $object->fields['fk_product']['default'] = $conf->global->CHIDefaultProduct;
     }
 
     $addNew = GETPOSTISSET('addnew');
@@ -200,11 +200,19 @@ if (empty($reshook)) {
         $backtopage .= '&fk_project=' . GETPOST('fk_project');
         $backtopage .= '&fk_product=' . GETPOST('fk_product');
     }
+
+    $saveAddNew = GETPOSTISSET('saveaddnew');
+    $redirectBackToPage = null;
+    if ($action == 'update' && $saveAddNew) {
+        $redirectBackToPage = true;
+    }
+
     if ($action === 'update') {
 
         $qty = GETPOST('qty', 'int');
         $dev = GETPOST('dev_estimate', 'int');
         $textDev = GETPOST('tech_detail');
+        $textCommercial = GETPOST('commercial_text');
 
         if ($qty > 0 && $dev == -1) {
             setEventMessage($langs->trans("CHIErrorDevEstimate"), 'errors');
@@ -249,6 +257,16 @@ if (empty($reshook)) {
     include DOL_DOCUMENT_ROOT . '/core/actions_sendmails.inc.php';
 }
 
+$saveAddNew = GETPOSTISSET('saveaddnew');
+if ($redirectBackToPage == true && $textCommercial == ! null) {
+    $backtopage = dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?action=create';
+    $backtopage .= '&po_estimated=' . GETPOST('po_estimated');
+    $backtopage .= '&fk_soc=' . GETPOST('fk_soc');
+    $backtopage .= '&fk_project=' . GETPOST('fk_project');
+    $backtopage .= '&fk_product=' . GETPOST('fk_product');
+    header("Location: " . $backtopage); // Open record of new object
+    exit;
+}
 /*
  * View
  *
@@ -372,6 +390,7 @@ if (($id || $ref) && $action == 'edit') {
     print dol_get_fiche_end();
 
     print '<div class="center"><input type="submit" class="button button-save" name="save" value="' . $langs->trans("Save") . '">';
+    print '<input type="submit" class="button" name="saveaddnew" value="' . dol_escape_htmltag($langs->trans("CHISaveAddNew")) . '">';
     print ' &nbsp; <input type="submit" class="button button-cancel" name="cancel" value="' . $langs->trans("Cancel") . '">';
     print '</div>';
 
