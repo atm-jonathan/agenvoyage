@@ -129,7 +129,7 @@ class Chiffrage extends CommonObject
 		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIDevEstimate','css'=>'minwidth200 maxwidth300 widthcentpercentminusx', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>5,),
 		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIPOEstimate', 'enabled'=>'1','css'=>'minwidth200 maxwidth300 widthcentpercentminusx', 'position'=>30, 'notnull'=>1, 'visible'=>1,),
 		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
-		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>54, 'notnull'=>0, 'visible'=>3,'showoncombobox'=>'0','css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
+		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>54, 'notnull'=>0, 'visible'=>1,'showoncombobox'=>'0','css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
 		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5, 'help'=>"CHIHelpEstimateDate",),
 	);
 	public $rowid;
