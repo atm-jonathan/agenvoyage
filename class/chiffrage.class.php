@@ -844,7 +844,11 @@ class Chiffrage extends CommonObject
 		if ($option == 'nolink') {
 			$linkstart = '<span';
 		} else {
-			$linkstart = '<a href="'.$url.'"';
+			if ($this->status != 0) {
+				$linkstart = '<a href="'.$url.'"';
+			} else {
+				$linkstart = '<a style="'.$url.'"';
+			}
 		}
 		$linkstart .= $linkclose.'>';
 		if ($option == 'nolink') {
