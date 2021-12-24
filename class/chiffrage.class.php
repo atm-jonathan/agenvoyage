@@ -811,12 +811,10 @@ class Chiffrage extends CommonObject
 			$label .= '<b>'.$langs->trans($this->fields['commercial_text']['label']).':</b> '.str_replace("\r\n","",$this->commercial_text);
 		}
 
-		if(!empty($this->tech_detail)){
+		if(!empty($this->keywords)){
 			$label .= '<br>';
-			$label .= '<b>'.$langs->trans($this->fields['tech_detail']['label']).':</b> '.str_replace("\r\n","",$this->tech_detail);
+			$label .= '<b>'.$langs->trans($this->fields['keywords']['label']).':</b> '.str_replace("\r\n","",$this->keywords);
 		}
-
-
 
 		$url = dol_buildpath('/chiffrage/chiffrage_card.php', 1).'?id='.$this->id;
 
