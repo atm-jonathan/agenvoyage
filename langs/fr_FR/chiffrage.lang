@@ -21,6 +21,7 @@ Create = Créer
 List_Chiffrage = Liste
 New_Chiffrage = Nouveau chiffrage
 CHIChiffrageDescription = Le module chiffrage permet d'appliquer un chiffrage et d'accéder a ses informations par la suite
+ModuleChiffrageDesc = Le module chiffrage permet d'appliquer un chiffrage et d'accéder a ses informations par la suite
 CHIMassActionValidation = A quelle proposition commerciale souhaitez-vous ajouter les éléments sélectionnés ?
 CHICreate&New = Créer et nouveau
 CHIAssociatedEstimated = Chiffrage associé
