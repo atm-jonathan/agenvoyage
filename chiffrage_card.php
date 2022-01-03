@@ -192,6 +192,9 @@ if (empty($reshook)) {
 		$object->fields['fk_product']['default'] = $conf->global->CHIDefaultProduct;
 		$object->fields['tech_detail']['visible'] = 5;
     }
+    if ($action == 'add') {
+        $object->fields['tech_detail']['visible'] = 5;
+    }
 
     $addNew = GETPOSTISSET('addnew');
     if ($action == 'add' && $addNew) {
