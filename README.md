@@ -7,7 +7,7 @@ Chiffrage is a Dolibarr module usefull to create a costing rule and be able to u
 
 ## LICENSE
 Copyright (C) 2019 ATM Consulting <contact@atm-consulting.fr>
-Discount Rules is released under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version (GPL-3+).
+Chiffrage is released under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version (GPL-3+).
 
 See the [COPYING](https://github.com/Dolibarr/dolibarr/blob/develop/COPYING) file for a full copy of the license.
 
