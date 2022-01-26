@@ -355,6 +355,24 @@ class ActionsChiffrage
 	}
 
 	/* Add here any other hooked methods... */
+	public function addMoreActionsButtons($parameters, $action, $hookmanager) {
+		global $user, $conf, $langs, $db;
+
+		$context = explode(':', $parameters['context']);
+		if (in_array('ticketcard', $context)) {
+			include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
+			$ticket = new Ticket($db);
+			$ticket->fetch($_GET['id']);
+			$extrafields = $ticket->fetch_optionals();
+			var_dump($extrafields);
+			exit;
+
+			print '<a class="butAction" href="'.dol_buildpath('/chiffrage/chiffrage_card.php?action=create', 1). '&fk_soc='.$ticket->fk_soc.'&module_name='.$extrafields.'">'.'Nouveau Chiffrage'.'</a>';//TODO Langs
+		}
+
+		return 0;
+	}
+
 //TODO delete this when module ready
 	//public function printObjectLine($parameters, $action, $hookmanager) {
 	//	global $user, $db;
