@@ -199,6 +199,8 @@ if (empty($reshook)) {
 		$line->fetch($lineidpropal);
 		$line->array_options['options_fk_chiffrage'] = $object->id;
 		$line->insertExtraFields();
+		$backtopage = dol_buildpath('/comm/propal/card.php', 1) . '?id=' . $propalFromChiffrage->id;
+		header("Location: " . $backtopage);
 	}
 
 
