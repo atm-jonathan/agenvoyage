@@ -186,6 +186,22 @@ if (empty($reshook)) {
             }
         }
     }
+	//TODO
+
+	if ($action == 'create_propal_from_chiffrage'){
+		$propalFromChiffrage = new Propal($db);
+		$propalFromChiffrage->socid = $object->fk_soc;
+		$propalFromChiffrage->datep = dol_now();
+		$propalFromChiffrage->date_validation = 90;
+		$propalFromChiffrage->create($user);
+		$lineidpropal = $propalFromChiffrage->addline('','0','1','0','','','37');
+		$line = new PropaleLigne($db);
+		$line->fetch($lineidpropal);
+		$line->array_options['options_fk_chiffrage'] = $object->id;
+		$line->insertExtraFields();
+	}
+
+
 
     if ($action == 'create') {
         $object->fields['po_estimate']['default'] = $user->id;
@@ -602,10 +618,10 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
                     print dolGetButtonAction($langs->trans("ErrorAddAtLeastOneLineFirst"), $langs->trans("Validate"), 'default', '#', '', 0);
                 }
             }
-
 			// Create propal from chiffrage
 			if ($object->status == $object::STATUS_ESTIMATED) {
-				print '<a class="butAction" href="'.dol_buildpath('/comm/propal/card.php?action=create', 1).'&socid='.$object->fk_soc.'">'.'Nouvelle Propale'.'</a>';//TODO Langs
+				//TODO
+				print '<a class="butAction" href="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'&action=create_propal_from_chiffrage">'.'Créer devis'.'</a>';
 			}
 
             // Clone
