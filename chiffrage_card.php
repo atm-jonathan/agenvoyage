@@ -186,8 +186,8 @@ if (empty($reshook)) {
             }
         }
     }
-	//TODO
 
+	// Action Création d'une propale depuis un chiffrage
 	if ($action == 'create_propal_from_chiffrage'){
 		$propalFromChiffrage = new Propal($db);
 		$propalFromChiffrage->socid = $object->fk_soc;
@@ -620,7 +620,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
                     print dolGetButtonAction($langs->trans("ErrorAddAtLeastOneLineFirst"), $langs->trans("Validate"), 'default', '#', '', 0);
                 }
             }
-			// Create propal from chiffrage
+			// Bouton Créer Devis (action = create_propal_from_chiffrage)
 			if ($object->status == $object::STATUS_ESTIMATED) {
 				//TODO
 				print '<a class="butAction" href="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'&action=create_propal_from_chiffrage">'.'Créer devis'.'</a>';
