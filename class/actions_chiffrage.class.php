@@ -361,7 +361,7 @@ class ActionsChiffrage
 		$context = explode(':', $parameters['context']);
 		if (in_array('ticketcard', $context)) {
 
-			print '<a class="butAction" href="'.dol_buildpath('/chiffrage/chiffrage_card.php?action=create', 1). '&fk_soc='.$object->fk_soc.'&module_name='.$object->array_options['options_fk_webmodule'].'&commercial_text='.'Demande '.$object->ref.'">'.'Nouveau Chiffrage'.'</a>';//TODO Langs
+			print '<a class="butAction" href="'.dol_buildpath('/chiffrage/chiffrage_card.php?action=create', 1). '&fk_soc='.$object->fk_soc.'&module_name='.$object->array_options['options_fk_webmodule'].'&commercial_text='.'Demande '.$object->ref.'">'.$langs->trans("NewChiffrage").'</a>';
 		}
 
 		return 0;
