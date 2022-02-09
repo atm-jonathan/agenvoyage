@@ -75,8 +75,9 @@ $scandir = GETPOST('scan_dir', 'alpha');
 $type = 'myobject';
 
 $arrayofparameters = array(
-	'CHIFFRAGE_MYPARAM1'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
-	'CHIFFRAGE_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
+	'CHIFFRAGE_DEFAULT_PRODUCT'=>array('type'=>'product', 'enabled'=>1),
+	//'CHIFFRAGE_MYPARAM1'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
+	//'CHIFFRAGE_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
 	//'CHIFFRAGE_MYPARAM3'=>array('type'=>'category:'.Categorie::TYPE_CUSTOMER, 'enabled'=>1),
 	//'CHIFFRAGE_MYPARAM4'=>array('type'=>'emailtemplate:thirdparty', 'enabled'=>1),
 	//'CHIFFRAGE_MYPARAM5'=>array('type'=>'yesno', 'enabled'=>1),
@@ -100,11 +101,11 @@ if ((float) DOL_VERSION >= 6) {
 }
 
 if ($action == 'updateMask') {
-	$maskconstorder = GETPOST('maskconstorder', 'alpha');
-	$maskorder = GETPOST('maskorder', 'alpha');
+	$maskconst = GETPOST('maskconst', 'alpha');
+	$maskvalue = GETPOST('maskvalue', 'alpha');
 
-	if ($maskconstorder) {
-		$res = dolibarr_set_const($db, $maskconstorder, $maskorder, 'chaine', 0, '', $conf->entity);
+	if ($maskvalue) {
+		$res = dolibarr_set_const($db, $maskconst, $maskvalue, 'chaine', 0, '', $conf->entity);
 		if (!($res > 0)) {
 			$error++;
 		}
@@ -372,6 +373,7 @@ if ($action == 'edit') {
 						print $langs->trans("NorProspectNorCustomer");
 					}
 				} elseif ($val['type'] == 'product') {
+					include_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 					$product = new Product($db);
 					$resprod = $product->fetch($conf->global->{$constname});
 					if ($resprod > 0) {
@@ -399,7 +401,7 @@ if ($action == 'edit') {
 
 $moduledir = 'chiffrage';
 $myTmpObjects = array();
-$myTmpObjects['MyObject'] = array('includerefgeneration'=>0, 'includedocgeneration'=>0);
+$myTmpObjects['Chiffrage'] = array('includerefgeneration'=>1, 'includedocgeneration'=>0);
 
 
 foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {

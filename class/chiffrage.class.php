@@ -51,7 +51,7 @@ class Chiffrage extends CommonObject
 	 * @var int  Does this object support multicompany module ?
 	 * 0=No test on entity, 1=Test with field entity, 'field@table'=Test with link by field@table
 	 */
-	public $ismultientitymanaged = 0;
+	public $ismultientitymanaged = 1;
 
 	/**
 	 * @var int  Does object support extrafields ? 0=No, 1=Yes
@@ -104,15 +104,16 @@ class Chiffrage extends CommonObject
 	 */
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
-		'ref' => array('type'=>'varchar(40)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
-		'label' => array('type'=>'varchar(160)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>2, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"Help text", 'showoncombobox'=>'2',),
-		'group_title' => array('type'=>'varchar(160)', 'label'=>'GroupTitle', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>0, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"GroupTitleHelpText", 'showoncombobox'=>'0',),
-		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>2, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
-		'qty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>45, 'notnull'=>0, 'visible'=>5, 'default'=>'0', 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"Help text for quantity",),
-		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>50, 'notnull'=>-1, 'visible'=>4, 'index'=>1, 'help'=>"LinkToThirparty",),
-		'fk_project' => array('type'=>'integer:Project:projet/class/project.class.php:1', 'label'=>'Project', 'enabled'=>'1', 'position'=>59, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,),
-		'fk_product' => array('type'=>'integer:Product:product/class/product.class.php:1', 'label'=>'Product', 'enabled'=>'1', 'position'=>59, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,),
-		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>2,),
+		'ref' => array('type'=>'varchar(40)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>1, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
+        'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>1, 'visible'=>0, 'notnull'=> 1, 'default'=>1, 'index'=>1, 'position'=>20),
+		'label' => array('type'=>'varchar(160)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>0, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"Help text", 'showoncombobox'=>'2',),
+		'group_title' => array('type'=>'varchar(160)', 'label'=>'GroupTitle', 'enabled'=>'1', 'position'=>52, 'notnull'=>0, 'visible'=>0, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'0', 'help'=>"CHIHelpGroupTitle"),
+		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>0, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
+		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>40, 'notnull'=>-1, 'visible'=>1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
+		'qty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>5, 'default'=>0, 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"CHIHelpQty"),
+		'fk_project' => array('type'=>'integer:Project:projet/class/project.class.php:1', 'label'=>'Project', 'enabled'=>'1', 'position'=>50, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
+		'fk_product' => array('type'=>'integer:Product:product/class/product.class.php:1', 'label'=>'Product', 'enabled'=>'1', 'position'=>51, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
+		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>0,),
 		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
 		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>62, 'notnull'=>0, 'visible'=>0,),
 		'date_creation' => array('type'=>'date', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>500, 'notnull'=>1, 'visible'=>-2,),
@@ -122,15 +123,14 @@ class Chiffrage extends CommonObject
 		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
 		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
 		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'notnull'=>1, 'position'=>1000, 'visible'=>5, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;', '10'=>'CHIEstimated', '11'=>'CHIProposed', '12'=>'CHISold'),),
-		'commercial_text' => array('type'=>'html', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>64, 'notnull'=>-1, 'visible'=>1,),
-		'tech_detail' => array('type'=>'html', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>5,),
-		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIDevEstimate', 'enabled'=>'1', 'position'=>51, 'notnull'=>0, 'visible'=>5,),
-		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIPOEstimate', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1,),
-		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,),
-		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>70, 'notnull'=>0, 'visible'=>1,'showoncombobox'=>'0'),
-		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5,),
-		'fk_propal' => array('type'=>'integer:Propal:propal/class/propal.class.php', 'label'=>'Propal', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
+		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'notnull'=>1, 'position'=>1000, 'visible'=>5, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;','10'=>'CHIEstimated',),),
+		'commercial_text' => array('type'=>'html', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>53, 'notnull'=>1, 'visible'=>-1,'csslist'=>'fieldkeytoswitchonsecondcolumn'),
+		'tech_detail' => array('type'=>'html', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>-1),
+		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIDevEstimate','css'=>'minwidth200 maxwidth300 widthcentpercentminusx', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>5,),
+		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIPOEstimate', 'enabled'=>'1','css'=>'minwidth200 maxwidth300 widthcentpercentminusx', 'position'=>30, 'notnull'=>1, 'visible'=>1,),
+		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
+		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>54, 'notnull'=>0, 'visible'=>1,'showoncombobox'=>'0','css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
+		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5, 'help'=>"CHIHelpEstimateDate",),
 	);
 	public $rowid;
 	public $ref;
@@ -158,6 +158,7 @@ class Chiffrage extends CommonObject
 	public $module_name;
 	public $keywords;
 	public $estimate_date;
+    public $entity;
 	// END MODULEBUILDER PROPERTIES
 
 
@@ -249,6 +250,7 @@ class Chiffrage extends CommonObject
 	 */
 	public function create(User $user, $notrigger = false)
 	{
+        $this->keywords = strtoupper($this->keywords);
 		$resultcreate = $this->createCommon($user, $notrigger);
 
 		//$resultvalidate = $this->validate($user, $notrigger);
@@ -265,6 +267,7 @@ class Chiffrage extends CommonObject
 	 */
 	public function createFromClone(User $user, $fromid)
 	{
+
 		global $langs, $extrafields;
 		$error = 0;
 
@@ -305,6 +308,24 @@ class Chiffrage extends CommonObject
 		if (property_exists($object, 'date_modification')) {
 			$object->date_modification = null;
 		}
+        if (property_exists($object, 'tech_detail')) {
+            $object->tech_detail = null;
+        }
+        if (property_exists($object, 'estimate_date')) {
+            $object->estimate_date = null;
+        }
+        if (property_exists($object, 'qty')) {
+            $object->qty = null;
+        }
+        if (property_exists($object, 'dev_estimate')) {
+            $object->dev_estimate = null;
+        }
+        if (property_exists($object, 'module_name')) {
+            $object->module_name = null;
+        }
+        if (property_exists($object, 'keywords')) {
+            $object->keywords = null;
+        }
 		// ...
 		// Clear extrafields that are unique
 		if (is_array($object->array_options) && count($object->array_options) > 0) {
@@ -347,6 +368,7 @@ class Chiffrage extends CommonObject
 
 		// End
 		if (!$error) {
+            setEventMessage("CHICreateToClone");
 			$this->db->commit();
 			return $object;
 		} else {
@@ -499,13 +521,19 @@ class Chiffrage extends CommonObject
 	 */
 	public function update(User $user, $notrigger = false)
 	{
+        $this->keywords = strtoupper($this->keywords);
 		// Set status to estimated if qty is more than 0 and status is already set to validated
 		if ($this->status == $this::STATUS_VALIDATED && $this->qty > 0) {
 			$this->status = $this::STATUS_ESTIMATED;
+			if ($this->estimate_date == null) {
+				$this->estimate_date = dol_now();
+                //TODO Pourquoi le langs trans ne marche pas ?
+                setEventMessage('CHIUpdateDateEstmated');
+			}
 		}
 
 		// Set status to validated if qty is equal to 0 or null
-		if ($this->qty == 0 || $this->qty == null) {
+		if (($this->qty == 0 || $this->qty == null) && $this->status != $this::STATUS_DRAFT) {
 			$this->status = $this::STATUS_VALIDATED;
 		}
 
@@ -524,6 +552,12 @@ class Chiffrage extends CommonObject
 		return $this->deleteCommon($user, $notrigger);
 		//return $this->deleteCommon($user, $notrigger, 1);
 	}
+
+    public function addChiffrageToPropal(User $user, $notrigger = false)
+    {
+        return $this->deleteCommon($user, $notrigger);
+        //return $this->deleteCommon($user, $notrigger, 1);
+    }
 
 	/**
 	 *  Delete a line of object in database
@@ -562,6 +596,10 @@ class Chiffrage extends CommonObject
 		// Protection
 		if ($this->status == self::STATUS_VALIDATED) {
 			dol_syslog(get_class($this)."::validate action abandonned: already validated", LOG_WARNING);
+			return 0;
+		}
+
+		if ($this->status == self::STATUS_ESTIMATED) {
 			return 0;
 		}
 
@@ -753,119 +791,123 @@ class Chiffrage extends CommonObject
 	 */
 	public function getNomUrl($withpicto = 0, $option = '', $notooltip = 0, $morecss = '', $save_lastsearch_value = -1)
 	{
-		global $conf, $langs, $hookmanager;
+		global $conf, $langs, $hookmanager, $action;
 
-		if (!empty($conf->dol_no_mouse_hover)) {
-			$notooltip = 1; // Force disable tooltips
-		}
+		if ($action == 'create') {
+			$result = 'Brouillon';
+			return $result;
+		} else {
+			if (! empty($conf->dol_no_mouse_hover)) {
+				$notooltip = 1; // Force disable tooltips
+			}
 
-		$result = '';
+			$result = '';
 
-		$label = img_picto('', $this->picto).' <u>'.$langs->trans("Chiffrage").'</u>';
-		if (isset($this->status)) {
-			$label .= ' '.$this->getLibStatut(5);
-		}
-		$label .= '<br>';
-		$label .= '<b>'.$langs->trans('Ref').':</b> '.$this->ref;
-
-		if(!empty($this->commercial_text)){
+			$label = img_picto('', $this->picto) . ' <u>' . $langs->trans("Chiffrage") . '</u>';
+			if (isset($this->status)) {
+				$label .= ' ' . $this->getLibStatut(5);
+			}
 			$label .= '<br>';
-			$label .= '<b>'.$langs->trans($this->fields['commercial_text']['label']).':</b> '.$this->commercial_text;
-		}
+			$label .= '<b>' . $langs->trans('Ref') . ':</b> ' . $this->ref;
 
-		if(!empty($this->tech_detail)){
-			$label .= '<br>';
-			$label .= '<b>'.$langs->trans($this->fields['tech_detail']['label']).':</b> '.$this->tech_detail;
-		}
-
-
-
-		$url = dol_buildpath('/chiffrage/chiffrage_card.php', 1).'?id='.$this->id;
-
-		if ($option != 'nolink') {
-			// Add param to save lastsearch_values or not
-			$add_save_lastsearch_values = ($save_lastsearch_value == 1 ? 1 : 0);
-			if ($save_lastsearch_value == -1 && preg_match('/list\.php/', $_SERVER["PHP_SELF"])) {
-				$add_save_lastsearch_values = 1;
+			if (! empty($this->commercial_text)) {
+				$label .= '<br>';
+				$label .= '<b>' . $langs->trans($this->fields['commercial_text']['label']) . ':</b> ' . str_replace("\r\n", "", $this->commercial_text);
 			}
-			if ($add_save_lastsearch_values) {
-				$url .= '&save_lastsearch_values=1';
+
+			if (! empty($this->keywords)) {
+				$label .= '<br>';
+				$label .= '<b>' . $langs->trans($this->fields['keywords']['label']) . ':</b> ' . str_replace("\r\n", "", $this->keywords);
 			}
-		}
 
-		$linkclose = '';
-		if (empty($notooltip)) {
-			if (!empty($conf->global->MAIN_OPTIMIZEFORTEXTBROWSER)) {
-				$label = $langs->trans("ShowChiffrage");
-				$linkclose .= ' alt="'.dol_escape_htmltag($label, 1).'"';
-			}
-			$linkclose .= ' title="'.dol_escape_htmltag($label, 1).'"';
-			$linkclose .= ' class="classfortooltip'.($morecss ? ' '.$morecss : '').'"';
-		} else {
-			$linkclose = ($morecss ? ' class="'.$morecss.'"' : '');
-		}
+			$url = dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?id=' . $this->id;
 
-		if ($option == 'nolink') {
-			$linkstart = '<span';
-		} else {
-			$linkstart = '<a href="'.$url.'"';
-		}
-		$linkstart .= $linkclose.'>';
-		if ($option == 'nolink') {
-			$linkend = '</span>';
-		} else {
-			$linkend = '</a>';
-		}
-
-		$result .= $linkstart;
-
-		if (empty($this->showphoto_on_popup)) {
-			if ($withpicto) {
-				$result .= img_object(($notooltip ? '' : $label), ($this->picto ? $this->picto : 'generic'), ($notooltip ? (($withpicto != 2) ? 'class="paddingright"' : '') : 'class="'.(($withpicto != 2) ? 'paddingright ' : '').'classfortooltip"'), 0, 0, $notooltip ? 0 : 1);
-			}
-		} else {
-			if ($withpicto) {
-				require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
-
-				list($class, $module) = explode('@', $this->picto);
-				$upload_dir = $conf->$module->multidir_output[$conf->entity]."/$class/".dol_sanitizeFileName($this->ref);
-				$filearray = dol_dir_list($upload_dir, "files");
-				$filename = $filearray[0]['name'];
-				if (!empty($filename)) {
-					$pospoint = strpos($filearray[0]['name'], '.');
-
-					$pathtophoto = $class.'/'.$this->ref.'/thumbs/'.substr($filename, 0, $pospoint).'_mini'.substr($filename, $pospoint);
-					if (empty($conf->global->{strtoupper($module.'_'.$class).'_FORMATLISTPHOTOSASUSERS'})) {
-						$result .= '<div class="floatleft inline-block valignmiddle divphotoref"><div class="photoref"><img class="photo'.$module.'" alt="No photo" border="0" src="'.DOL_URL_ROOT.'/viewimage.php?modulepart='.$module.'&entity='.$conf->entity.'&file='.urlencode($pathtophoto).'"></div></div>';
-					} else {
-						$result .= '<div class="floatleft inline-block valignmiddle divphotoref"><img class="photouserphoto userphoto" alt="No photo" border="0" src="'.DOL_URL_ROOT.'/viewimage.php?modulepart='.$module.'&entity='.$conf->entity.'&file='.urlencode($pathtophoto).'"></div>';
-					}
-
-					$result .= '</div>';
-				} else {
-					$result .= img_object(($notooltip ? '' : $label), ($this->picto ? $this->picto : 'generic'), ($notooltip ? (($withpicto != 2) ? 'class="paddingright"' : '') : 'class="'.(($withpicto != 2) ? 'paddingright ' : '').'classfortooltip"'), 0, 0, $notooltip ? 0 : 1);
+			if ($option != 'nolink') {
+				// Add param to save lastsearch_values or not
+				$add_save_lastsearch_values = ($save_lastsearch_value == 1 ? 1 : 0);
+				if ($save_lastsearch_value == -1 && preg_match('/list\.php/', $_SERVER["PHP_SELF"])) {
+					$add_save_lastsearch_values = 1;
+				}
+				if ($add_save_lastsearch_values) {
+					$url .= '&save_lastsearch_values=1';
 				}
 			}
+
+			$linkclose = '';
+			if (empty($notooltip)) {
+				if (! empty($conf->global->MAIN_OPTIMIZEFORTEXTBROWSER)) {
+					$label = $langs->trans("ShowChiffrage");
+					$linkclose .= ' alt="' . dol_escape_htmltag($label, 1) . '"';
+				}
+				$linkclose .= ' title="' . dol_escape_htmltag($label, 1) . '"';
+				$linkclose .= ' class="classfortooltip' . ($morecss ? ' ' . $morecss : '') . '"';
+			} else {
+				$linkclose = ($morecss ? ' class="' . $morecss . '"' : '');
+			}
+
+			if ($option == 'nolink') {
+				$linkstart = '<span';
+			} else {
+				$linkstart = '<a href="' . $url . '"';
+
+			}
+			$linkstart .= $linkclose . '>';
+			if ($option == 'nolink') {
+				$linkend = '</span>';
+			} else {
+				$linkend = '</a>';
+			}
+
+			$result .= $linkstart;
+
+			if (empty($this->showphoto_on_popup)) {
+				if ($withpicto) {
+					$result .= img_object(($notooltip ? '' : $label), ($this->picto ? $this->picto : 'generic'), ($notooltip ? (($withpicto != 2) ? 'class="paddingright"' : '') : 'class="' . (($withpicto != 2) ? 'paddingright ' : '') . 'classfortooltip"'), 0, 0, $notooltip ? 0 : 1);
+				}
+			} else {
+				if ($withpicto) {
+					require_once DOL_DOCUMENT_ROOT . '/core/lib/files.lib.php';
+
+					list($class, $module) = explode('@', $this->picto);
+					$upload_dir = $conf->$module->multidir_output[$conf->entity] . "/$class/" . dol_sanitizeFileName($this->ref);
+					$filearray = dol_dir_list($upload_dir, "files");
+					$filename = $filearray[0]['name'];
+					if (! empty($filename)) {
+						$pospoint = strpos($filearray[0]['name'], '.');
+
+						$pathtophoto = $class . '/' . $this->ref . '/thumbs/' . substr($filename, 0, $pospoint) . '_mini' . substr($filename, $pospoint);
+						if (empty($conf->global->{strtoupper($module . '_' . $class) . '_FORMATLISTPHOTOSASUSERS'})) {
+							$result .= '<div class="floatleft inline-block valignmiddle divphotoref"><div class="photoref"><img class="photo' . $module . '" alt="No photo" border="0" src="' . DOL_URL_ROOT . '/viewimage.php?modulepart=' . $module . '&entity=' . $conf->entity . '&file=' . urlencode($pathtophoto) . '"></div></div>';
+						} else {
+							$result .= '<div class="floatleft inline-block valignmiddle divphotoref"><img class="photouserphoto userphoto" alt="No photo" border="0" src="' . DOL_URL_ROOT . '/viewimage.php?modulepart=' . $module . '&entity=' . $conf->entity . '&file=' . urlencode($pathtophoto) . '"></div>';
+						}
+
+						$result .= '</div>';
+					} else {
+						$result .= img_object(($notooltip ? '' : $label), ($this->picto ? $this->picto : 'generic'), ($notooltip ? (($withpicto != 2) ? 'class="paddingright"' : '') : 'class="' . (($withpicto != 2) ? 'paddingright ' : '') . 'classfortooltip"'), 0, 0, $notooltip ? 0 : 1);
+					}
+				}
+			}
+
+			if ($withpicto != 2) {
+				$result .= $this->ref;
+			}
+
+			$result .= $linkend;
+			//if ($withpicto != 2) $result.=(($addlabel && $this->label) ? $sep . dol_trunc($this->label, ($addlabel > 1 ? $addlabel : 0)) : '');
+
+			global $action, $hookmanager;
+			$hookmanager->initHooks(array('chiffragedao'));
+			$parameters = array('id' => $this->id, 'getnomurl' => $result);
+			$reshook = $hookmanager->executeHooks('getNomUrl', $parameters, $this, $action); // Note that $action and $object may have been modified by some hooks
+			if ($reshook > 0) {
+				$result = $hookmanager->resPrint;
+			} else {
+				$result .= $hookmanager->resPrint;
+			}
+
+			return $result;
 		}
-
-		if ($withpicto != 2) {
-			$result .= $this->ref;
-		}
-
-		$result .= $linkend;
-		//if ($withpicto != 2) $result.=(($addlabel && $this->label) ? $sep . dol_trunc($this->label, ($addlabel > 1 ? $addlabel : 0)) : '');
-
-		global $action, $hookmanager;
-		$hookmanager->initHooks(array('chiffragedao'));
-		$parameters = array('id'=>$this->id, 'getnomurl'=>$result);
-		$reshook = $hookmanager->executeHooks('getNomUrl', $parameters, $this, $action); // Note that $action and $object may have been modified by some hooks
-		if ($reshook > 0) {
-			$result = $hookmanager->resPrint;
-		} else {
-			$result .= $hookmanager->resPrint;
-		}
-
-		return $result;
 	}
 
 	/**
@@ -894,13 +936,13 @@ class Chiffrage extends CommonObject
 			global $langs;
 			//$langs->load("chiffrage@chiffrage");
 			$this->labelStatus[self::STATUS_DRAFT] = $langs->trans('Draft');
-			$this->labelStatus[self::STATUS_VALIDATED] = $langs->trans('Enabled');
+			$this->labelStatus[self::STATUS_VALIDATED] = $langs->trans('CHIValidated');
 			$this->labelStatus[self::STATUS_CANCELED] = $langs->trans('Disabled');
 			$this->labelStatus[self::STATUS_ESTIMATED] = $langs->trans('CHIEstimated');
 			$this->labelStatus[self::STATUS_PROPOSED] = $langs->trans('CHIProposed');
 			$this->labelStatus[self::STATUS_SOLD] = $langs->trans('CHISold');
 			$this->labelStatusShort[self::STATUS_DRAFT] = $langs->trans('Draft');
-			$this->labelStatusShort[self::STATUS_VALIDATED] = $langs->trans('Enabled');
+			$this->labelStatusShort[self::STATUS_VALIDATED] = $langs->trans('CHIValidated');
 			$this->labelStatusShort[self::STATUS_CANCELED] = $langs->trans('Disabled');
 			$this->labelStatusShort[self::STATUS_ESTIMATED] = $langs->trans('CHIEstimated');
 			$this->labelStatusShort[self::STATUS_PROPOSED] = $langs->trans('CHIProposed');
@@ -911,6 +953,9 @@ class Chiffrage extends CommonObject
 		//if ($status == self::STATUS_VALIDATED) $statusType = 'status1';
 		if ($status == self::STATUS_CANCELED) {
 			$statusType = 'status6';
+		}
+		if ($status == self::STATUS_ESTIMATED) {
+			$statusType = 'status7';
 		}
 
 		return dolGetStatus($this->labelStatus[$status], $this->labelStatusShort[$status], '', $statusType, $mode);
@@ -1111,10 +1156,9 @@ class Chiffrage extends CommonObject
 	{
 		global $conf, $langs, $form, $action;
 
-		if(in_array($key, array('allowed_disk_space')) && !empty($value)){
-			$value =  bytes2ShorthandFileSize($value);
-		}
-
+        if($key == 'keywords') {
+            return '<input  name="keywords" style="text-transform: uppercase" type="text" value="'.dol_escape_htmltag($value).'"/>';
+        }
 		if($key == 'group_title'){
 			$out = '<input type="text" class="flat '.$morecss.' maxwidthonsmartphone" list="datalist_'.$keyprefix.$key.$keysuffix.'" name="'.$keyprefix.$key.$keysuffix.'" id="'.$keyprefix.$key.$keysuffix.'" value="'.dol_escape_htmltag($value).'" '.($moreparam ? $moreparam : '').'>';
 
