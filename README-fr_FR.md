@@ -6,4 +6,4 @@ Ce module vous permet de créer des chiffrages que vous pourrez réutiliser ult�
 ## Configuration et gestion
 
 Lors de l'activation du module de nouveaux menus gauche apparaissent dans la rubrique "Projet",
-ils vous permettent créer et de gérer les chiffrages disponibles.
+ils vous permettent de créer et de gérer les chiffrages disponibles.
