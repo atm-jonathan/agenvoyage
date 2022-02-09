@@ -206,7 +206,7 @@ if (empty($reshook)) {
 
 
     if ($action == 'create') {
-        $object->fields['po_estimate']['default'] = $user->id;
+		$object->fields['po_estimate']['default'] = $user->id;
 		$object->fields['fk_product']['default'] = $conf->global->CHIDefaultProduct;
 		$object->fields['tech_detail']['visible'] = 5;
     }
