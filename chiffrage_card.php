@@ -194,11 +194,34 @@ if (empty($reshook)) {
 		$propalFromChiffrage->datep = dol_now();
 		$propalFromChiffrage->date_validation = 90;
 		$propalFromChiffrage->create($user);
-		$lineidpropal = $propalFromChiffrage->addline('','0','1','0','','','37');
-		$line = new PropaleLigne($db);
-		$line->fetch($lineidpropal);
-		$line->array_options['options_fk_chiffrage'] = $object->id;
-		$line->insertExtraFields();
+		$product = new Product($db);
+		$resprod = $product->fetch($object->fk_product);
+
+		// Ajout de la ligne à la propale avec extrafield : fk_chiffrage pour la liaison avec le chiffrage
+		$resAddline = $propalFromChiffrage->addline(
+			$object->commercial_text,
+			$product->price,
+			$object->qty,
+			$product->tva_tx,
+			0,
+			0,
+			$object->fk_product,
+			0.0,
+			'HT',
+			0.0,
+			0,
+			$product->type,
+			-1,
+			0,
+			0,
+			0,
+			$product->cost_price,
+			'',
+			'',
+			'',
+			array('options_fk_chiffrage' => $object->id)
+		);
+
 		$backtopage = dol_buildpath('/comm/propal/card.php', 1) . '?id=' . $propalFromChiffrage->id;
 		header("Location: " . $backtopage);
 	}
