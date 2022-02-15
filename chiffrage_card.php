@@ -188,42 +188,44 @@ if (empty($reshook)) {
     }
 
 	// Action Création d'une propale depuis un chiffrage
-	if ($action == 'create_propal_from_chiffrage'){
-		$propalFromChiffrage = new Propal($db);
-		$propalFromChiffrage->socid = $object->fk_soc;
-		$propalFromChiffrage->datep = dol_now();
-		$propalFromChiffrage->date_validation = 90;
-		$propalFromChiffrage->create($user);
-		$product = new Product($db);
-		$resprod = $product->fetch($object->fk_product);
+	if ($action == 'create_propal_from_chiffrage') {
+		if (!empty($user->rights->propal->creer)) {
+			$propalFromChiffrage = new Propal($db);
+			$propalFromChiffrage->socid = $object->fk_soc;
+			$propalFromChiffrage->datep = dol_now();
+			$propalFromChiffrage->date_validation = 90;
+			$propalFromChiffrage->create($user);
+			$product = new Product($db);
+			$resprod = $product->fetch($object->fk_product);
 
-		// Ajout de la ligne à la propale avec extrafield : fk_chiffrage pour la liaison avec le chiffrage
-		$resAddline = $propalFromChiffrage->addline(
-			$object->commercial_text,
-			$product->price,
-			$object->qty,
-			$product->tva_tx,
-			0,
-			0,
-			$object->fk_product,
-			0.0,
-			'HT',
-			0.0,
-			0,
-			$product->type,
-			-1,
-			0,
-			0,
-			0,
-			$product->cost_price,
-			'',
-			'',
-			'',
-			array('options_fk_chiffrage' => $object->id)
-		);
+			// Ajout de la ligne à la propale avec extrafield : fk_chiffrage pour la liaison avec le chiffrage
+			$resAddline = $propalFromChiffrage->addline(
+				$object->commercial_text,
+				$product->price,
+				$object->qty,
+				$product->tva_tx,
+				0,
+				0,
+				$object->fk_product,
+				0.0,
+				'HT',
+				0.0,
+				0,
+				$product->type,
+				-1,
+				0,
+				0,
+				0,
+				$product->cost_price,
+				'',
+				'',
+				'',
+				array('options_fk_chiffrage' => $object->id)
+			);
 
-		$backtopage = dol_buildpath('/comm/propal/card.php', 1) . '?id=' . $propalFromChiffrage->id;
-		header("Location: " . $backtopage);
+			$backtopage = dol_buildpath('/comm/propal/card.php', 1) . '?id=' . $propalFromChiffrage->id;
+			header("Location: " . $backtopage);
+		}
 	}
 
 
@@ -645,8 +647,8 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
             }
 			// Bouton Créer Devis (action = create_propal_from_chiffrage)
 			if ($object->status == $object::STATUS_ESTIMATED) {
-				//TODO
-				print '<a class="butAction" href="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'&action=create_propal_from_chiffrage">'.'Créer devis'.'</a>';
+
+				print dolGetButtonAction($langs->trans('CHICreatePropal'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $object->socid . '&action=create_propal_from_chiffrage&token=' . newToken(), '', $permissiontoadd);
 			}
 
             // Clone
