@@ -217,7 +217,7 @@ print load_fiche_titre($langs->trans($page_name), $linkback, 'title_setup');
 
 // Configuration header
 $head = chiffrageAdminPrepareHead();
-print dol_get_fiche_head($head, 'settings', $langs->trans($page_name), -1, "chiffrage@chiffrage");
+print dol_get_fiche_head($head, 'Settings', $langs->trans($page_name), -1, "chiffrage@chiffrage");
 
 // Setup page goes here
 echo '<span class="opacitymedium">'.$langs->trans("ChiffrageSetupPage").'</span><br><br>';
