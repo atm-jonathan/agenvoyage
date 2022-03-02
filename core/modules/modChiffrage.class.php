@@ -156,6 +156,13 @@ class modChiffrage extends DolibarrModules
 		//                             2 => array('CHIFFRAGE_MYNEWCONST2', 'chaine', 'myvalue', 'This is another constant to add', 0, 'current', 1)
 		// );
 		$this->const = array();
+		$r = 0;
+
+		$this->const[$r][0] = "CHIFFRAGE_CHIFFRAGE_ADDON";
+		$this->const[$r][1] = "chaine";
+		$this->const[$r][2] = "mod_chiffrage_standard";
+		$this->const[$r][3] = "";
+		$this->const[$r][4] = 0;
 
 		// Some keys to add into the overwriting translation tables
 		/*$this->overwrite_translation = array(

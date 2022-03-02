@@ -220,7 +220,6 @@ $head = chiffrageAdminPrepareHead();
 print dol_get_fiche_head($head, 'Settings', $langs->trans($page_name), -1, "chiffrage@chiffrage");
 
 // Setup page goes here
-echo '<span class="opacitymedium">'.$langs->trans("ChiffrageSetupPage").'</span><br><br>';
 
 
 if ($action == 'edit') {
