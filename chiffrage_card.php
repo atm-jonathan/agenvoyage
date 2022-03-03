@@ -222,7 +222,7 @@ if (empty($reshook)) {
 				'',
 				array('options_fk_chiffrage' => $object->id)
 			);
-
+			$object->add_object_linked('propal',$propalFromChiffrage->id);
 			$backtopage = dol_buildpath('/comm/propal/card.php', 1) . '?id=' . $propalFromChiffrage->id;
 			header("Location: " . $backtopage);
 		}
