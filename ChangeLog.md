@@ -4,6 +4,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- FIX : Fiche chiffage : "Produit / Service" au lieu de "Produit" *03/03/2022* - 1.0.10
 - FIX : Lien chiffrage / propale visible sur chiffrage après ajout avec le bouton "Créer Devis" depuis le chiffrage. *03/03/2022* - 1.0.9
 - FIX : Nouveau chiffrage : le service par défaut est renseigné *03/03/2022* - 1.0.8
 - FIX : Activer par défaut le modèle de numérotation standard *03/03/2022* - 1.0.7

@@ -112,7 +112,7 @@ class Chiffrage extends CommonObject
 		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>40, 'notnull'=>-1, 'visible'=>1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
 		'qty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>5, 'default'=>0, 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"CHIHelpQty"),
 		'fk_project' => array('type'=>'integer:Project:projet/class/project.class.php:1', 'label'=>'Project', 'enabled'=>'1', 'position'=>50, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
-		'fk_product' => array('type'=>'integer:Product:product/class/product.class.php:1', 'label'=>'Product', 'enabled'=>'1', 'position'=>51, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
+		'fk_product' => array('type'=>'integer:Product:product/class/product.class.php:1', 'label'=>'CHIProductService', 'enabled'=>'1', 'position'=>51, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
 		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>0,),
 		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
 		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>62, 'notnull'=>0, 'visible'=>0,),
