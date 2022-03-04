@@ -72,7 +72,7 @@ class modChiffrage extends DolibarrModules
 		$this->editor_url = 'https://www.atm-consulting.fr';
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
-		$this->version = '1.0.1';
+		$this->version = '1.0.10';
 		// Url to the file with your last numberversion of this module
 		//$this->url_last_version = 'http://www.example.com/versionmodule.txt';
 
@@ -156,6 +156,13 @@ class modChiffrage extends DolibarrModules
 		//                             2 => array('CHIFFRAGE_MYNEWCONST2', 'chaine', 'myvalue', 'This is another constant to add', 0, 'current', 1)
 		// );
 		$this->const = array();
+		$r = 0;
+
+		$this->const[$r][0] = "CHIFFRAGE_CHIFFRAGE_ADDON";
+		$this->const[$r][1] = "chaine";
+		$this->const[$r][2] = "mod_chiffrage_standard";
+		$this->const[$r][3] = "";
+		$this->const[$r][4] = 0;
 
 		// Some keys to add into the overwriting translation tables
 		/*$this->overwrite_translation = array(

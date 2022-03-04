@@ -274,6 +274,7 @@ if (empty($reshook)) {
 								setEventMessage($langs->trans('CHIErrorAddChiffrageLine') . ' : ' . $propal->errorsToString(), 'errors');
 								$error++;
 							}
+							$chiffrage->add_object_linked('propal',$propal->id);
 						} else {
 							setEventMessage($langs->trans('CHIErrorFetchChiffrage') . ' : ' . $chiffrage->errorsToString(), 'errors');
 							$error++;

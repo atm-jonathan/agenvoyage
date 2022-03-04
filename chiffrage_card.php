@@ -222,7 +222,7 @@ if (empty($reshook)) {
 				'',
 				array('options_fk_chiffrage' => $object->id)
 			);
-
+			$object->add_object_linked('propal',$propalFromChiffrage->id);
 			$backtopage = dol_buildpath('/comm/propal/card.php', 1) . '?id=' . $propalFromChiffrage->id;
 			header("Location: " . $backtopage);
 		}
@@ -232,7 +232,7 @@ if (empty($reshook)) {
 
     if ($action == 'create') {
 		$object->fields['po_estimate']['default'] = $user->id;
-		$object->fields['fk_product']['default'] = $conf->global->CHIDefaultProduct;
+		$object->fields['fk_product']['default'] = $conf->global->CHIFFRAGE_DEFAULT_PRODUCT;
 		$object->fields['tech_detail']['visible'] = 5;
     }
     if ($action == 'add') {
@@ -646,8 +646,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
                 }
             }
 			// Bouton Créer Devis (action = create_propal_from_chiffrage)
-			if ($object->status == $object::STATUS_ESTIMATED) {
-
+			if ($object->status == $object::STATUS_ESTIMATED && !empty($object->fk_soc)) {
 				print dolGetButtonAction($langs->trans('CHICreatePropal'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $object->socid . '&action=create_propal_from_chiffrage&token=' . newToken(), '', $permissiontoadd);
 			}
 

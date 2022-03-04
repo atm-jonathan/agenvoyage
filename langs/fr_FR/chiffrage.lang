@@ -1,4 +1,5 @@
 CHICommercialText = Texte commercial
+CHIProductService = Produit/Service
 CHITechDetail = Détail technique
 CHIDevEstimate = Chiffreur DEV
 CHIPOEstimate = Chiffreur CDP
@@ -37,7 +38,7 @@ CHIErrorDevEstimate = Le champ 'Chiffreur DEV' est obligatoire
 CHIErrorTechDetail = Le champ 'Détail technique' est obligatoire
 CHICreateToClone = Clonage effectué
 CHIUpdateDateEstmated = Mise à jour : Date du chiffrage
-CHIDefaultProduct = Produit par défaut
+CHIFFRAGE_DEFAULT_PRODUCT = Produit par défaut
 CHIErrorQty = Quantité en jour ne peut être négatif
 DeleteobjectsofChiffrage = Supprimer les chiffrages
 CreateUpdateobjectsofChiffrage = Créer/Modifier les chiffrages
