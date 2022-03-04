@@ -189,7 +189,7 @@ if (empty($reshook)) {
 
 	// Action Création d'une propale depuis un chiffrage
 	if ($action == 'create_propal_from_chiffrage') {
-		if (!empty($user->rights->propal->creer)) {
+		if (!empty($user->rights->propal->creer) && !empty($object->fk_soc)) {
 			$propalFromChiffrage = new Propal($db);
 			$propalFromChiffrage->socid = $object->fk_soc;
 			$propalFromChiffrage->datep = dol_now();
