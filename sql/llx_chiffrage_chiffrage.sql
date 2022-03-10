@@ -43,6 +43,8 @@ CREATE TABLE llx_chiffrage_chiffrage(
 	module_name integer,
 	keywords varchar(128),
 	estimate_date date,
-    fk_product integer
+    fk_product integer,
+    fk_ticket integer
+
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;

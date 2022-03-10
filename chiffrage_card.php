@@ -81,6 +81,7 @@ if (! $res) {
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formcompany.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formprojet.class.php';
+require_once DOL_DOCUMENT_ROOT."/ticket/class/ticket.class.php";
 dol_include_once('/chiffrage/class/chiffrage.class.php');
 dol_include_once('/chiffrage/lib/chiffrage_chiffrage.lib.php');
 
@@ -229,14 +230,21 @@ if (empty($reshook)) {
 	}
 
 
-
     if ($action == 'create') {
 		$object->fields['po_estimate']['default'] = $user->id;
 		$object->fields['fk_product']['default'] = $conf->global->CHIFFRAGE_DEFAULT_PRODUCT;
 		$object->fields['tech_detail']['visible'] = 5;
+		$object->fk_ticket =(int) GETPOST('fk_ticket', 'int');
     }
     if ($action == 'add') {
         $object->fields['tech_detail']['visible'] = 5;
+		$object->fk_ticket =(int) GETPOST('fk_ticket', 'int');
+//		$ticket = new Ticket($db);
+//		$response = $ticket->fetch($object->fk_ticket);
+//		if(empty($response)){
+//			dol_print_error();
+//		}
+//		//$ticket->add_object_linked('chiffrage',$object->id);
     }
 
     $addNew = GETPOSTISSET('addnew');
@@ -322,6 +330,22 @@ if ($redirectBackToPage == true && $textCommercial == ! null) {
 $form = new Form($db);
 $formfile = new FormFile($db);
 $formproject = new FormProjets($db);
+
+
+//	$ticket = new Ticket($db);
+//	$resTicket = $ticket->fetch($object->fk_ticket);
+
+$ticket = new Ticket($db);
+$response = $ticket->fetch($object->fk_ticket);
+if(empty($response)){
+	dol_print_error();
+}else{
+	$object->add_object_linked('ticket',$ticket->id);
+}
+
+//$ticket->add_object_linked('chiffrage',$object->id);
+
+
 
 $title = $langs->trans("Chiffrage");
 $help_url = '';
