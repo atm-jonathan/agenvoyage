@@ -199,26 +199,4 @@ class ActionsChiffrage
 
 		return 0;
 	}
-
-	/**
-	 *
-	 * @param   array           $parameters     Array of parameters
-	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param   string          $action         'add', 'update', 'view'
-	 * @param   Hookmanager     $hookmanager    hookmanager
-	 * @return  int                             <0 if KO,
-	 *                                          =0 if OK but we want to process standard actions too,
-	 *                                          >0 if OK and we want to replace standard actions.
-	 */
-
-	public function showLinkedObjectBlock(&$parameters, &$object, &$action, $hookmanager) {
-		global $langs;
-
-		$context = explode(':', $parameters['context']);
-		if (in_array('ticketcard', $context)) {
-			$object->add_object_linked('chiffrage',$object->id);
-		}
-		return 0;
-	}
-
 }
