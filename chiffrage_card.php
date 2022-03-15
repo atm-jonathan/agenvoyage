@@ -247,6 +247,12 @@ if (empty($reshook)) {
 
 	if($action == 'set_ticket'){
 		$object->add_object_linked('ticket',$fk_ticket);
+		$url = $backtopage;
+		if(empty($backtopage)){
+			$url = dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?id='. $object->id;
+		}
+		header("Location: " . $url); // Open record of new object
+		exit;
 	}
 
     $addNew = GETPOSTISSET('addnew');
