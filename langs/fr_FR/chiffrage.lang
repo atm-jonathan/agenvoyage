@@ -47,3 +47,4 @@ CHISettings = Paramètres
 CHIAbout = A propos
 CHISaveAddNew = Enregistrer et nouveau
 CHICreatePropal = Créer devis
+ChiffrageAskTicketTitle = Création d'un chiffrage depuis le ticket %s
