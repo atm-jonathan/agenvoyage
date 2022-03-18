@@ -81,6 +81,7 @@ if (! $res) {
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formcompany.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formprojet.class.php';
+require_once DOL_DOCUMENT_ROOT."/ticket/class/ticket.class.php";
 dol_include_once('/chiffrage/class/chiffrage.class.php');
 dol_include_once('/chiffrage/lib/chiffrage_chiffrage.lib.php');
 
@@ -88,6 +89,7 @@ dol_include_once('/chiffrage/lib/chiffrage_chiffrage.lib.php');
 $langs->loadLangs(array("chiffrage@chiffrage", "other"));
 
 // Get parameters
+$fk_ticket = GETPOST('fk_ticket', 'int');
 $id = GETPOST('id', 'int');
 $ref = GETPOST('ref', 'alpha');
 $action = GETPOST('action', 'aZ09');
@@ -225,9 +227,9 @@ if (empty($reshook)) {
 			$object->add_object_linked('propal',$propalFromChiffrage->id);
 			$backtopage = dol_buildpath('/comm/propal/card.php', 1) . '?id=' . $propalFromChiffrage->id;
 			header("Location: " . $backtopage);
+			exit;
 		}
 	}
-
 
 
     if ($action == 'create') {
@@ -235,9 +237,23 @@ if (empty($reshook)) {
 		$object->fields['fk_product']['default'] = $conf->global->CHIFFRAGE_DEFAULT_PRODUCT;
 		$object->fields['tech_detail']['visible'] = 5;
     }
+
     if ($action == 'add') {
         $object->fields['tech_detail']['visible'] = 5;
+		if($fk_ticket > 0){
+			$backtopage .= "&action=set_ticket&fk_ticket=".$fk_ticket;
+		}
     }
+
+	if($action == 'set_ticket'){
+		$object->add_object_linked('ticket',$fk_ticket);
+		$url = $backtopage;
+		if(empty($backtopage)){
+			$url = dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?id='. $object->id;
+		}
+		header("Location: " . $url); // Open record of new object
+		exit;
+	}
 
     $addNew = GETPOSTISSET('addnew');
     if ($action == 'add' && $addNew) {
@@ -277,6 +293,10 @@ if (empty($reshook)) {
     }
     // Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
     include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
+
+	if($action == 'add' && $fk_ticket > 0){
+		$object->add_object_linked('ticket',$fk_ticket);
+	}
 
     // Actions when linking object each other
     include DOL_DOCUMENT_ROOT . '/core/actions_dellink.inc.php';
@@ -323,6 +343,7 @@ $form = new Form($db);
 $formfile = new FormFile($db);
 $formproject = new FormProjets($db);
 
+
 $title = $langs->trans("Chiffrage");
 $help_url = '';
 llxHeader('', $title, $help_url);
@@ -355,6 +376,10 @@ if ($action == 'create') {
     print '<form method="POST" action="' . $_SERVER["PHP_SELF"] . '">';
     print '<input type="hidden" name="token" value="' . newToken() . '">';
     print '<input type="hidden" name="action" value="add">';
+
+	if($fk_ticket > 0){
+		print '<input type="hidden" name="fk_ticket" value="'.$fk_ticket.'">';
+	}
     if ($backtopage) {
         print '<input type="hidden" name="backtopage" value="' . $backtopage . '">';
     }
