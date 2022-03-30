@@ -4,7 +4,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-
+- FIX : Modification de la redirection du bouton Annuler lors de la création d'un chiffrage depuis un ticket *30/03/2022* 1.2.1
 
 ## Version 1.2
 - NEW : Ajout dans les objets liés de Qty en JH d'un chiffrage *11/03/2022* - 1.2.0
