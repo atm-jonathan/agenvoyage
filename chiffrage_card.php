@@ -241,7 +241,7 @@ if (empty($reshook)) {
     if ($action == 'add') {
         $object->fields['tech_detail']['visible'] = 5;
 		if($fk_ticket > 0){
-			$backtopage .= "&action=set_ticket&fk_ticket=".$fk_ticket;
+			$backtopage = dol_buildpath('/ticket/card.php', 1) . '?id='. $fk_ticket;
 		}
     }
 
