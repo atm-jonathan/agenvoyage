@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+
+## Version 1.2
 - NEW : Ajout dans les objets liés de Qty en JH d'un chiffrage *11/03/2022* - 1.2.0
 - NEW : Ajout des liens dans Objets liés lors de la création d'un chiffrage depuis un ticket *11/03/2022* - 1.1.0
 - FIX : Modification du filtre 'po_estimate' lors de la création d'un chiffrage *11/03/2022* - 1.0.12
