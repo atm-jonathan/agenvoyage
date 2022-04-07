@@ -82,6 +82,7 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/html.formcompany.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formprojet.class.php';
 require_once DOL_DOCUMENT_ROOT."/ticket/class/ticket.class.php";
+require_once DOL_DOCUMENT_ROOT."/projet/class/task.class.php";
 dol_include_once('/chiffrage/class/chiffrage.class.php');
 dol_include_once('/chiffrage/lib/chiffrage_chiffrage.lib.php');
 
@@ -89,6 +90,7 @@ dol_include_once('/chiffrage/lib/chiffrage_chiffrage.lib.php');
 $langs->loadLangs(array("chiffrage@chiffrage", "other"));
 
 // Get parameters
+$fk_task = GETPOST('fk_task', 'int');
 $fk_ticket = GETPOST('fk_ticket', 'int');
 $id = GETPOST('id', 'int');
 $ref = GETPOST('ref', 'alpha');
@@ -226,6 +228,41 @@ if (empty($reshook)) {
 			);
 			$object->add_object_linked('propal',$propalFromChiffrage->id);
 			$backtopage = dol_buildpath('/comm/propal/card.php', 1) . '?id=' . $propalFromChiffrage->id;
+			header("Location: " . $backtopage);
+			exit;
+		}
+	}
+
+	// Action Création d'une propale depuis un chiffrage
+	if ($action == 'create_task_from_chiffrage') {
+		if (!empty($object->fk_project)) {
+
+			$taskFromChiffrage = new Task($db);
+			$labelTaskFromChiffrage = new Product($db);
+			$resLabel = $labelTaskFromChiffrage->fetch(array('options_fk_chiffrage' => $object->label));
+
+			//Permet de générer le prochain numéro de référence
+			$obj = empty($conf->global->PROJECT_TASK_ADDON) ? 'mod_task_simple' : $conf->global->PROJECT_TASK_ADDON;
+			if (!empty($conf->global->PROJECT_TASK_ADDON) && is_readable(DOL_DOCUMENT_ROOT."/core/modules/project/task/".$conf->global->PROJECT_TASK_ADDON.".php")) {
+				require_once DOL_DOCUMENT_ROOT."/core/modules/project/task/".$conf->global->PROJECT_TASK_ADDON.'.php';
+				$modTask = new $obj;
+				$defaultref = $modTask->getNextValue(0, $taskFromChiffrage);
+			}
+
+			$taskFromChiffrage->ref = $defaultref;
+			$taskFromChiffrage->label = $labelTaskFromChiffrage->label;
+			$taskFromChiffrage->fk_project = $object->fk_project;
+			$taskFromChiffrage->fk_task_parent = $object->fk_project;
+			$taskFromChiffrage->description = $object->commercial_text;
+
+			//Ajout de l'extrafield chiffrage sur tâche en cours de création
+			$taskFromChiffrage->array_options['options_fk_chiffrage'] = $object->id;
+
+			$taskFromChiffrage->planned_workload = ($conf->global->CHIFFRAGE_DEFAULT_MULTIPLICATOR_FOR_TASK * 3600) * $object->qty;
+			$res = $taskFromChiffrage->create($user);
+
+			$object->add_object_linked('project_task',$taskFromChiffrage->id);
+			$backtopage = dol_buildpath('/projet/tasks/task.php', 1) . '?id=' . $taskFromChiffrage->id;
 			header("Location: " . $backtopage);
 			exit;
 		}
@@ -673,6 +710,11 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 			// Bouton Créer Devis (action = create_propal_from_chiffrage)
 			if ($object->status == $object::STATUS_ESTIMATED && !empty($object->fk_soc)) {
 				print dolGetButtonAction($langs->trans('CHICreatePropal'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $object->socid . '&action=create_propal_from_chiffrage&token=' . newToken(), '', $permissiontoadd);
+			}
+
+			// Bouton Créer Tâche (action = create_task_from_chiffrage)
+			if ($object->status == $object::STATUS_ESTIMATED && !empty($object->fk_project)) {
+				print dolGetButtonAction($langs->trans('CHICreateTask'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&fk_project=' . $object->fk_project . '&action=create_task_from_chiffrage&token=' . newToken(), '', $permissiontoadd);
 			}
 
             // Clone

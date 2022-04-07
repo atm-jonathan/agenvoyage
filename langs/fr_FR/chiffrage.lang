@@ -48,3 +48,5 @@ CHIAbout = A propos
 CHISaveAddNew = Enregistrer et nouveau
 CHICreatePropal = Créer devis
 ChiffrageAskTicketTitle = Création d'un chiffrage depuis le ticket %s
+CHICreateTask = Créer tâche
+CHIFFRAGE_DEFAULT_MULTIPLICATOR_FOR_TASK = Multiplicateur temps chiffrage pour les tâches
