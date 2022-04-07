@@ -233,7 +233,7 @@ if (empty($reshook)) {
 		}
 	}
 
-	// Action Création d'une propale depuis un chiffrage
+	// Action Création d'une tâche depuis un chiffrage
 	if ($action == 'create_task_from_chiffrage') {
 		if (!empty($object->fk_project)) {
 
