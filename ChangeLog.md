@@ -4,8 +4,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-- NEW : Ajout de la création d'une tâche depuis un chiffrage *07/04/2022* 1.3.0
-
+- NEW : Ajout de la création de tâches via le MassAction & depuis un Chiffrage *08/04/2022* 1.3.0
 
 ## Version 1.2
 
