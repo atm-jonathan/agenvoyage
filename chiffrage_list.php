@@ -297,6 +297,66 @@ if (empty($reshook)) {
 	}
 
 
+	if ($action == "confirm-add-to-project") {
+		require_once DOL_DOCUMENT_ROOT . '/projet/class/project.class.php';
+		require_once DOL_DOCUMENT_ROOT . '/projet/class/task.class.php';
+
+		$target_fk_projet = GETPOST('target_fk_projet', 'int');
+		$error = 0;
+
+		$project = new Project($db);
+		$res = $project->fetch($target_fk_projet);
+
+		if ($res > 0) {
+			if ($project->status != Project::STATUS_CLOSED) {
+				foreach ($toselect as $chiffrageId) {
+					$chiffrage = new Chiffrage($db);
+					$resChiffrage = $chiffrage->fetch($chiffrageId);
+
+					if ($resChiffrage > 0) {
+						$taskFromChiffrage = new Task($db);
+						$labelTaskFromChiffrage = new Product($db);
+						$resLabel = $labelTaskFromChiffrage->fetch($chiffrage->fk_product);
+
+						//Permet de générer le prochain numéro de référence
+						$obj = empty($conf->global->PROJECT_TASK_ADDON) ? 'mod_task_simple' : $conf->global->PROJECT_TASK_ADDON;
+						if (!empty($conf->global->PROJECT_TASK_ADDON) && is_readable(DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . ".php")) {
+							require_once DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . '.php';
+							$modTask = new $obj;
+							$defaultref = $modTask->getNextValue(0, $taskFromChiffrage);
+						}
+
+						$taskFromChiffrage->ref = $defaultref;
+						$taskFromChiffrage->label = $labelTaskFromChiffrage->label;
+						$taskFromChiffrage->fk_project = $target_fk_projet;
+						$taskFromChiffrage->fk_task_parent = 0;
+						$taskFromChiffrage->description = $chiffrage->commercial_text;
+
+						//Ajout de l'extrafield chiffrage sur tâche en cours de création
+						$taskFromChiffrage->array_options['options_fk_chiffrage'] = $chiffrage->id;
+
+						$taskFromChiffrage->planned_workload = ($conf->global->CHIFFRAGE_DEFAULT_MULTIPLICATOR_FOR_TASK * 3600) * $chiffrage->qty;
+						$res = $taskFromChiffrage->create($user);
+
+						$chiffrage->add_object_linked('project_task', $taskFromChiffrage->id);
+
+					} else {
+						setEventMessage($langs->trans('CHIErrorFetchChiffrage') . ' : ' . $chiffrage->errorsToString(), 'errors');
+						$error++;
+					}
+				}
+			}
+		} else {
+			setEventMessage('CHIErrorFetchProject' . ' : ' . $project->errorsToString(), 'errors');
+			$error++;
+		}
+		if ($error == 0) {
+			setEventMessage($langs->trans('CHISuccessAddProjectTasks', $numberLineCreate));
+			header("location: " . dol_buildpath('projet/card.php', 1) . '?id=' . $project->id);
+			exit();
+		}
+	}
+
 	// Purge search criteria
 	if (GETPOST('button_removefilter_x', 'alpha') || GETPOST('button_removefilter.x', 'alpha') || GETPOST('button_removefilter', 'alpha')) { // All tests are required to be compatible with all browsers
 		foreach ($object->fields as $key => $val) {
@@ -514,6 +574,7 @@ $arrayofmassactions = array(
 	//TODO Mass action from chiffrage to propal lines
 	'validate' => img_picto('', 'check', 'class="pictofixedwidth"') . ' ' . $langs->trans("CHIValidate"),
 	'preaddpropal' => img_picto('', 'filenew', 'class="pictofixedwidth"') . ' ' . $langs->trans("CHIAddToPropal"),
+	'preaddtasktoproject' => img_picto('', 'filenew', 'class="pictofixedwidth"') . ' ' . $langs->trans("CHIAddTasksToProject"),
 	//'generate_doc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("ReGeneratePDF"),
 	//'builddoc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("PDFMerge"),
 	//'presend'=>img_picto('', 'email', 'class="pictofixedwidth"').$langs->trans("SendByMail"),
@@ -572,6 +633,26 @@ if ($massaction == 'preaddpropal') {
 
 	//$tmpPropalFieldVisibility = $objecttmp->fields['fk_propal']['visible'];
 }
+
+if ($massaction == 'preaddtasktoproject') {
+
+	include_once DOL_DOCUMENT_ROOT . '/projet/class/project.class.php';
+	$project = new Project($db);
+
+
+	$objectStaticForMassAction = new Chiffrage($db);
+	print '<input type="hidden" name="token" value="' . newToken() . '" />';
+	print '<div class="select-mass-action-container warning"  >';
+	print '<h4>' . $langs->trans('CHIMassActionValidationProject') . '</h4>';
+
+	print $form->selectForForms('Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED, 'target_fk_projet', '', 1, '', '');
+
+	print '<button class="button" type="submit" name="action" value="confirm-add-to-project"  >' . $langs->trans('Valid') . '</button>';
+	print '<button class="button" type="submit" name="action" value="cancel"  >' . $langs->trans('Cancel') . '</button>';
+
+	print '</div>';
+}
+
 
 if ($search_all) {
 	foreach ($fieldstosearchall as $key => $val) {
