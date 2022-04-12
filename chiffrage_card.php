@@ -262,15 +262,18 @@ if (empty($reshook)) {
 			$taskFromChiffrage->array_options['options_fk_chiffrage'] = $object->id;
 
 			$taskFromChiffrage->planned_workload = ($conf->global->CHIFFRAGE_DEFAULT_MULTIPLICATOR_FOR_TASK * 3600) * $object->qty;
-			$res = $taskFromChiffrage->create($user);
-
-			if ($res > 0) {
-				$object->add_object_linked('project_task', $taskFromChiffrage->id);
-				$backtopage = dol_buildpath('/projet/tasks/task.php', 1) . '?id=' . $taskFromChiffrage->id;
-				header("Location: " . $backtopage);
-				exit;
-			} else {
-				setEventMessage($langs->trans("CHIErrorCreateTask"), 'errors');
+			if($taskFromChiffrage->fk_project != -1){
+				$res = $taskFromChiffrage->create($user);
+				if ($res > 0) {
+					$object->add_object_linked('project_task', $taskFromChiffrage->id);
+					$backtopage = dol_buildpath('/projet/tasks/task.php', 1) . '?id=' . $taskFromChiffrage->id;
+					header("Location: " . $backtopage);
+					exit;
+				} else {
+					setEventMessage($langs->trans("CHIErrorCreateTask"), 'errors');
+				}
+			}else{
+				setEventMessage($langs->trans("CHIErrorNoProject"), 'errors');
 			}
 		}
 	}
@@ -340,6 +343,10 @@ if (empty($reshook)) {
 
 	if($action == 'add' && $fk_ticket > 0){
 		$object->add_object_linked('ticket',$fk_ticket);
+	}
+
+	if($action == 'confirm_create_task'){
+		$object->add_object_linked('project_task',$fk_task);
 	}
 
     // Actions when linking object each other
@@ -737,7 +744,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 			}
 
 			// Bouton Créer Tâche (action = create_task_from_chiffrage)
-			if ($object->status == $object::STATUS_ESTIMATED && !empty($object->fk_project && $object->fk_project)) {
+			if ($object->status == $object::STATUS_ESTIMATED) {
 				print dolGetButtonAction($langs->trans('CHICreateTask'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&fk_project=' . $object->fk_project . '&action=create_task_from_chiffrage&token=' . newToken(), '', $permissiontoadd);
 			}
 
@@ -790,8 +797,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
         }
 
         // Show links to link elements
-        $linktoelem = $form->showLinkToObjectBlock($object, null, array('chiffrage'));
-        $somethingshown = $form->showLinkedObjectBlock($object, $linktoelem);
+        $somethingshown = $form->showLinkedObjectBlock($object);
 
         print '</div><div class="fichehalfright"><div class="ficheaddleft">';
 

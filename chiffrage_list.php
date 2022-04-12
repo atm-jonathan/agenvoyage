@@ -352,7 +352,7 @@ if (empty($reshook)) {
 		}
 		if ($error == 0) {
 			setEventMessage($langs->trans('CHISuccessAddProjectTasks', $numberLineCreate));
-			header("location: " . dol_buildpath('projet/card.php', 1) . '?id=' . $project->id);
+			header("location: " . dol_buildpath('projet/tasks.php', 1) . '?id=' . $project->id);
 			exit();
 		}
 	}
