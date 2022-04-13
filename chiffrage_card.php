@@ -236,45 +236,53 @@ if (empty($reshook)) {
 	// Action Création d'une tâche depuis un chiffrage
 	if ($action == 'confirm_create_task') {
 		$taskFromChiffrage = new Task($db);
+		$taskFromChiffrage->fk_project = GETPOST('fk_projet', 'int');;
 		$labelTaskFromChiffrage = new Product($db);
 		$resLabel = $labelTaskFromChiffrage->fetch($object->fk_product);
-		$projectFromChiffrage = new Project($db);
-		$resProjectFromChiffrage = $projectFromChiffrage->fetch(GETPOST('fk_projet', 'int'));
 
-		if ($projectFromChiffrage->statut == Project::STATUS_CLOSED) {
-			setEventMessage($langs->trans("CHIErrorProjectClosed"), 'errors');
-		} else {
-			//Permet de générer le prochain numéro de référence
-			$obj = empty($conf->global->PROJECT_TASK_ADDON) ? 'mod_task_simple' : $conf->global->PROJECT_TASK_ADDON;
-			if (!empty($conf->global->PROJECT_TASK_ADDON) && is_readable(DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . ".php")) {
-				require_once DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . '.php';
-				$modTask = new $obj;
-				$defaultref = $modTask->getNextValue(0, $taskFromChiffrage);
-			}
-
-			$taskFromChiffrage->ref = $defaultref;
-			$taskFromChiffrage->label = $labelTaskFromChiffrage->label;
-			$taskFromChiffrage->fk_project = GETPOST('fk_projet', 'int');
-			$taskFromChiffrage->fk_task_parent = 0;
-			$taskFromChiffrage->description = $object->commercial_text;
-
-			//Ajout de l'extrafield chiffrage sur tâche en cours de création
-			$taskFromChiffrage->array_options['options_fk_chiffrage'] = $object->id;
-
-			$taskFromChiffrage->planned_workload = ($conf->global->CHIFFRAGE_DEFAULT_MULTIPLICATOR_FOR_TASK * 3600) * $object->qty;
-			if($taskFromChiffrage->fk_project != -1){
-				$res = $taskFromChiffrage->create($user);
-				if ($res > 0) {
-					$object->add_object_linked('project_task', $taskFromChiffrage->id);
-					$backtopage = dol_buildpath('/projet/tasks/task.php', 1) . '?id=' . $taskFromChiffrage->id;
-					header("Location: " . $backtopage);
-					exit;
+		if($resLabel > 0){
+			$projectFromChiffrage = new Project($db);
+			$resProjectFromChiffrage = $projectFromChiffrage->fetch($taskFromChiffrage->fk_project);
+			if ($resLabel > 0){
+				if ($projectFromChiffrage->statut == Project::STATUS_CLOSED) {
+					setEventMessage($langs->trans("CHIErrorProjectClosed"), 'errors');
 				} else {
-					setEventMessage($langs->trans("CHIErrorCreateTask"), 'errors');
+					//Permet de générer le prochain numéro de référence
+					$obj = empty($conf->global->PROJECT_TASK_ADDON) ? 'mod_task_simple' : $conf->global->PROJECT_TASK_ADDON;
+					if (!empty($conf->global->PROJECT_TASK_ADDON) && is_readable(DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . ".php")) {
+						require_once DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . '.php';
+						$modTask = new $obj;
+						$defaultref = $modTask->getNextValue(0, $taskFromChiffrage);
+					}
+
+					$taskFromChiffrage->ref = $defaultref;
+					$taskFromChiffrage->label = $labelTaskFromChiffrage->label;
+					$taskFromChiffrage->fk_task_parent = 0;
+					$taskFromChiffrage->description = $object->commercial_text;
+
+					//Ajout de l'extrafield chiffrage sur tâche en cours de création
+					$taskFromChiffrage->array_options['options_fk_chiffrage'] = $object->id;
+
+					$taskFromChiffrage->planned_workload = ($conf->global->CHIFFRAGE_DEFAULT_MULTIPLICATOR_FOR_TASK * 3600) * $object->qty;
+					if($taskFromChiffrage->fk_project != -1){
+						$res = $taskFromChiffrage->create($user);
+						if ($res > 0) {
+							$object->add_object_linked('project_task', $taskFromChiffrage->id);
+							$backtopage = dol_buildpath('/projet/tasks/task.php', 1) . '?id=' . $taskFromChiffrage->id;
+							header("Location: " . $backtopage);
+							exit;
+						} else {
+							setEventMessage($langs->trans("CHIErrorCreateTask"), 'errors');
+						}
+					}else{
+						setEventMessage($langs->trans("CHIErrorNoProject"), 'errors');
+					}
 				}
 			}else{
-				setEventMessage($langs->trans("CHIErrorNoProject"), 'errors');
+				setEventMessage($langs->trans("CHIErrorFetchProject"), 'errors');
 			}
+		}else{
+			setEventMessage($langs->trans("CHIErrorFetchLabelProduct"), 'errors');
 		}
 	}
 
