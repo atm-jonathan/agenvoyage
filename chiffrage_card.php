@@ -145,6 +145,8 @@ $upload_dir = $conf->chiffrage->multidir_output[isset($object->entity) ? $object
 /*
  * Actions
  */
+$addNew = GETPOSTISSET('addnew');
+$addCancel = GETPOSTISSET('cancel');
 
 $parameters = array();
 $reshook = $hookmanager->executeHooks('doActions', $parameters, $object, $action); // Note that $action and $object may have been modified by some hooks
@@ -237,14 +239,18 @@ if (empty($reshook)) {
 		$object->fields['fk_product']['default'] = $conf->global->CHIFFRAGE_DEFAULT_PRODUCT;
 		$object->fields['tech_detail']['visible'] = 5;
     }
+	if($action == 'add' && $addCancel){
+		header("Location: " . $backtopage); // Open record of new object
+		exit;
+	}
 
     if ($action == 'add') {
         $object->fields['tech_detail']['visible'] = 5;
 		if($fk_ticket > 0){
-			$backtopage .= "&action=set_ticket&fk_ticket=".$fk_ticket;
+			$object->fk_ticket = $fk_ticket;
+			$backtopage = 'chiffrage_card.php?id=__ID__';
 		}
     }
-
 	if($action == 'set_ticket'){
 		$object->add_object_linked('ticket',$fk_ticket);
 		$url = $backtopage;
@@ -254,8 +260,6 @@ if (empty($reshook)) {
 		header("Location: " . $url); // Open record of new object
 		exit;
 	}
-
-    $addNew = GETPOSTISSET('addnew');
     if ($action == 'add' && $addNew) {
         $backtopage = dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?action=create';
         $backtopage .= '&po_estimated=' . GETPOST('po_estimated');
@@ -293,10 +297,6 @@ if (empty($reshook)) {
     }
     // Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
     include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
-
-	if($action == 'add' && $fk_ticket > 0){
-		$object->add_object_linked('ticket',$fk_ticket);
-	}
 
     // Actions when linking object each other
     include DOL_DOCUMENT_ROOT . '/core/actions_dellink.inc.php';
