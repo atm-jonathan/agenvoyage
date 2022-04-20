@@ -4,6 +4,11 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+
+
+
+## Version 1.3
+
 - NEW : Ajout de la création de tâches via le MassAction & depuis un Chiffrage *08/04/2022* 1.3.0
 
 ## Version 1.2
