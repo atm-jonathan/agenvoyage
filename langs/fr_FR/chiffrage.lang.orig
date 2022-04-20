@@ -49,6 +49,7 @@ CHIAbout = A propos
 CHISaveAddNew = Enregistrer et nouveau
 CHICreatePropal = Créer devis
 ChiffrageAskTicketTitle = Création d'un chiffrage depuis le ticket %s
+<<<<<<< HEAD
 CHICreateTask = Créer tâche
 CHIAddTasksToProject = Créer des tâches projet
 CHIFFRAGE_DEFAULT_MULTIPLICATOR_FOR_TASK = Multiplicateur temps chiffrage pour les tâches
@@ -63,6 +64,8 @@ CHIErrorFetchProject = Erreur de récupération du projet
 CHIErrorProjectNotDraft
 CHIErrorNoProject = Veuillez sélectionner un projet
 CHIErrorFetchLabelProduct = Erreur de récupération du label de produit
+=======
 
 NotEnoughRights = Droits insuffisants
 ErrorOnCreatePropal = Création de la proposition commercial en erreur
+>>>>>>> 5b0a89e9fd43b58cb285f3c840708e515a610abe
