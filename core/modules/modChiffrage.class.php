@@ -72,7 +72,9 @@ class modChiffrage extends DolibarrModules
 		$this->editor_url = 'https://www.atm-consulting.fr';
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
-		$this->version = '1.2.2';
+
+		$this->version = '1.3.0';
+
 		// Url to the file with your last numberversion of this module
 		//$this->url_last_version = 'http://www.example.com/versionmodule.txt';
 
@@ -88,7 +90,7 @@ class modChiffrage extends DolibarrModules
 		// Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
 		$this->module_parts = array(
 			// Set this to 1 if module has its own trigger directory (core/triggers)
-			'triggers' => 0,
+			'triggers' => 1,
 			// Set this to 1 if module has its own login method file (core/login)
 			'login' => 0,
 			// Set this to 1 if module has its own substitution function file (core/substitutions)
@@ -563,6 +565,7 @@ class modChiffrage extends DolibarrModules
 		$param = array ( 'options' => array ( 'Chiffrage:chiffrage/class/chiffrage.class.php' => NULL, ), );
 
 		$extrafields->addExtraField('fk_chiffrage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'propaldet', 0, 0, '', $param, 1);
+		$extrafields->addExtraField('fk_chiffrage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'projet_task', 0, 0, '', $param, 1);
 
 		//$result1=$extrafields->addExtraField('chiffrage_myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
 		//$result2=$extrafields->addExtraField('chiffrage_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');

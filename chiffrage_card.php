@@ -82,6 +82,7 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/html.formcompany.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formprojet.class.php';
 require_once DOL_DOCUMENT_ROOT."/ticket/class/ticket.class.php";
+require_once DOL_DOCUMENT_ROOT."/projet/class/task.class.php";
 dol_include_once('/chiffrage/class/chiffrage.class.php');
 dol_include_once('/chiffrage/lib/chiffrage_chiffrage.lib.php');
 
@@ -89,6 +90,7 @@ dol_include_once('/chiffrage/lib/chiffrage_chiffrage.lib.php');
 $langs->loadLangs(array("chiffrage@chiffrage", "other"));
 
 // Get parameters
+$fk_task = GETPOST('fk_task', 'int');
 $fk_ticket = GETPOST('fk_ticket', 'int');
 $id = GETPOST('id', 'int');
 $ref = GETPOST('ref', 'alpha');
@@ -233,6 +235,59 @@ if (empty($reshook)) {
 		}
 	}
 
+	// Action Création d'une tâche depuis un chiffrage
+	if ($action == 'confirm_create_task') {
+		$taskFromChiffrage = new Task($db);
+		$taskFromChiffrage->fk_project = GETPOST('fk_projet', 'int');;
+		$labelTaskFromChiffrage = new Product($db);
+		$resLabel = $labelTaskFromChiffrage->fetch($object->fk_product);
+
+		if($resLabel > 0){
+			$projectFromChiffrage = new Project($db);
+			$resProjectFromChiffrage = $projectFromChiffrage->fetch($taskFromChiffrage->fk_project);
+			if ($resLabel > 0){
+				if ($projectFromChiffrage->statut == Project::STATUS_CLOSED) {
+					setEventMessage($langs->trans("CHIErrorProjectClosed"), 'errors');
+				} else {
+					//Permet de générer le prochain numéro de référence
+					$obj = empty($conf->global->PROJECT_TASK_ADDON) ? 'mod_task_simple' : $conf->global->PROJECT_TASK_ADDON;
+					if (!empty($conf->global->PROJECT_TASK_ADDON) && is_readable(DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . ".php")) {
+						require_once DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . '.php';
+						$modTask = new $obj;
+						$defaultref = $modTask->getNextValue(0, $taskFromChiffrage);
+					}
+
+					$taskFromChiffrage->ref = $defaultref;
+					$taskFromChiffrage->label = $labelTaskFromChiffrage->label;
+					$taskFromChiffrage->fk_task_parent = 0;
+					$taskFromChiffrage->description = $object->commercial_text;
+
+					//Ajout de l'extrafield chiffrage sur tâche en cours de création
+					$taskFromChiffrage->array_options['options_fk_chiffrage'] = $object->id;
+
+					$taskFromChiffrage->planned_workload = ($conf->global->CHIFFRAGE_DEFAULT_MULTIPLICATOR_FOR_TASK * 3600) * $object->qty;
+					if($taskFromChiffrage->fk_project != -1){
+						$res = $taskFromChiffrage->create($user);
+						if ($res > 0) {
+							$object->add_object_linked('project_task', $taskFromChiffrage->id);
+							$backtopage = dol_buildpath('/projet/tasks/task.php', 1) . '?id=' . $taskFromChiffrage->id;
+							header("Location: " . $backtopage);
+							exit;
+						} else {
+							setEventMessage($langs->trans("CHIErrorCreateTask"), 'errors');
+						}
+					}else{
+						setEventMessage($langs->trans("CHIErrorNoProject"), 'errors');
+					}
+				}
+			}else{
+				setEventMessage($langs->trans("CHIErrorFetchProject"), 'errors');
+			}
+		}else{
+			setEventMessage($langs->trans("CHIErrorFetchLabelProduct"), 'errors');
+		}
+	}
+
 
     if ($action == 'create') {
 		$object->fields['po_estimate']['default'] = $user->id;
@@ -298,6 +353,15 @@ if (empty($reshook)) {
     // Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
     include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
 
+
+	if($action == 'add' && $fk_ticket > 0){
+		$object->add_object_linked('ticket',$fk_ticket);
+	}
+
+	if($action == 'confirm_create_task'){
+		$object->add_object_linked('project_task',$fk_task);
+	}
+
     // Actions when linking object each other
     include DOL_DOCUMENT_ROOT . '/core/actions_dellink.inc.php';
 
@@ -346,7 +410,7 @@ $formproject = new FormProjets($db);
 
 $title = $langs->trans("Chiffrage");
 $help_url = '';
-llxHeader('', $title, $help_url);
+llxHeader('', $title, $help_url,'','','','',array("chiffrage/css/chiffrage.css"));
 
 // fields fk_soc & fk_project in view
 $object->fields['fk_soc']['visible'] = 0;
@@ -480,9 +544,26 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 
     $formconfirm = '';
 
+	// Action Création d'une tâche depuis un chiffrage
+	if ($action == 'create_task_from_chiffrage') {
+		include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
+		$form = new Form($db);
+		$refProjectChiffrage = new Project($db);
+		$resProject = $refProjectChiffrage->fetch($object->fk_project);
+		$formquestion = array(
+			array(
+				'type' => 'other',
+				'name' => 'fk_projet',
+			'label' => $langs->trans("CHISelectProject"),
+			'value' => $form->selectForForms('Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED, 'fk_projet',$object->fk_project, 1, '', '', "form-project")
+		)
+		);
+		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('CHITaskCreate'), $langs->trans('ConfirmCreateObject'), 'confirm_create_task', $formquestion, 0, 1);
+	}
+
     // Confirmation to delete
     if ($action == 'delete') {
-        $formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('DeleteChiffrage'), $langs->trans('ConfirmDeleteObject'), 'confirm_delete', '', 0, 1);
+        $formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('CHIDeleteChiffrage'), $langs->trans('ConfirmDeleteObject'), 'confirm_delete', '', 0, 1);
     }
     // Confirmation to delete line
     if ($action == 'deleteline') {
@@ -675,6 +756,11 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 				print dolGetButtonAction($langs->trans('CHICreatePropal'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $object->socid . '&action=create_propal_from_chiffrage&token=' . newToken(), '', $permissiontoadd);
 			}
 
+			// Bouton Créer Tâche (action = create_task_from_chiffrage)
+			if ($object->status == $object::STATUS_ESTIMATED) {
+				print dolGetButtonAction($langs->trans('CHICreateTask'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&fk_project=' . $object->fk_project . '&action=create_task_from_chiffrage&token=' . newToken(), '', $permissiontoadd);
+			}
+
             // Clone
             print dolGetButtonAction($langs->trans('ToClone'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $object->socid . '&action=clone&token=' . newToken(), '', $permissiontoadd);
 
@@ -724,8 +810,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
         }
 
         // Show links to link elements
-        $linktoelem = $form->showLinkToObjectBlock($object, null, array('chiffrage'));
-        $somethingshown = $form->showLinkedObjectBlock($object, $linktoelem);
+        $somethingshown = $form->showLinkedObjectBlock($object);
 
         print '</div><div class="fichehalfright"><div class="ficheaddleft">';
 
