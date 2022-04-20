@@ -250,8 +250,10 @@ class Chiffrage extends CommonObject
 	 */
 	public function create(User $user, $notrigger = false)
 	{
-       
 		$resultcreate = $this->createCommon($user, $notrigger);
+		if ($resultcreate > 0 && !empty($this->fk_ticket)){
+			$this->add_object_linked('ticket',$this->fk_ticket);
+		}
 
 		//$resultvalidate = $this->validate($user, $notrigger);
 

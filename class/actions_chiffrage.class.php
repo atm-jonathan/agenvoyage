@@ -195,7 +195,8 @@ class ActionsChiffrage
 		$context = explode(':', $parameters['context']);
 		if (in_array('ticketcard', $context)) {
 			$descriptionTicketChiffrage = $langs->trans('ChiffrageAskTicketTitle', $object->ref);
-			print '<a class="butAction" href="'.dol_buildpath('/chiffrage/chiffrage_card.php?action=create', 1). '&fk_soc='.$object->fk_soc.'&module_name='.$object->array_options['options_fk_webmodule'].'&commercial_text='.urlencode($descriptionTicketChiffrage).'&fk_ticket='.$object->id.'">'.$langs->trans("NewChiffrage").'</a>';
+			$urlTicket = dol_buildpath('/ticket/card.php?id='.$object->id,1);
+			print '<a class="butAction" href="'.dol_buildpath('/chiffrage/chiffrage_card.php?action=create', 1). '&fk_soc='.$object->fk_soc.'&module_name='.$object->array_options['options_fk_webmodule'].'&commercial_text='.urlencode($descriptionTicketChiffrage).'&fk_ticket='.$object->id.'&backtopage='.urlencode($urlTicket).'">'.$langs->trans("NewChiffrage").'</a>';
 		}
 
 		return 0;
