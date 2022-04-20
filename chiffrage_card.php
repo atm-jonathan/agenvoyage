@@ -231,6 +231,9 @@ if (empty($reshook)) {
 			header("Location: " . $backtopage);
 			exit;
 		}
+		else{
+			setEventMessage('NotEnoughRights', 'errors');
+		}
 	}
 
 
@@ -672,7 +675,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
             }
 			// Bouton Créer Devis (action = create_propal_from_chiffrage)
 			if ($object->status == $object::STATUS_ESTIMATED && !empty($object->fk_soc)) {
-				print dolGetButtonAction($langs->trans('CHICreatePropal'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $object->socid . '&action=create_propal_from_chiffrage&token=' . newToken(), '', $permissiontoadd);
+				print dolGetButtonAction($langs->trans('CHICreatePropal'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $object->socid . '&action=create_propal_from_chiffrage&token=' . newToken(), '', !empty($user->rights->propal->creer));
 			}
 
             // Clone
