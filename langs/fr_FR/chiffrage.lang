@@ -50,3 +50,4 @@ CHICreatePropal = Créer devis
 ChiffrageAskTicketTitle = Création d'un chiffrage depuis le ticket %s
 
 NotEnoughRights = Droits insuffisants
+ErrorOnCreatePropal = Création de la proposition commercial en erreur
