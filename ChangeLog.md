@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-
+- NEW : Ajout de la page extrafield et la possibilité d'en créer 
 
 ## Version 1.3
 
