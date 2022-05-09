@@ -40,12 +40,10 @@ function chiffrageAdminPrepareHead()
 	$head[$h][2] = 'Settings';
 	$h++;
 
-	/*
-	$head[$h][0] = dol_buildpath("/chiffrage/admin/myobject_extrafields.php", 1);
+	$head[$h][0] = dol_buildpath("/chiffrage/admin/chiffrage_extrafields.php", 1);
 	$head[$h][1] = $langs->trans("ExtraFields");
-	$head[$h][2] = 'myobject_extrafields';
+	$head[$h][2] = 'chiffrage_extrafields';
 	$h++;
-	*/
 
 	$head[$h][0] = dol_buildpath("/chiffrage/admin/about.php", 1);
 	$head[$h][1] = $langs->trans("CHIAbout");
