@@ -76,7 +76,8 @@ class modChiffrage extends DolibarrModules
 		$this->version = '1.4.0';
 
 		// Url to the file with your last numberversion of this module
-		//$this->url_last_version = 'http://www.example.com/versionmodule.txt';
+		require_once __DIR__ . '/../../class/techatm.class.php';
+		$this->url_last_version = \chiffrage\TechATM::getLastModuleVersionUrl($this);
 
 		// Key used in llx_const table to save module status enabled/disabled (where CHIFFRAGE is value of property name of module in uppercase)
 		$this->const_name = 'MAIN_MODULE_'.strtoupper($this->name);
