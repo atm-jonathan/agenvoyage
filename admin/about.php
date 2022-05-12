@@ -95,9 +95,13 @@ print load_fiche_titre($langs->trans($page_name), $linkback, 'title_setup');
 $head = chiffrageAdminPrepareHead();
 print dol_get_fiche_head($head, 'about', $langs->trans($page_name), 0, 'chiffrage@chiffrage');
 
-dol_include_once('/chiffrage/core/modules/modChiffrage.class.php');
-$tmpmodule = new modChiffrage($db);
-print $tmpmodule->getDescLong();
+require_once __DIR__ . '/../class/techatm.class.php';
+$techATM = new \chiffrage\TechATM($db);
+
+require_once __DIR__ . '/../core/modules/modChiffrage.class.php';
+$moduleDescriptor = new modChiffrage($db);
+
+print $techATM->getAboutPage($moduleDescriptor);
 
 // Page end
 print dol_get_fiche_end();
