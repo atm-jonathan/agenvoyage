@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## Version 1.5
+
 - NEW : Ajout de la class TechATM pour l'affichage de la page "A propos" *10/05/2022* 1.5.0
 - NEW : Ajout de la page extrafield et la possibilité d'en créer *09/05/2022* 1.4.0
 
