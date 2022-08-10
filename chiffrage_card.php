@@ -270,7 +270,31 @@ if (empty($reshook)) {
 					$taskFromChiffrage->ref = $defaultref;
 					$taskFromChiffrage->label = $labelTaskFromChiffrage->label;
 					$taskFromChiffrage->fk_task_parent = 0;
-					$taskFromChiffrage->description = $object->commercial_text;
+
+					if(!empty($object->commercial_text)) {
+						if(!empty($taskFromChiffrage->description)){
+							$taskFromChiffrage->description.= "\n";
+						}
+						$taskFromChiffrage->description .= '<h4>' . $langs->trans('CHICommercialText') . '</h4>'."\n";
+						$taskFromChiffrage->description .= $object->commercial_text;
+					}
+
+					if(!empty($object->detailed_feature_specification)){
+						if(!empty($taskFromChiffrage->description)){
+							$taskFromChiffrage->description.= "\n";
+						}
+						$taskFromChiffrage->description.= '<h4>'.$langs->trans('DetailedFeatureSpecification').'</h4>'."\n";
+						$taskFromChiffrage->description.= $object->commercial_text;
+					}
+
+					if(!empty($object->tech_detail)){
+						if(!empty($taskFromChiffrage->description)){
+							$taskFromChiffrage->description.= "\n";
+						}
+						$taskFromChiffrage->description.= '<h4>'.$langs->trans('CHITechDetail').'</h4>'."\n";
+						$taskFromChiffrage->description.= $object->tech_detail;
+					}
+
 
 					//Ajout de l'extrafield chiffrage sur tâche en cours de création
 					$taskFromChiffrage->array_options['options_fk_chiffrage'] = $object->id;

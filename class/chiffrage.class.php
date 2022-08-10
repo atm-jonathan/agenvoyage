@@ -153,6 +153,7 @@ class Chiffrage extends CommonObject
 	public $model_pdf;
 	public $status;
 	public $commercial_text;
+	public $detailed_feature_specification;
 	public $tech_detail;
 	public $dev_estimate;
 	public $po_estimate;
