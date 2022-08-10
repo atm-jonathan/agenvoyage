@@ -248,7 +248,7 @@ if (empty($reshook)) {
 	// Action Création d'une tâche depuis un chiffrage
 	if ($action == 'confirm_create_task') {
 		$taskFromChiffrage = new Task($db);
-		$taskFromChiffrage->fk_project = GETPOST('fk_projet', 'int');;
+		$taskFromChiffrage->fk_project = GETPOST('fk_projet', 'int');
 		$labelTaskFromChiffrage = new Product($db);
 		$resLabel = $labelTaskFromChiffrage->fetch($object->fk_product);
 
@@ -547,7 +547,8 @@ if (($id || $ref) && $action == 'edit') {
 if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'create'))) {
     $res = $object->fetch_optionals();
     $object->fields['commercial_text']['position'] = 999;
-    $object->fields['tech_detail']['position'] = 1000;
+    $object->fields['detailed_feature_specification']['position'] = 1000;
+    $object->fields['tech_detail']['position'] = 1001;
 
     $head = chiffragePrepareHead($object);
     print dol_get_fiche_head($head, 'card', $langs->trans("Workstation"), -1, $object->picto);
