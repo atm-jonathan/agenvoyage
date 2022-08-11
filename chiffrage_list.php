@@ -344,7 +344,7 @@ if (empty($reshook)) {
 								$taskFromChiffrage->description.= "\n";
 							}
 							$taskFromChiffrage->description.= '<h4>'.$langs->trans('DetailedFeatureSpecification').'</h4>'."\n";
-							$taskFromChiffrage->description.= $chiffrage->commercial_text;
+							$taskFromChiffrage->description.= $chiffrage->detailed_feature_specification;
 						}
 
 						if(!empty($chiffrage->tech_detail)){
