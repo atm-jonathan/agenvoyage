@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- NEW : Ajout du champ "détail spécification fonctionnelle" *10/05/2022* 1.6.0
+
 ## Version 1.5
 
 - NEW : Ajout de la class TechATM pour l'affichage de la page "A propos" *10/05/2022* 1.5.0

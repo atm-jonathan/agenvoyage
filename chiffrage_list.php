@@ -330,7 +330,31 @@ if (empty($reshook)) {
 						$taskFromChiffrage->label = $labelTaskFromChiffrage->label;
 						$taskFromChiffrage->fk_project = $target_fk_projet;
 						$taskFromChiffrage->fk_task_parent = 0;
-						$taskFromChiffrage->description = $chiffrage->commercial_text;
+
+						if(!empty($chiffrage->commercial_text)) {
+							if(!empty($taskFromChiffrage->description)){
+								$taskFromChiffrage->description.= "\n";
+							}
+							$taskFromChiffrage->description .= '<h4>' . $langs->trans('CHICommercialText') . '</h4>'."\n";
+							$taskFromChiffrage->description .= $chiffrage->commercial_text;
+						}
+
+						if(!empty($chiffrage->detailed_feature_specification)){
+							if(!empty($taskFromChiffrage->description)){
+								$taskFromChiffrage->description.= "\n";
+							}
+							$taskFromChiffrage->description.= '<h4>'.$langs->trans('DetailedFeatureSpecification').'</h4>'."\n";
+							$taskFromChiffrage->description.= $chiffrage->detailed_feature_specification;
+						}
+
+						if(!empty($chiffrage->tech_detail)){
+							if(!empty($taskFromChiffrage->description)){
+								$taskFromChiffrage->description.= "\n";
+							}
+							$taskFromChiffrage->description.= '<h4>'.$langs->trans('CHITechDetail').'</h4>'."\n";
+							$taskFromChiffrage->description.= $chiffrage->tech_detail;
+						}
+
 
 						//Ajout de l'extrafield chiffrage sur tâche en cours de création
 						$taskFromChiffrage->array_options['options_fk_chiffrage'] = $chiffrage->id;

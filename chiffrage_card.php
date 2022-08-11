@@ -248,7 +248,7 @@ if (empty($reshook)) {
 	// Action Création d'une tâche depuis un chiffrage
 	if ($action == 'confirm_create_task') {
 		$taskFromChiffrage = new Task($db);
-		$taskFromChiffrage->fk_project = GETPOST('fk_projet', 'int');;
+		$taskFromChiffrage->fk_project = GETPOST('fk_projet', 'int');
 		$labelTaskFromChiffrage = new Product($db);
 		$resLabel = $labelTaskFromChiffrage->fetch($object->fk_product);
 
@@ -270,7 +270,31 @@ if (empty($reshook)) {
 					$taskFromChiffrage->ref = $defaultref;
 					$taskFromChiffrage->label = $labelTaskFromChiffrage->label;
 					$taskFromChiffrage->fk_task_parent = 0;
-					$taskFromChiffrage->description = $object->commercial_text;
+
+					if(!empty($object->commercial_text)) {
+						if(!empty($taskFromChiffrage->description)){
+							$taskFromChiffrage->description.= "\n";
+						}
+						$taskFromChiffrage->description .= '<h4>' . $langs->trans('CHICommercialText') . '</h4>'."\n";
+						$taskFromChiffrage->description .= $object->commercial_text;
+					}
+
+					if(!empty($object->detailed_feature_specification)){
+						if(!empty($taskFromChiffrage->description)){
+							$taskFromChiffrage->description.= "\n";
+						}
+						$taskFromChiffrage->description.= '<h4>'.$langs->trans('DetailedFeatureSpecification').'</h4>'."\n";
+						$taskFromChiffrage->description.= $object->detailed_feature_specification;
+					}
+
+					if(!empty($object->tech_detail)){
+						if(!empty($taskFromChiffrage->description)){
+							$taskFromChiffrage->description.= "\n";
+						}
+						$taskFromChiffrage->description.= '<h4>'.$langs->trans('CHITechDetail').'</h4>'."\n";
+						$taskFromChiffrage->description.= $object->tech_detail;
+					}
+
 
 					//Ajout de l'extrafield chiffrage sur tâche en cours de création
 					$taskFromChiffrage->array_options['options_fk_chiffrage'] = $object->id;
@@ -547,7 +571,8 @@ if (($id || $ref) && $action == 'edit') {
 if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'create'))) {
     $res = $object->fetch_optionals();
     $object->fields['commercial_text']['position'] = 999;
-    $object->fields['tech_detail']['position'] = 1000;
+    $object->fields['detailed_feature_specification']['position'] = 1000;
+    $object->fields['tech_detail']['position'] = 1001;
 
     $head = chiffragePrepareHead($object);
     print dol_get_fiche_head($head, 'card', $langs->trans("Workstation"), -1, $object->picto);
