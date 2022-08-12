@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+
+## Version 1.6
+
 - NEW : Ajout du champ "détail spécification fonctionnelle" *10/05/2022* 1.6.0
 
 ## Version 1.5
