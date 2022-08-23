@@ -100,7 +100,7 @@ $toselect = GETPOST('toselect', 'array'); // Array of ids of elements selected i
 $contextpage = GETPOST('contextpage', 'aZ') ? GETPOST('contextpage', 'aZ') : 'chiffragelist'; // To manage different context of search
 $backtopage = GETPOST('backtopage', 'alpha'); // Go back to a dedicated page
 $optioncss = GETPOST('optioncss', 'aZ'); // Option for the css output (always '' except when 'print')
-
+$socid      = GETPOST('socid', 'int');
 $id = GETPOST('id', 'int');
 
 // Load variable for pagination
@@ -449,6 +449,9 @@ if ($object->ismultientitymanaged == 1) {
 } else {
 	$sql .= " WHERE 1 = 1";
 }
+if ($socid > 0) {
+	$sql .= " AND t.fk_soc = ".((int) $socid);
+}
 foreach ($search as $key => $val) {
 	if (array_key_exists($key, $object->fields)) {
 		if ($key == 'status' && $search[$key] == -1) {
@@ -549,6 +552,32 @@ if ($num == 1 && !empty($conf->global->MAIN_SEARCH_DIRECT_OPEN_IF_ONLY_ONE) && $
 // --------------------------------------------------------------------
 
 llxHeader('', $title, $help_url, '', 0, 0, $morejs, $morecss, '', '');
+
+if ($socid && $user->rights->societe->lire) {
+	$socstat = new Societe($db);
+	$res = $socstat->fetch($socid);
+	if ($res > 0) {
+		$tmpobject = $object;
+		$object = $socstat; // $object must be of type Societe when calling societe_prepare_head
+		$head = societe_prepare_head($socstat);
+		$object = $tmpobject;
+
+		print dol_get_fiche_head($head, 'tabChiffrage', $langs->trans("ThirdParty"), -1, 'company');
+
+		dol_banner_tab($socstat, 'socid', '', ($user->socid ? 0 : 1), 'rowid', 'nom');
+
+		print '<div class="fichecenter">';
+
+		print '<div class="underbanner clearboth"></div>';
+		print '<table class="border centpercent tableforfield">';
+
+
+
+		print '</table>';
+		print '</div>';
+		print dol_get_fiche_end();
+	}
+}
 
 // Example : Adding jquery code
 // print '<script type="text/javascript" language="javascript">
