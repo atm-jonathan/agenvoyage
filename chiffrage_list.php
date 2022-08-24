@@ -450,7 +450,7 @@ if ($object->ismultientitymanaged == 1) {
 	$sql .= " WHERE 1 = 1";
 }
 if ($socid > 0) {
-	$sql .= " AND t.fk_soc = ".((int) $socid);
+	$sql .= ' AND t.fk_soc = '.intval($socid);
 }
 foreach ($search as $key => $val) {
 	if (array_key_exists($key, $object->fields)) {
@@ -553,14 +553,11 @@ if ($num == 1 && !empty($conf->global->MAIN_SEARCH_DIRECT_OPEN_IF_ONLY_ONE) && $
 
 llxHeader('', $title, $help_url, '', 0, 0, $morejs, $morecss, '', '');
 
-if ($socid && $user->rights->societe->lire) {
+if ($socid > 0 && !empty($user->rights->societe->lire)) {
 	$socstat = new Societe($db);
 	$res = $socstat->fetch($socid);
 	if ($res > 0) {
-		$tmpobject = $object;
-		$object = $socstat; // $object must be of type Societe when calling societe_prepare_head
 		$head = societe_prepare_head($socstat);
-		$object = $tmpobject;
 
 		print dol_get_fiche_head($head, 'tabChiffrage', $langs->trans("ThirdParty"), -1, 'company');
 
