@@ -612,6 +612,9 @@ foreach ($search as $key => $val) {
 if ($optioncss != '') {
 	$param .= '&optioncss=' . urlencode($optioncss);
 }
+if ($socid > 0){
+	$param .= '&socid='.$socid;
+}
 // Add $param from extra fields
 include DOL_DOCUMENT_ROOT . '/core/tpl/extrafields_list_search_param.tpl.php';
 // Add $param from hooks
