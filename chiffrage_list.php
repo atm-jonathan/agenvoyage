@@ -100,7 +100,7 @@ $toselect = GETPOST('toselect', 'array'); // Array of ids of elements selected i
 $contextpage = GETPOST('contextpage', 'aZ') ? GETPOST('contextpage', 'aZ') : 'chiffragelist'; // To manage different context of search
 $backtopage = GETPOST('backtopage', 'alpha'); // Go back to a dedicated page
 $optioncss = GETPOST('optioncss', 'aZ'); // Option for the css output (always '' except when 'print')
-
+$socid      = GETPOST('socid', 'int');
 $id = GETPOST('id', 'int');
 
 // Load variable for pagination
@@ -449,6 +449,9 @@ if ($object->ismultientitymanaged == 1) {
 } else {
 	$sql .= " WHERE 1 = 1";
 }
+if ($socid > 0) {
+	$sql .= ' AND t.fk_soc = '.intval($socid);
+}
 foreach ($search as $key => $val) {
 	if (array_key_exists($key, $object->fields)) {
 		if ($key == 'status' && $search[$key] == -1) {
@@ -550,6 +553,29 @@ if ($num == 1 && !empty($conf->global->MAIN_SEARCH_DIRECT_OPEN_IF_ONLY_ONE) && $
 
 llxHeader('', $title, $help_url, '', 0, 0, $morejs, $morecss, '', '');
 
+if ($socid > 0 && !empty($user->rights->societe->lire)) {
+	$socstat = new Societe($db);
+	$res = $socstat->fetch($socid);
+	if ($res > 0) {
+		$head = societe_prepare_head($socstat);
+
+		print dol_get_fiche_head($head, 'tabChiffrage', $langs->trans("ThirdParty"), -1, 'company');
+
+		dol_banner_tab($socstat, 'socid', '', ($user->socid ? 0 : 1), 'rowid', 'nom');
+
+		print '<div class="fichecenter">';
+
+		print '<div class="underbanner clearboth"></div>';
+		print '<table class="border centpercent tableforfield">';
+
+
+
+		print '</table>';
+		print '</div>';
+		print dol_get_fiche_end();
+	}
+}
+
 // Example : Adding jquery code
 // print '<script type="text/javascript" language="javascript">
 // jQuery(document).ready(function() {
@@ -585,6 +611,9 @@ foreach ($search as $key => $val) {
 }
 if ($optioncss != '') {
 	$param .= '&optioncss=' . urlencode($optioncss);
+}
+if ($socid > 0){
+	$param .= '&socid='.$socid;
 }
 // Add $param from extra fields
 include DOL_DOCUMENT_ROOT . '/core/tpl/extrafields_list_search_param.tpl.php';
@@ -622,6 +651,7 @@ print '<input type="hidden" name="sortfield" value="' . $sortfield . '">';
 print '<input type="hidden" name="sortorder" value="' . $sortorder . '">';
 print '<input type="hidden" name="page" value="' . $page . '">';
 print '<input type="hidden" name="contextpage" value="' . $contextpage . '">';
+print '<input type="hidden" name="socid" value="' . $socid . '">';
 
 $newcardbutton = dolGetButtonTitle($langs->trans('New'), '', 'fa fa-plus-circle', dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?action=create&backtopage=' . urlencode($_SERVER['PHP_SELF']), '', $permissiontoadd);
 

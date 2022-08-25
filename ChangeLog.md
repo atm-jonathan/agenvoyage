@@ -4,7 +4,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-
+- NEW : Ajout d'un onglet chiffrage sur la page des tiers *23/08/2022* 1.7.0
 
 ## Version 1.6
 
