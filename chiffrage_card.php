@@ -203,7 +203,8 @@ if (empty($reshook)) {
 			$propalFromChiffrage->date_validation = 90;
 			$resCreate = $propalFromChiffrage->create($user);
 			if($resCreate > 0){
-
+				// on passe le chiffrage en converti
+				$object->setStatut($object::STATUS_CONVERTED);
 				$product = new Product($db);
 				$resprod = $product->fetch($object->fk_product);
 
@@ -303,7 +304,10 @@ if (empty($reshook)) {
 					if($taskFromChiffrage->fk_project != -1){
 						$res = $taskFromChiffrage->create($user);
 						if ($res > 0) {
+
 							$object->add_object_linked('project_task', $taskFromChiffrage->id);
+							//
+							$object->setStatut($object::STATUS_CONVERTED);
 							$backtopage = dol_buildpath('/projet/tasks/task.php', 1) . '?id=' . $taskFromChiffrage->id;
 							header("Location: " . $backtopage);
 							exit;

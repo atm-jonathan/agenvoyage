@@ -70,6 +70,8 @@ class Chiffrage extends CommonObject
 	const STATUS_ESTIMATED = 10;
 	const STATUS_PROPOSED = 11;
 	const STATUS_SOLD = 12;
+	const STATUS_CONVERTED = 13;
+	const STATUS_REALIZED = 14;
 
 
 	/**
@@ -944,12 +946,16 @@ class Chiffrage extends CommonObject
 			$this->labelStatus[self::STATUS_ESTIMATED] = $langs->trans('CHIEstimated');
 			$this->labelStatus[self::STATUS_PROPOSED] = $langs->trans('CHIProposed');
 			$this->labelStatus[self::STATUS_SOLD] = $langs->trans('CHISold');
+			$this->labelStatus[self::STATUS_CONVERTED] = $langs->trans('CHIConverted');
+			$this->labelStatus[self::STATUS_REALIZED] = $langs->trans('CHIRealized');
 			$this->labelStatusShort[self::STATUS_DRAFT] = $langs->trans('Draft');
 			$this->labelStatusShort[self::STATUS_VALIDATED] = $langs->trans('CHIValidated');
 			$this->labelStatusShort[self::STATUS_CANCELED] = $langs->trans('Disabled');
 			$this->labelStatusShort[self::STATUS_ESTIMATED] = $langs->trans('CHIEstimated');
 			$this->labelStatusShort[self::STATUS_PROPOSED] = $langs->trans('CHIProposed');
 			$this->labelStatusShort[self::STATUS_SOLD] = $langs->trans('CHISold');
+			$this->labelStatusShort[self::STATUS_CONVERTED] = $langs->trans('CHIConverted');
+			$this->labelStatusShort[self::STATUS_REALIZED] = $langs->trans('CHIRealized');
 		}
 
 		$statusType = 'status'.$status;
@@ -959,6 +965,12 @@ class Chiffrage extends CommonObject
 		}
 		if ($status == self::STATUS_ESTIMATED) {
 			$statusType = 'status7';
+		}
+		if ($status == self::STATUS_REALIZED) {
+			$statusType = 'status4';
+		}
+		if ($status == self::STATUS_CONVERTED) {
+			$statusType = 'status6';
 		}
 
 		return dolGetStatus($this->labelStatus[$status], $this->labelStatusShort[$status], '', $statusType, $mode);

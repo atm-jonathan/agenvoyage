@@ -118,21 +118,67 @@ class InterfaceChiffragetrigger
         // Data and type of action are stored into $object and $action
 		if(! defined('INC_FROM_DOLIBARR')) define('INC_FROM_DOLIBARR', true);
 
+		switch ($action){
+			case 'TASK_MODIFY':
+				dol_syslog(
+					"Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id
+				);
 
-		if ($action == 'TASK_MODIFY')
-		{
-			dol_syslog(
-				"Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id
-			);
+				GETPOST($object->array_options['options_fk_chiffrage']);
+				$oldChiffrage = $object->oldcopy->array_options['options_fk_chiffrage'];
+				$fk_chiffrage = $object->array_options['options_fk_chiffrage'];
+				if($oldChiffrage != $fk_chiffrage){
+					$object->deleteObjectLinked($fk_chiffrage,'chiffrage', $object->id,'project_task');
+					$object->add_object_linked('chiffrage', $fk_chiffrage);
+				}
+				// si la tâche passe à 100 % de réalisation
+				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,1, $object->progress);
+				break;
+			case 'TASK_DELETE':
+				$this->setStatusForObject($object,Chiffrage::STATUS_ESTIMATED);
 
-			GETPOST($object->array_options['options_fk_chiffrage']);
-			$oldChiffrage = $object->oldcopy->array_options['options_fk_chiffrage'];
-			$fk_chiffrage = $object->array_options['options_fk_chiffrage'];
-			if($oldChiffrage != $fk_chiffrage){
-				$object->deleteObjectLinked($fk_chiffrage,'chiffrage', $object->id,'project_task');
-				$object->add_object_linked('chiffrage', $fk_chiffrage);
-			}
+
+				break;
+			case 'PROPAL_DELETE':
+				$this->setStatusForObject($object,Chiffrage::STATUS_ESTIMATED);
+				break;
+
+			case 'TASK_TIMESPENT_CREATE':
+				// si al tâche passe à 100 % de réalisation
+
+				dol_include_once('/chiffrage/class/chiffrage.class.php');
+				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,1, $object->progress);
+				break;
+
+			case 'TASK_TIMESPENT_MODIFY':
+				dol_include_once('/chiffrage/class/chiffrage.class.php');
+				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,1, $object->progress);
+				break;
 		}
+
         return 0;
     }
+
+
+
+	/**
+	 * @param $object
+	 * @param $tatus
+	 * @return void
+	 */
+	private function setStatusForObject(&$object, $status, $percent = 0, $progress = 0){
+
+		if ( ($percent && $progress == 100) ||  (!$percent && !$progress)){
+			$res  = $object->fetchObjectLinked($object->id);
+			if ($res > 0 ){
+				if (count($object->linkedObjectsIds['chiffrage_chiffrage']) > 0){
+					foreach ($object->linkedObjectsIds['chiffrage_chiffrage'] as $key => $value) {
+						$Chi = new Chiffrage($this->db);
+						$res = $Chi->fetch($value);
+						if ($res >  0) $Chi->setStatut($status);
+					}
+				}
+			}
+		}
+	}
 }
