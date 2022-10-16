@@ -172,11 +172,10 @@ class InterfaceChiffragetrigger
 			$res  = $object->fetchObjectLinked($object->id);
 			if ($res > 0 ){
 				if (count($object->linkedObjectsIds['chiffrage_chiffrage']) > 0){
-					foreach ($object->linkedObjectsIds['chiffrage_chiffrage'] as $key => $value) {
-						$Chi = new Chiffrage($this->db);
-						$res = $Chi->fetch($value);
-						if ($res >  0) $Chi->setStatut($status);
-					}
+					$tmp = reset($object->linkedObjectsIds['chiffrage_chiffrage']);
+					$Chi = new Chiffrage($this->db);
+					$res = $Chi->fetch($tmp);
+					if ($res >  0) $Chi->setStatut($status);
 				}
 			}
 		}
