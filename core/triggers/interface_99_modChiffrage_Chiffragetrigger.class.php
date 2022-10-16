@@ -37,7 +37,7 @@ class InterfaceChiffragetrigger
 {
 
     private $db;
-
+	const  PROGRESS_CHANGE = 1;
     /**
      * Constructor
      *
@@ -117,7 +117,7 @@ class InterfaceChiffragetrigger
         // Put here code you want to execute when a Dolibarr business events occurs.
         // Data and type of action are stored into $object and $action
 		if(! defined('INC_FROM_DOLIBARR')) define('INC_FROM_DOLIBARR', true);
-
+		dol_include_once('/chiffrage/class/chiffrage.class.php');
 		switch ($action){
 			case 'TASK_MODIFY':
 				dol_syslog(
@@ -131,28 +131,24 @@ class InterfaceChiffragetrigger
 					$object->deleteObjectLinked($fk_chiffrage,'chiffrage', $object->id,'project_task');
 					$object->add_object_linked('chiffrage', $fk_chiffrage);
 				}
-				// si la tâche passe à 100 % de réalisation
-				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,1, $object->progress);
+
+				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
 				break;
+
 			case 'TASK_DELETE':
 				$this->setStatusForObject($object,Chiffrage::STATUS_ESTIMATED);
-
-
 				break;
+
 			case 'PROPAL_DELETE':
 				$this->setStatusForObject($object,Chiffrage::STATUS_ESTIMATED);
 				break;
 
 			case 'TASK_TIMESPENT_CREATE':
-				// si al tâche passe à 100 % de réalisation
-
-				dol_include_once('/chiffrage/class/chiffrage.class.php');
-				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,1, $object->progress);
+				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
 				break;
 
 			case 'TASK_TIMESPENT_MODIFY':
-				dol_include_once('/chiffrage/class/chiffrage.class.php');
-				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,1, $object->progress);
+				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
 				break;
 		}
 
@@ -160,19 +156,21 @@ class InterfaceChiffragetrigger
     }
 
 
-
 	/**
 	 * @param $object
-	 * @param $tatus
+	 * @param $status
+	 * @param $progressChange
+	 * @param $progress
 	 * @return void
 	 */
-	private function setStatusForObject(&$object, $status, $percent = 0, $progress = 0){
+	private function setStatusForObject(&$object, $status, $progressChange = 0, $progress = 0){
 
-		if ( ($percent && $progress == 100) ||  (!$percent && !$progress)){
+		if ( ($progressChange && $progress == 100) ||  (!$progressChange && !$progress)){
 			$res  = $object->fetchObjectLinked($object->id);
 			if ($res > 0 ){
 				if (count($object->linkedObjectsIds['chiffrage_chiffrage']) > 0){
 					$tmp = reset($object->linkedObjectsIds['chiffrage_chiffrage']);
+
 					$Chi = new Chiffrage($this->db);
 					$res = $Chi->fetch($tmp);
 					if ($res >  0) $Chi->setStatut($status);

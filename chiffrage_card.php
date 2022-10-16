@@ -306,7 +306,7 @@ if (empty($reshook)) {
 						if ($res > 0) {
 
 							$object->add_object_linked('project_task', $taskFromChiffrage->id);
-							//
+
 							$object->setStatut($object::STATUS_CONVERTED);
 							$backtopage = dol_buildpath('/projet/tasks/task.php', 1) . '?id=' . $taskFromChiffrage->id;
 							header("Location: " . $backtopage);
