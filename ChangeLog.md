@@ -5,7 +5,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 - NEW : Ajout d'un onglet chiffrage sur la page des tiers *23/08/2022* 1.7.0
-
+- NEW : Changement de statut converti sur création de propal ou de tâche *17/10/2022* 1.7.0
+    - changement de statut réalisé si la tâche est à 100 % 
+    - retour au statut chiffré si supprésion propal ou tâche liée
+  
 ## Version 1.6
 
 - NEW : Ajout du champ "détail spécification fonctionnelle" *10/05/2022* 1.6.0

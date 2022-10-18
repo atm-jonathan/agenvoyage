@@ -37,7 +37,7 @@ class InterfaceChiffragetrigger
 {
 
     private $db;
-
+	const  PROGRESS_CHANGE = 1;
     /**
      * Constructor
      *
@@ -117,22 +117,70 @@ class InterfaceChiffragetrigger
         // Put here code you want to execute when a Dolibarr business events occurs.
         // Data and type of action are stored into $object and $action
 		if(! defined('INC_FROM_DOLIBARR')) define('INC_FROM_DOLIBARR', true);
+		dol_include_once('/chiffrage/class/chiffrage.class.php');
+		switch ($action){
+			case 'TASK_MODIFY':
+				dol_syslog(
+					"Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id
+				);
 
+				GETPOST($object->array_options['options_fk_chiffrage']);
+				$oldChiffrage = $object->oldcopy->array_options['options_fk_chiffrage'];
+				$fk_chiffrage = $object->array_options['options_fk_chiffrage'];
+				if($oldChiffrage != $fk_chiffrage){
+					$object->deleteObjectLinked($fk_chiffrage,'chiffrage', $object->id,'project_task');
+					$object->add_object_linked('chiffrage', $fk_chiffrage);
+				}
 
-		if ($action == 'TASK_MODIFY')
-		{
-			dol_syslog(
-				"Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id
-			);
+				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
+				break;
 
-			GETPOST($object->array_options['options_fk_chiffrage']);
-			$oldChiffrage = $object->oldcopy->array_options['options_fk_chiffrage'];
-			$fk_chiffrage = $object->array_options['options_fk_chiffrage'];
-			if($oldChiffrage != $fk_chiffrage){
-				$object->deleteObjectLinked($fk_chiffrage,'chiffrage', $object->id,'project_task');
-				$object->add_object_linked('chiffrage', $fk_chiffrage);
-			}
+			case 'TASK_DELETE':
+				$this->setStatusForObject($object,Chiffrage::STATUS_ESTIMATED);
+				break;
+
+			case 'PROPAL_DELETE':
+				$this->setStatusForObject($object,Chiffrage::STATUS_ESTIMATED);
+				break;
+
+			case 'TASK_TIMESPENT_CREATE':
+				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
+				break;
+
+			case 'TASK_TIMESPENT_MODIFY':
+				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
+				break;
 		}
+
         return 0;
     }
+
+
+	/**
+	 * @param $object
+	 * @param $status
+	 * @param $progressChange
+	 * @param $progress
+	 * @return void
+	 */
+	private function setStatusForObject(&$object, $status, $progressChange = 0, $progress = 0){
+		global $langs;
+
+		if ( ($progressChange && $progress == 100) ||  (!$progressChange && !$progress)){
+			$res  = $object->fetchObjectLinked($object->id);
+			if ($res > 0 ){
+				if (count($object->linkedObjectsIds['chiffrage_chiffrage']) > 0){
+					$chiId = reset($object->linkedObjectsIds['chiffrage_chiffrage']);
+					$Chi = new Chiffrage($this->db);
+					$res = $Chi->fetch($chiId);
+					if ($res >  0){
+						$Chi->setStatut($status);
+						setEventMessage($langs->transnoentities('CHITaskDeleteChangeStatusToEstimated', $Chi->getNomUrl(1, '', 0, 'ref'),$Chi->getLibStatut($status)));
+					}
+				}
+			}
+		}
+	}
+
+
 }
