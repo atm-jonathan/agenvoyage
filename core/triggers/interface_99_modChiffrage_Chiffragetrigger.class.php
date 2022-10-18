@@ -164,18 +164,23 @@ class InterfaceChiffragetrigger
 	 * @return void
 	 */
 	private function setStatusForObject(&$object, $status, $progressChange = 0, $progress = 0){
+		global $langs;
 
 		if ( ($progressChange && $progress == 100) ||  (!$progressChange && !$progress)){
 			$res  = $object->fetchObjectLinked($object->id);
 			if ($res > 0 ){
 				if (count($object->linkedObjectsIds['chiffrage_chiffrage']) > 0){
 					$tmp = reset($object->linkedObjectsIds['chiffrage_chiffrage']);
-
 					$Chi = new Chiffrage($this->db);
 					$res = $Chi->fetch($tmp);
-					if ($res >  0) $Chi->setStatut($status);
+					if ($res >  0){
+						$Chi->setStatut($status);
+						setEventMessage($langs->transnoentities('CHITaskDeleteChangeStatusToEstimated', $Chi->getNomUrl(1, '', 0, 'ref'),$Chi->getLibStatut($status)));
+					}
 				}
 			}
 		}
 	}
+
+
 }

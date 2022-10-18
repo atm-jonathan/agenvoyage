@@ -68,3 +68,4 @@ CHIConverted=Converti
 NotEnoughRights = Droits insuffisants
 ErrorOnCreatePropal = Création de la proposition commercial en erreur
 DetailedFeatureSpecification = Détail spécification fonctionnelle
+CHITaskDeleteChangeStatusToEstimated=Le Chiffrage associé %s est maintenant au statut %s
