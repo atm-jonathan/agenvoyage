@@ -170,9 +170,9 @@ class InterfaceChiffragetrigger
 			$res  = $object->fetchObjectLinked($object->id);
 			if ($res > 0 ){
 				if (count($object->linkedObjectsIds['chiffrage_chiffrage']) > 0){
-					$tmp = reset($object->linkedObjectsIds['chiffrage_chiffrage']);
+					$chiId = reset($object->linkedObjectsIds['chiffrage_chiffrage']);
 					$Chi = new Chiffrage($this->db);
-					$res = $Chi->fetch($tmp);
+					$res = $Chi->fetch($chiId);
 					if ($res >  0){
 						$Chi->setStatut($status);
 						setEventMessage($langs->transnoentities('CHITaskDeleteChangeStatusToEstimated', $Chi->getNomUrl(1, '', 0, 'ref'),$Chi->getLibStatut($status)));
