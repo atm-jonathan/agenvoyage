@@ -73,7 +73,7 @@ class modChiffrage extends DolibarrModules
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
 
-		$this->version = '1.7.1';
+		$this->version = '1.7.2';
 
 		// Url to the file with your last numberversion of this module
 		require_once __DIR__ . '/../../class/techatm.class.php';
@@ -566,7 +566,7 @@ class modChiffrage extends DolibarrModules
 		$extrafields = new ExtraFields($this->db);
 
 		$param = array ( 'options' => array ( 'Chiffrage:chiffrage/class/chiffrage.class.php' => NULL, ), );
-
+		$extrafields->addExtraField('fk_chiffrage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'commandedet', 0, 0, '', $param, 1);
 		$extrafields->addExtraField('fk_chiffrage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'propaldet', 0, 0, '', $param, 1);
 		$extrafields->addExtraField('fk_chiffrage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'projet_task', 0, 0, '', $param, 1);
 

@@ -8,7 +8,8 @@ All notable changes to this project will be documented in this file.
   
 ## version 1.7
 
-- FIX : Erreur dans la liste si plusieurs extrafields *31/03/2023* - 1.7.1
+- FIX : Erreur dans la liste si plusieurs extrafields *31/03/2023* - 1.7.2
+- FIX : Ajout d'un extrafield fk_chiffrage sur commandedet (effectuera le lien automatique du chiffrage vers la tâche  ) - *16/02/2023* - 1.7.1  
 - NEW : Ajout d'un onglet chiffrage sur la page des tiers *23/08/2022* 1.7.0
 - NEW : Changement de statut converti sur création de propal ou de tâche *17/10/2022* 1.7.0
   - changement de statut réalisé si la tâche est à 100 %
