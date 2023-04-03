@@ -7,12 +7,14 @@ All notable changes to this project will be documented in this file.
 
   
 ## version 1.7
+
+- FIX : Erreur dans la liste si plusieurs extrafields *31/03/2023* - 1.7.2
 - FIX : Ajout d'un extrafield fk_chiffrage sur commandedet (effectuera le lien automatique du chiffrage vers la tâche  ) - *16/02/2023* - 1.7.1  
 - NEW : Ajout d'un onglet chiffrage sur la page des tiers *23/08/2022* 1.7.0
 - NEW : Changement de statut converti sur création de propal ou de tâche *17/10/2022* 1.7.0
   - changement de statut réalisé si la tâche est à 100 %
   - retour au statut chiffré si supprésion propal ou tâche liée
-  - 
+
 ## Version 1.6
 
 - NEW : Ajout du champ "détail spécification fonctionnelle" *10/05/2022* 1.6.0
@@ -47,5 +49,4 @@ All notable changes to this project will be documented in this file.
 - FIX : Lien chiffrage / propale visible sur chiffrage après ajout avec l'action en masse *03/03/2022* - 1.0.3
 - FIX : Mots-clés : retirer la fonction MAJUSCULES *03/03/2022* - 1.0.2
 - FIX : Ajout des lignes sur la propal créé grâce au bouton "Créer Devis" depuis un chiffrage *15/02/2022* - 1.0.1
-Initial version
 
