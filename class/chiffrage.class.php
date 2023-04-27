@@ -221,7 +221,7 @@ class Chiffrage extends CommonObject
 			$this->fields['entity']['enabled'] = 0;
 		}
 
-		if ((float) DOL_VERSION >= 17 ){
+		if ( version_compare(DOL_VERSION,'17.0.0') > 0 ) {
 			$this->fields['po_estimate']['type'] = 'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))';
 			$this->fields['dev_estimate']['type'] = 'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))';
 			$this->fields['fk_soc']['type'] = 'integer:Societe:societe/class/societe.class.php:1:(status:=:1)';
