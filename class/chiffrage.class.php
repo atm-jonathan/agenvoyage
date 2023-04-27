@@ -104,7 +104,6 @@ class Chiffrage extends CommonObject
 	/**
 	 * @var array  Array with all fields and their property. Do not use it as a static var. It may be modified by constructor.
 	 */
-
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
 		'ref' => array('type'=>'varchar(40)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>1, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
@@ -130,7 +129,7 @@ class Chiffrage extends CommonObject
 		'commercial_text' => array('type'=>'html', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>53, 'notnull'=>1, 'visible'=>-1,'csslist'=>'fieldkeytoswitchonsecondcolumn'),
 		'detailed_feature_specification' => array('type'=>'html', 'label'=>'DetailedFeatureSpecification', 'enabled'=>'1', 'position'=>55, 'notnull'=>-1, 'visible'=>-1,'csslist'=>'fieldkeytoswitchonsecondcolumn'),
 		'tech_detail' => array('type'=>'html', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>-1),
-		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1 AND statut=1', 'label'=>'CHIDevEstimate','css'=>'minwidth200 maxwidth300 widthcentpercentminusx', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>5,),
+		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1', 'label'=>'CHIDevEstimate','css'=>'minwidth200 maxwidth300 widthcentpercentminusx', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>5,),
 		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:employee=1 AND statut=1', 'label'=>'CHIPOEstimate', 'enabled'=>'1','css'=>'minwidth200 maxwidth300 widthcentpercentminusx', 'position'=>30, 'notnull'=>1, 'visible'=>1,),
 		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
 		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>56, 'notnull'=>0, 'visible'=>1,'showoncombobox'=>'0','css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
@@ -219,12 +218,6 @@ class Chiffrage extends CommonObject
 		}
 		if (empty($conf->multicompany->enabled) && isset($this->fields['entity'])) {
 			$this->fields['entity']['enabled'] = 0;
-		}
-
-		if ((float) DOL_VERSION >= 17 ){
-			$this->fields['po_estimate']['type'] = 'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))';
-			$this->fields['dev_estimate']['type'] = 'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))';
-			$this->fields['fk_soc']['type'] = 'integer:Societe:societe/class/societe.class.php:1:(status:=:1)';
 		}
 
 		// Example to show how to set values of fields definition dynamically
