@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 
   
 ## version 1.7
-
+- FIX : CHANGMENT DE SYNTAXE  sur les fields en version > 17.0.2 dolibarr - *27/04/2023* - 1.7.3  
 - FIX : Erreur dans la liste si plusieurs extrafields *31/03/2023* - 1.7.2
 - FIX : Ajout d'un extrafield fk_chiffrage sur commandedet (effectuera le lien automatique du chiffrage vers la tâche  ) - *16/02/2023* - 1.7.1  
 - NEW : Ajout d'un onglet chiffrage sur la page des tiers *23/08/2022* 1.7.0
