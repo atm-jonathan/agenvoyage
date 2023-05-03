@@ -677,7 +677,11 @@ if ($massaction == 'preaddpropal') {
 	print '<div class="select-mass-action-container warning"  >';
 	print '<h4>' . $langs->trans('CHIMassActionValidation') . '</h4>';
 
-	print $form->selectForForms('Propal:comm/propal/class/propal.class.php:1:t.fk_statut=' . Propal::STATUS_DRAFT, 'target_fk_propal', '', 1, '', '');
+	$filter = 'Propal:comm/propal/class/propal.class.php:1:t.fk_statut=' . Propal::STATUS_DRAFT;
+	if ( version_compare(DOL_VERSION,'17.0.0') > 0 ) {
+		$filter = 'Propal:comm/propal/class/propal.class.php:1:(fk_statut:=:' . Propal::STATUS_DRAFT.')';
+	}
+	print $form->selectForForms($filter, 'target_fk_propal', '', 1, '', '');
 
 
 	print '<button class="button" type="submit" name="action" value="confirm-add-propal"  >' . $langs->trans('Valid') . '</button>';
@@ -698,8 +702,12 @@ if ($massaction == 'preaddtasktoproject') {
 	print '<input type="hidden" name="token" value="' . newToken() . '" />';
 	print '<div class="select-mass-action-container warning"  >';
 	print '<h4>' . $langs->trans('CHIMassActionValidationProject') . '</h4>';
+	if ( version_compare(DOL_VERSION,'17.0.0') > 0 ) {
+		print $form->selectForForms('Project:projet/class/project.class.php:1:(fk_statut:!=:' . Project::STATUS_CLOSED, 'target_fk_projet)', '', 1, '', '');
+	}else{
+		print $form->selectForForms('Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED, 'target_fk_projet', '', 1, '', '');
+	}
 
-	print $form->selectForForms('Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED, 'target_fk_projet', '', 1, '', '');
 
 	print '<button class="button" type="submit" name="action" value="confirm-add-to-project"  >' . $langs->trans('Valid') . '</button>';
 	print '<button class="button" type="submit" name="action" value="cancel"  >' . $langs->trans('Cancel') . '</button>';
