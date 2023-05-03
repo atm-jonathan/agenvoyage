@@ -135,6 +135,7 @@ class Chiffrage extends CommonObject
 		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>56, 'notnull'=>0, 'visible'=>1,'showoncombobox'=>'0','css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
 		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5, 'help'=>"CHIHelpEstimateDate",),
 	);
+
 	public $rowid;
 	public $ref;
 	public $label;
