@@ -705,7 +705,7 @@ if ($massaction == 'preaddtasktoproject') {
 	$filters = 'Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED;
 
 	if ( version_compare(DOL_VERSION,'17.0.0') > 0 ) {
-		$filters = 'Project:projet/class/project.class.php:1:(fk_statut:!=:' . Project::STATUS_CLOSED;
+		$filters = 'Project:projet/class/project.class.php:1:(fk_statut:!=:' . Project::STATUS_CLOSED . ')';
 	}
 	print $form->selectForForms('Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED, 'target_fk_projet', '', 1, '', '');
 
