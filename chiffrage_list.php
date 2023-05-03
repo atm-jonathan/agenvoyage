@@ -702,12 +702,12 @@ if ($massaction == 'preaddtasktoproject') {
 	print '<input type="hidden" name="token" value="' . newToken() . '" />';
 	print '<div class="select-mass-action-container warning"  >';
 	print '<h4>' . $langs->trans('CHIMassActionValidationProject') . '</h4>';
-	if ( version_compare(DOL_VERSION,'17.0.0') > 0 ) {
-		print $form->selectForForms('Project:projet/class/project.class.php:1:(fk_statut:!=:' . Project::STATUS_CLOSED, 'target_fk_projet)', '', 1, '', '');
-	}else{
-		print $form->selectForForms('Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED, 'target_fk_projet', '', 1, '', '');
-	}
+	$filters = 'Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED;
 
+	if ( version_compare(DOL_VERSION,'17.0.0') > 0 ) {
+		$filters = 'Project:projet/class/project.class.php:1:(fk_statut:!=:' . Project::STATUS_CLOSED;
+	}
+	print $form->selectForForms('Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED, 'target_fk_projet', '', 1, '', '');
 
 	print '<button class="button" type="submit" name="action" value="confirm-add-to-project"  >' . $langs->trans('Valid') . '</button>';
 	print '<button class="button" type="submit" name="action" value="cancel"  >' . $langs->trans('Cancel') . '</button>';
