@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
   
 ## version 1.7
+- FIX : déclaration des fields - *05/06/2023* - 1.7.5
 - FIX : changement de syntaxe dans les filtres de selectForForms - *03/05/2023* - 1.7.4
 - FIX : change syntaxe  - *27/04/2023* - 1.7.3  
 - FIX : Erreur dans la liste si plusieurs extrafields *31/03/2023* - 1.7.2

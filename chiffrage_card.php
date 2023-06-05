@@ -594,7 +594,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 				'type' => 'other',
 				'name' => 'fk_projet',
 			'label' => $langs->trans("CHISelectProject"),
-			'value' => $form->selectForForms('Project:projet/class/project.class.php:1:t.fk_statut!=' . Project::STATUS_CLOSED, 'fk_projet',$object->fk_project, 1, '', '', "form-project")
+			'value' => $form->selectForForms('Project:projet/class/project.class.php:1:(t.fk_statut:!=:' . Project::STATUS_CLOSED . ')', 'fk_projet',$object->fk_project, 1, '', '', "form-project")
 		)
 		);
 		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('CHITaskCreate'), $langs->trans('ConfirmCreateObject'), 'confirm_create_task', $formquestion, 0, 1);
