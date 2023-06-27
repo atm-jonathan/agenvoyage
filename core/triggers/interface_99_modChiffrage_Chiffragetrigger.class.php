@@ -169,7 +169,7 @@ class InterfaceChiffragetrigger
 		if ( ($progressChange && $progress == 100) ||  (!$progressChange && !$progress)){
 			$res  = $object->fetchObjectLinked($object->id);
 			if ($res > 0 ){
-				if (count($object->linkedObjectsIds['chiffrage_chiffrage']) > 0){
+				if (is_array($object->linkedObjectsIds['chiffrage_chiffrage']) &&  count($object->linkedObjectsIds['chiffrage_chiffrage']) > 0){
 					$chiId = reset($object->linkedObjectsIds['chiffrage_chiffrage']);
 					$Chi = new Chiffrage($this->db);
 					$res = $Chi->fetch($chiId);
