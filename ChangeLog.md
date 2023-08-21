@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+
+## version 1.8
+
 - NEW : Ajout des status "Converti" et "Réalisé" dans le filtre de la liste et le menu - *04/08/2023* - 1.8.0
   
 ## version 1.7
