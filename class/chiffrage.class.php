@@ -125,7 +125,7 @@ class Chiffrage extends CommonObject
 		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
 		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
 		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'notnull'=>1, 'position'=>1000, 'visible'=>5, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;','10'=>'CHIEstimated',),),
+		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'notnull'=>1, 'position'=>1000, 'visible'=>5, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;','10'=>'CHIEstimated','13'=>'CHIConverted','14'=>'CHIRealized'),),
 		'commercial_text' => array('type'=>'html', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>53, 'notnull'=>1, 'visible'=>-1,'csslist'=>'fieldkeytoswitchonsecondcolumn'),
 		'detailed_feature_specification' => array('type'=>'html', 'label'=>'DetailedFeatureSpecification', 'enabled'=>'1', 'position'=>55, 'notnull'=>-1, 'visible'=>-1,'csslist'=>'fieldkeytoswitchonsecondcolumn'),
 		'tech_detail' => array('type'=>'html', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>-1),

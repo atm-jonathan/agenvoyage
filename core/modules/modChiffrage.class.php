@@ -73,7 +73,7 @@ class modChiffrage extends DolibarrModules
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
 
-		$this->version = '1.7.6';
+		$this->version = '1.8.0';
 
 		// Url to the file with your last numberversion of this module
 		require_once __DIR__ . '/../../class/techatm.class.php';
@@ -405,6 +405,37 @@ class modChiffrage extends DolibarrModules
             'target'=>'',
             'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
         );
+
+		$this->menu[$r++]=array(
+			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage_chiffrage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'type'=>'left',			                // This is a Left menu entry
+			'titre'=>'CHIConverted',
+			'mainmenu'=>'project',
+			'leftmenu'=>'chiffrage_chiffrage_list_converted',
+			'url'=>'/chiffrage/chiffrage_list.php?leftmenu=chiffrage&search_status=13',
+			'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'position'=>1000+$r,
+			'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+			'target'=>'',
+			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
+		);
+
+
+		$this->menu[$r++]=array(
+			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage_chiffrage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'type'=>'left',			                // This is a Left menu entry
+			'titre'=>'CHIRealized',
+			'mainmenu'=>'project',
+			'leftmenu'=>'chiffrage_chiffrage_list_realized',
+			'url'=>'/chiffrage/chiffrage_list.php?leftmenu=chiffrage&search_status=14',
+			'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'position'=>1000+$r,
+			'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+			'target'=>'',
+			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
+		);
 
 
 //        $this->menu[$r++]=array(

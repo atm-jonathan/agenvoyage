@@ -5,8 +5,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- NEW : Ajout des status "Converti" et "Réalisé" dans le filtre de la liste et le menu - *04/08/2023* - 1.8.0
   
 ## version 1.7
+
 - FIX : déclaration des fields - *05/06/2023* - 1.7.6
 - FIX : ajout du test sur array avant count  - *27/06/2023* - 1.7.5   
 - FIX : changement de syntaxe dans les filtres de selectForForms - *03/05/2023* - 1.7.4
