@@ -383,7 +383,7 @@ if (empty($reshook)) {
             setEventMessage($langs->trans("CHIErrorTechDetail"), 'errors');
             $action = 'edit';
         }
-        if ($qty < 0) {
+        if ($qty < 0 && $qty != '') {
             setEventMessage($langs->trans("CHIErrorQty"), 'errors');
             $action = 'edit';
         }

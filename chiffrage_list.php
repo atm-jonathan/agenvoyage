@@ -653,7 +653,13 @@ print '<input type="hidden" name="page" value="' . $page . '">';
 print '<input type="hidden" name="contextpage" value="' . $contextpage . '">';
 print '<input type="hidden" name="socid" value="' . $socid . '">';
 
-$newcardbutton = dolGetButtonTitle($langs->trans('New'), '', 'fa fa-plus-circle', dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?action=create&backtopage=' . urlencode($_SERVER['PHP_SELF']), '', $permissiontoadd);
+$addparams = '';
+if(!empty($socid))
+{
+	$addparams = '&fk_soc='.$socid;
+}
+$linktoadd = dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?action=create' . $addparams;
+$newcardbutton = dolGetButtonTitle($langs->trans('New'), '', 'fa fa-plus-circle', $linktoadd, '', $permissiontoadd);
 
 print_barre_liste($title, $page, $_SERVER["PHP_SELF"], $param, $sortfield, $sortorder, $massactionbutton, $num, $nbtotalofrecords, 'object_chiffrage_titre@chiffrage', 0, $newcardbutton, '', $limit, 0, 0, 1);
 
