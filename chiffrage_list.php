@@ -131,10 +131,10 @@ $search_array_options = $extrafields->getOptionalsFromPost($object->table_elemen
 // Default sort order (if not yet defined by previous GETPOST)
 if (!$sortfield) {
 	reset($object->fields);                    // Reset is required to avoid key() to return null.
-	$sortfield = "t." . key($object->fields); // Set here default search field. By default 1st field in definition.
+	$sortfield = "t.tms"; // Set here default search field. By default 1st field in definition.
 }
 if (!$sortorder) {
-	$sortorder = "ASC";
+	$sortorder = "DESC";
 }
 
 // Initialize array of search criterias
@@ -653,7 +653,13 @@ print '<input type="hidden" name="page" value="' . $page . '">';
 print '<input type="hidden" name="contextpage" value="' . $contextpage . '">';
 print '<input type="hidden" name="socid" value="' . $socid . '">';
 
-$newcardbutton = dolGetButtonTitle($langs->trans('New'), '', 'fa fa-plus-circle', dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?action=create&backtopage=' . urlencode($_SERVER['PHP_SELF']), '', $permissiontoadd);
+$addparams = '';
+if(!empty($socid))
+{
+	$addparams = '&fk_soc='.$socid;
+}
+$linktoadd = dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?action=create' . $addparams;
+$newcardbutton = dolGetButtonTitle($langs->trans('New'), '', 'fa fa-plus-circle', $linktoadd, '', $permissiontoadd);
 
 print_barre_liste($title, $page, $_SERVER["PHP_SELF"], $param, $sortfield, $sortorder, $massactionbutton, $num, $nbtotalofrecords, 'object_chiffrage_titre@chiffrage', 0, $newcardbutton, '', $limit, 0, 0, 1);
 

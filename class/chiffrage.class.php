@@ -108,7 +108,6 @@ class Chiffrage extends CommonObject
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
 		'ref' => array('type'=>'varchar(40)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>1, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
         'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>1, 'visible'=>0, 'notnull'=> 1, 'default'=>1, 'index'=>1, 'position'=>20),
-		'label' => array('type'=>'varchar(160)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>0, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"Help text", 'showoncombobox'=>'2',),
 		'group_title' => array('type'=>'varchar(160)', 'label'=>'GroupTitle', 'enabled'=>'1', 'position'=>52, 'notnull'=>0, 'visible'=>0, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'0', 'help'=>"CHIHelpGroupTitle"),
 		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>0, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
 		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:(status:=:1)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>40, 'notnull'=>-1, 'visible'=>1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
@@ -138,7 +137,6 @@ class Chiffrage extends CommonObject
 
 	public $rowid;
 	public $ref;
-	public $label;
 	public $amount;
 	public $qty;
 	public $fk_soc;
@@ -219,6 +217,9 @@ class Chiffrage extends CommonObject
 		}
 		if (empty($conf->multicompany->enabled) && isset($this->fields['entity'])) {
 			$this->fields['entity']['enabled'] = 0;
+		}
+		if (empty($conf->webhost->enabled)) {
+			$this->fields['module_name']['enabled'] = 0;
 		}
 
 
@@ -311,9 +312,6 @@ class Chiffrage extends CommonObject
 		// Clear fields
 		if (property_exists($object, 'ref')) {
 			$object->ref = empty($this->fields['ref']['default']) ? "Copy_Of_".$object->ref : $this->fields['ref']['default'];
-		}
-		if (property_exists($object, 'label')) {
-			$object->label = empty($this->fields['label']['default']) ? $langs->trans("CopyOf")." ".$object->label : $this->fields['label']['default'];
 		}
 		if (property_exists($object, 'status')) {
 			$object->status = self::STATUS_DRAFT;
