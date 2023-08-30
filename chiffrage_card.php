@@ -83,6 +83,7 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formprojet.class.php';
 require_once DOL_DOCUMENT_ROOT."/ticket/class/ticket.class.php";
 require_once DOL_DOCUMENT_ROOT."/projet/class/task.class.php";
+require_once DOL_DOCUMENT_ROOT."/product/class/product.class.php";
 dol_include_once('/chiffrage/class/chiffrage.class.php');
 dol_include_once('/chiffrage/lib/chiffrage_chiffrage.lib.php');
 
