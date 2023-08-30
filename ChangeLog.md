@@ -5,15 +5,16 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+
+
+## version 1.8
+
 - FIX : Erreur 500 création tâche depuis chiffrage - *30/08/2023* - 1.8.7
 - FIX : Erreur php card à cause du champs module (lié à webhost) - *30/08/2023* - 1.8.6
 - FIX : Redirection sur card après création grâce au + sur une liste de chiffrage - *30/08/2023* - 1.8.5
 - FIX : Pré-remplissage du champs tiers suite à une création depuis la fiche tiers - *30/08/2023* - 1.8.4
 - FIX : Ordonner la liste par dernière date de modification par défaut - *30/08/2023* - 1.8.3
 - FIX : Après clône, message erreur qté ne peuvent être inférieures à zero alors que défini sur vide - *30/08/2023* - 1.8.2
-
-## version 1.8
-
 - NEW : Ajout des status "Converti" et "Réalisé" dans le filtre de la liste et le menu - *04/08/2023* - 1.8.0
   
 ## version 1.7
