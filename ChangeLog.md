@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## version 1.8.1
+
+- FIX : Erreur 500 création tâche depuis chiffrage - *30/08/2023* - 1.8.2
+- FIX : Erreur php card à cause du champs module (lié à webhost) - *30/08/2023* - 1.8.2
+- FIX : Redirection sur card après création grâce au + sur une liste de chiffrage - *30/08/2023* - 1.8.2
+- FIX : Pré-remplissage du champs tiers suite à une création depuis la fiche tiers - *30/08/2023* - 1.8.2
+- FIX : Ordonner la liste par dernière date de modification par défaut - *30/08/2023* - 1.8.2
+- FIX : Après clône, message erreur qté ne peuvent être inférieures à zero alors que défini sur vide - *30/08/2023* - 1.8.2
 
 ## version 1.8
 
