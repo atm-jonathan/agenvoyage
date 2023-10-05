@@ -45,7 +45,7 @@ class modVoyage extends DolibarrModules
 
 		// Id for module (must be unique).
 		// Use here a free id (See in Home -> System information -> Dolibarr for list of used modules id).
-		$this->numero = 104096; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
+		$this->numero = 104098; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
 
 		// Key text used to identify module (for permissions, menus, etc...)
 		$this->rights_class = 'voyage';
@@ -210,29 +210,27 @@ class modVoyage extends DolibarrModules
 
 		// Dictionaries
 		$this->dictionaries = array();
-		/* Example:
 		$this->dictionaries=array(
 			'langs'=>'voyage@voyage',
 			// List of tables we want to see into dictonnary editor
-			'tabname'=>array(MAIN_DB_PREFIX."table1", MAIN_DB_PREFIX."table2", MAIN_DB_PREFIX."table3"),
+			'tabname'=>array(MAIN_DB_PREFIX."c_mode_transport"),
 			// Label of tables
-			'tablib'=>array("Table1", "Table2", "Table3"),
+			'tablib'=>array("Mode de transport"),
 			// Request to select fields
-			'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'table1 as f', 'SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'table2 as f', 'SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'table3 as f'),
+			'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'c_mode_transport as f'),
 			// Sort order
-			'tabsqlsort'=>array("label ASC", "label ASC", "label ASC"),
+			'tabsqlsort'=>array("label ASC"),
 			// List of fields (result of select to show dictionary)
-			'tabfield'=>array("code,label", "code,label", "code,label"),
+			'tabfield'=>array("code,label"),
 			// List of fields (list of fields to edit a record)
-			'tabfieldvalue'=>array("code,label", "code,label", "code,label"),
+			'tabfieldvalue'=>array("code,label"),
 			// List of fields (list of fields for insert)
-			'tabfieldinsert'=>array("code,label", "code,label", "code,label"),
+			'tabfieldinsert'=>array("code,label"),
 			// Name of columns with primary key (try to always name it 'rowid')
-			'tabrowid'=>array("rowid", "rowid", "rowid"),
+			'tabrowid'=>array("rowid"),
 			// Condition to show each dictionary
 			'tabcond'=>array($conf->voyage->enabled, $conf->voyage->enabled, $conf->voyage->enabled)
 		);
-		*/
 
 		// Boxes/Widgets
 		// Add here list of php file(s) stored in voyage/core/boxes that contains a class to show a widget.
@@ -275,17 +273,20 @@ class modVoyage extends DolibarrModules
 		/* BEGIN MODULEBUILDER PERMISSIONS */
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'label'; // Permission label
-		$this->rights[$r][4] = 'voyage';
+        $this->rights[$r][3] = 0;
+        $this->rights[$r][4] = 'voyage';
 		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->voyage->voyage->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = $langs->trans("CreateUpdateobjectsofVoyage"); // Permission label
-		$this->rights[$r][4] = 'voyage';
+        $this->rights[$r][3] = 0;
+        $this->rights[$r][4] = 'voyage';
 		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->voyage->voyage->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = $langs->trans("DeleteobjectsofVoyage"); // Permission label
-		$this->rights[$r][4] = 'voyage';
+        $this->rights[$r][3] = 0;
+        $this->rights[$r][4] = 'voyage';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->voyage->voyage->delete)
 		$r++;
 		/* END MODULEBUILDER PERMISSIONS */
@@ -302,7 +303,7 @@ class modVoyage extends DolibarrModules
 			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
 			'mainmenu'=>'voyage',
 			'leftmenu'=>'',
-			'url'=>'/voyage/voyageindex.php',
+			'url'=>'/voyage/voyage_list.php',
 			'langs'=>'voyage@voyage', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000 + $r,
 			'enabled'=>'$conf->voyage->enabled', // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled.
@@ -318,7 +319,7 @@ class modVoyage extends DolibarrModules
 			'type'=>'left',                          // This is a Top menu entry
 			'titre'=>'Voyage',
 			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
-			'mainmenu'=>'project',
+			'mainmenu'=>'voyage',
 			'leftmenu'=>'voyage',
             'url'=>'/voyage/voyage_list.php',
 			'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
@@ -331,10 +332,10 @@ class modVoyage extends DolibarrModules
 		);
 
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=voyage,fk_leftmenu=voyage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
 			'titre'=>'NewVoyage',
-			'mainmenu'=>'project',
+			'mainmenu'=>'voyage',
 			'leftmenu'=>'voyage_voyage_new',
 			'url'=>'/voyage/voyage_card.php?action=create',
 			'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
@@ -346,10 +347,10 @@ class modVoyage extends DolibarrModules
 		);
 
         $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=voyage,fk_leftmenu=voyage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',			                // This is a Left menu entry
             'titre'=>'List_Voyage',
-            'mainmenu'=>'project',
+            'mainmenu'=>'voyage',
             'leftmenu'=>'voyage_voyage_list',
             'url'=>'/voyage/voyage_list.php',
             'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
@@ -361,10 +362,10 @@ class modVoyage extends DolibarrModules
         );
 
         $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=voyage,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',			                // This is a Left menu entry
             'titre'=>'Draft',
-            'mainmenu'=>'project',
+            'mainmenu'=>'voyage',
             'leftmenu'=>'voyage_voyage_list_draft',
             'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=0',
             'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
@@ -376,10 +377,10 @@ class modVoyage extends DolibarrModules
         );
 
         $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=voyage,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',			                // This is a Left menu entry
             'titre'=>'CHIValidated',
-            'mainmenu'=>'project',
+            'mainmenu'=>'voyage',
             'leftmenu'=>'voyage_voyage_list_validate',
             'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=1',
             'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
@@ -389,53 +390,6 @@ class modVoyage extends DolibarrModules
             'target'=>'',
             'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
         );
-
-
-        $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'type'=>'left',			                // This is a Left menu entry
-            'titre'=>'CHIEstimated',
-            'mainmenu'=>'project',
-            'leftmenu'=>'voyage_voyage_list_estimated',
-            'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=10',
-            'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'position'=>1000+$r,
-            'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
-            'target'=>'',
-            'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
-        );
-
-		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-			'type'=>'left',			                // This is a Left menu entry
-			'titre'=>'CHIConverted',
-			'mainmenu'=>'project',
-			'leftmenu'=>'voyage_voyage_list_converted',
-			'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=13',
-			'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-			'position'=>1000+$r,
-			'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
-			'target'=>'',
-			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
-		);
-
-
-		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-			'type'=>'left',			                // This is a Left menu entry
-			'titre'=>'CHIRealized',
-			'mainmenu'=>'project',
-			'leftmenu'=>'voyage_voyage_list_realized',
-			'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=14',
-			'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-			'position'=>1000+$r,
-			'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
-			'target'=>'',
-			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
-		);
 
 
 //        $this->menu[$r++]=array(
@@ -608,7 +562,7 @@ class modVoyage extends DolibarrModules
 		//$result5=$extrafields->addExtraField('voyage_myattr5', "New Attr 5 label", 'text',    1, 10, 'user',         0, 0, '', '', 1, '', 0, 0, '', '', 'voyage@voyage', '$conf->voyage->enabled');
 
 		// Permissions
-		$this->remove($options);
+//		$this->remove($options);
 
 		$sql = array();
 

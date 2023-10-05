@@ -1,0 +1,1 @@
+ALTER TABLE llx_c_mode_transport ADD UNIQUE INDEX uk_c_mode_transport(code);

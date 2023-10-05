@@ -472,8 +472,8 @@ $object->fields['fk_project']['visible'] = 0;
 
 // Part to create
 if ($action == 'create') {
-    $object->fields['fk_soc']['visible'] = 1;
-    $object->fields['fk_project']['visible'] = 1;
+    $object->fields['amount']['visible'] = 1;
+    $object->fields['fk_product']['visible'] = 0;
     print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("Voyage")), '', 'object_' . $object->picto);
 
     print '<form method="POST" action="' . $_SERVER["PHP_SELF"] . '">';

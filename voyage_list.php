@@ -626,8 +626,6 @@ $param .= $hookmanager->resPrint;
 $arrayofmassactions = array(
 	//TODO Mass action from voyage to propal lines
 	'validate' => img_picto('', 'check', 'class="pictofixedwidth"') . ' ' . $langs->trans("CHIValidate"),
-	'preaddpropal' => img_picto('', 'filenew', 'class="pictofixedwidth"') . ' ' . $langs->trans("CHIAddToPropal"),
-	'preaddtasktoproject' => img_picto('', 'filenew', 'class="pictofixedwidth"') . ' ' . $langs->trans("CHIAddTasksToProject"),
 	//'generate_doc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("ReGeneratePDF"),
 	//'builddoc'=>img_picto('', 'pdf', 'class="pictofixedwidth"').$langs->trans("PDFMerge"),
 	//'presend'=>img_picto('', 'email', 'class="pictofixedwidth"').$langs->trans("SendByMail"),
