@@ -17,8 +17,8 @@
  */
 
 /**
- * 	\file		core/triggers/interface_99_modMyodule_Chiffragetrigger.class.php
- * 	\ingroup	chiffrage
+ * 	\file		core/triggers/interface_99_modMyodule_Voyagetrigger.class.php
+ * 	\ingroup	voyage
  * 	\brief		Sample trigger
  * 	\remarks	You can create other triggers by copying this one
  * 				- File name should be either:
@@ -33,7 +33,7 @@
 /**
  * Trigger class
  */
-class InterfaceChiffragetrigger
+class InterfaceVoyagetrigger
 {
 
     private $db;
@@ -54,7 +54,7 @@ class InterfaceChiffragetrigger
             . "They are provided for tutorial purpose only.";
         // 'development', 'experimental', 'dolibarr' or version
         $this->version = 'development';
-        $this->picto = 'chiffrage@chiffrage';
+        $this->picto = 'voyage@voyage';
     }
 
     /**
@@ -117,38 +117,38 @@ class InterfaceChiffragetrigger
         // Put here code you want to execute when a Dolibarr business events occurs.
         // Data and type of action are stored into $object and $action
 		if(! defined('INC_FROM_DOLIBARR')) define('INC_FROM_DOLIBARR', true);
-		dol_include_once('/chiffrage/class/chiffrage.class.php');
+		dol_include_once('/voyage/class/voyage.class.php');
 		switch ($action){
 			case 'TASK_MODIFY':
 				dol_syslog(
 					"Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id
 				);
 
-				GETPOST($object->array_options['options_fk_chiffrage']);
-				$oldChiffrage = $object->oldcopy->array_options['options_fk_chiffrage'];
-				$fk_chiffrage = $object->array_options['options_fk_chiffrage'];
-				if($oldChiffrage != $fk_chiffrage){
-					$object->deleteObjectLinked($fk_chiffrage,'chiffrage', $object->id,'project_task');
-					$object->add_object_linked('chiffrage', $fk_chiffrage);
+				GETPOST($object->array_options['options_fk_voyage']);
+				$oldVoyage = $object->oldcopy->array_options['options_fk_voyage'];
+				$fk_voyage = $object->array_options['options_fk_voyage'];
+				if($oldVoyage != $fk_voyage){
+					$object->deleteObjectLinked($fk_voyage,'voyage', $object->id,'project_task');
+					$object->add_object_linked('voyage', $fk_voyage);
 				}
 
-				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
+				$this->setStatusForObject($object,Voyage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
 				break;
 
 			case 'TASK_DELETE':
-				$this->setStatusForObject($object,Chiffrage::STATUS_ESTIMATED);
+				$this->setStatusForObject($object,Voyage::STATUS_ESTIMATED);
 				break;
 
 			case 'PROPAL_DELETE':
-				$this->setStatusForObject($object,Chiffrage::STATUS_ESTIMATED);
+				$this->setStatusForObject($object,Voyage::STATUS_ESTIMATED);
 				break;
 
 			case 'TASK_TIMESPENT_CREATE':
-				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
+				$this->setStatusForObject($object,Voyage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
 				break;
 
 			case 'TASK_TIMESPENT_MODIFY':
-				$this->setStatusForObject($object,Chiffrage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
+				$this->setStatusForObject($object,Voyage::STATUS_REALIZED,self::PROGRESS_CHANGE, $object->progress);
 				break;
 		}
 
@@ -169,9 +169,9 @@ class InterfaceChiffragetrigger
 		if ( ($progressChange && $progress == 100) ||  (!$progressChange && !$progress)){
 			$res  = $object->fetchObjectLinked($object->id);
 			if ($res > 0 ){
-				if (is_array($object->linkedObjectsIds['chiffrage_chiffrage']) &&  count($object->linkedObjectsIds['chiffrage_chiffrage']) > 0){
-					$chiId = reset($object->linkedObjectsIds['chiffrage_chiffrage']);
-					$Chi = new Chiffrage($this->db);
+				if (is_array($object->linkedObjectsIds['voyage_voyage']) &&  count($object->linkedObjectsIds['voyage_voyage']) > 0){
+					$chiId = reset($object->linkedObjectsIds['voyage_voyage']);
+					$Chi = new Voyage($this->db);
 					$res = $Chi->fetch($chiId);
 					if ($res >  0){
 						$Chi->setStatut($status);

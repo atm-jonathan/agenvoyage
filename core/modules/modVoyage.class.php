@@ -19,19 +19,19 @@
  */
 
 /**
- * 	\defgroup   chiffrage     Module Chiffrage
- *  \brief      Chiffrage module descriptor.
+ * 	\defgroup   voyage     Module Voyage
+ *  \brief      Voyage module descriptor.
  *
- *  \file       htdocs/chiffrage/core/modules/modChiffrage.class.php
- *  \ingroup    chiffrage
- *  \brief      Description and activation file for module Chiffrage
+ *  \file       htdocs/voyage/core/modules/modVoyage.class.php
+ *  \ingroup    voyage
+ *  \brief      Description and activation file for module Voyage
  */
 include_once DOL_DOCUMENT_ROOT.'/core/modules/DolibarrModules.class.php';
 
 /**
- *  Description and activation class for module Chiffrage
+ *  Description and activation class for module Voyage
  */
-class modChiffrage extends DolibarrModules
+class modVoyage extends DolibarrModules
 {
 	/**
 	 * Constructor. Define names, constants, directories, boxes, permissions
@@ -48,7 +48,7 @@ class modChiffrage extends DolibarrModules
 		$this->numero = 104096; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
 
 		// Key text used to identify module (for permissions, menus, etc...)
-		$this->rights_class = 'chiffrage';
+		$this->rights_class = 'voyage';
 
 		// Family can be 'base' (core modules),'crm','financial','hr','projects','products','ecm','technic' (transverse modules),'interface' (link with external tools),'other','...'
 		// It is used to group modules by family in module setup page
@@ -59,13 +59,13 @@ class modChiffrage extends DolibarrModules
 
 		// Gives the possibility for the module, to provide his own family info and position of this family (Overwrite $this->family and $this->module_position. Avoid this)
 		//$this->familyinfo = array('myownfamily' => array('position' => '01', 'label' => $langs->trans("MyOwnFamily")));
-		// Module label (no space allowed), used if translation string 'ModuleChiffrageName' not found (Chiffrage is name of module).
+		// Module label (no space allowed), used if translation string 'ModuleVoyageName' not found (Voyage is name of module).
 		$this->name = preg_replace('/^mod/i', '', get_class($this));
 
-		// Module description, used if translation string 'ModuleChiffrageDesc' not found (Chiffrage is name of module).
-		$this->description = "CHIChiffrageDescription";
+		// Module description, used if translation string 'ModuleVoyageDesc' not found (Voyage is name of module).
+		$this->description = "CHIVoyageDescription";
 		// Used only if file README.md and README-LL.md not found.
-		$this->descriptionlong = "CHIChiffrageDescription";
+		$this->descriptionlong = "CHIVoyageDescription";
 
 		// Author
 		$this->editor_name = 'ATM Consulting';
@@ -77,16 +77,16 @@ class modChiffrage extends DolibarrModules
 
 		// Url to the file with your last numberversion of this module
 		require_once __DIR__ . '/../../class/techatm.class.php';
-		$this->url_last_version = \chiffrage\TechATM::getLastModuleVersionUrl($this);
+		$this->url_last_version = \voyage\TechATM::getLastModuleVersionUrl($this);
 
-		// Key used in llx_const table to save module status enabled/disabled (where CHIFFRAGE is value of property name of module in uppercase)
+		// Key used in llx_const table to save module status enabled/disabled (where VOYAGE is value of property name of module in uppercase)
 		$this->const_name = 'MAIN_MODULE_'.strtoupper($this->name);
 
 		// Name of image file used for this module.
 		// If file is in theme/yourtheme/img directory under name object_pictovalue.png, use this->picto='pictovalue'
 		// If file is in module/img directory under name object_pictovalue.png, use this->picto='pictovalue@module'
 		// To use a supported fa-xxx css style of font awesome, use this->picto='xxx'
-		$this->picto = 'chiffragemodule@chiffrage';
+		$this->picto = 'voyagemodule@voyage';
 
 		// Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
 		$this->module_parts = array(
@@ -110,11 +110,11 @@ class modChiffrage extends DolibarrModules
 			'theme' => 0,
 			// Set this to relative path of css file if module has its own css file
 			'css' => array(
-				//    '/chiffrage/css/chiffrage.css.php',
+				'/voyage/css/voyage.css.php',
 			),
 			// Set this to relative path of js file if module must load a js on all pages
 			'js' => array(
-				//   '/chiffrage/js/chiffrage.js.php',
+				'/voyage/js/voyage.js.php',
 			),
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
 			'hooks' => array(
@@ -126,11 +126,11 @@ class modChiffrage extends DolibarrModules
 		);
 
 		// Data directories to create when module is enabled.
-		// Example: this->dirs = array("/chiffrage/temp","/chiffrage/subdir");
-		$this->dirs = array("/chiffrage/temp");
+		// Example: this->dirs = array("/voyage/temp","/voyage/subdir");
+		$this->dirs = array("/voyage/temp");
 
-		// Config pages. Put here list of php page, stored into chiffrage/admin directory, to use to setup module.
-		$this->config_page_url = array("setup.php@chiffrage");
+		// Config pages. Put here list of php page, stored into voyage/admin directory, to use to setup module.
+		$this->config_page_url = array("setup.php@voyage");
 
 		// Dependencies
 		// A condition to hide module
@@ -141,7 +141,7 @@ class modChiffrage extends DolibarrModules
 		$this->conflictwith = array(); // List of module class names as string this module is in conflict with. Example: array('modModuleToDisable1', ...)
 
 		// The language file dedicated to your module
-		$this->langfiles = array("chiffrage@chiffrage");
+		$this->langfiles = array("voyage@voyage");
 
 		// Prerequisites
 		$this->phpmin = array(5, 6); // Minimum version of PHP required by module
@@ -150,20 +150,20 @@ class modChiffrage extends DolibarrModules
 		// Messages at activation
 		$this->warnings_activation = array(); // Warning to show when we activate module. array('always'='text') or array('FR'='textfr','ES'='textes'...)
 		$this->warnings_activation_ext = array(); // Warning to show when we activate an external module. array('always'='text') or array('FR'='textfr','ES'='textes'...)
-		//$this->automatic_activation = array('FR'=>'ChiffrageWasAutomaticallyActivatedBecauseOfYourCountryChoice');
+		//$this->automatic_activation = array('FR'=>'VoyageWasAutomaticallyActivatedBecauseOfYourCountryChoice');
 		//$this->always_enabled = true;								// If true, can't be disabled
 
 		// Constants
 		// List of particular constants to add when module is enabled (key, 'chaine', value, desc, visible, 'current' or 'allentities', deleteonunactive)
-		// Example: $this->const=array(1 => array('CHIFFRAGE_MYNEWCONST1', 'chaine', 'myvalue', 'This is a constant to add', 1),
-		//                             2 => array('CHIFFRAGE_MYNEWCONST2', 'chaine', 'myvalue', 'This is another constant to add', 0, 'current', 1)
+		// Example: $this->const=array(1 => array('VOYAGE_MYNEWCONST1', 'chaine', 'myvalue', 'This is a constant to add', 1),
+		//                             2 => array('VOYAGE_MYNEWCONST2', 'chaine', 'myvalue', 'This is another constant to add', 0, 'current', 1)
 		// );
 		$this->const = array();
 		$r = 0;
 
-		$this->const[$r][0] = "CHIFFRAGE_CHIFFRAGE_ADDON";
+		$this->const[$r][0] = "VOYAGE_VOYAGE_ADDON";
 		$this->const[$r][1] = "chaine";
-		$this->const[$r][2] = "mod_chiffrage_standard";
+		$this->const[$r][2] = "mod_voyage_standard";
 		$this->const[$r][3] = "";
 		$this->const[$r][4] = 0;
 
@@ -173,18 +173,18 @@ class modChiffrage extends DolibarrModules
 			'fr_FR:ParentCompany'=>'Maison mère ou revendeur'
 		)*/
 
-		if (!isset($conf->chiffrage) || !isset($conf->chiffrage->enabled)) {
-			$conf->chiffrage = new stdClass();
-			$conf->chiffrage->enabled = 0;
+		if (!isset($conf->voyage) || !isset($conf->voyage->enabled)) {
+			$conf->voyage = new stdClass();
+			$conf->voyage->enabled = 0;
 		}
 
 		// Array to add new pages in new tabs
 		$this->tabs = array(
-			'thirdparty:+tabChiffrage:Chiffrage:chiffrage@chiffrage:$user->rights->chiffrage->chiffrage->read:/chiffrage/chiffrage_list.php?socid=__ID__',
+			'thirdparty:+tabVoyage:Voyage:voyage@voyage:$user->rights->voyage->voyage->read:/voyage/voyage_list.php?socid=__ID__',
 		);
 		// Example:
-		// $this->tabs[] = array('data'=>'objecttype:+tabname1:Title1:mylangfile@chiffrage:$user->rights->chiffrage->read:/chiffrage/mynewtab1.php?id=__ID__');  					// To add a new tab identified by code tabname1
-		// $this->tabs[] = array('data'=>'objecttype:+tabname2:SUBSTITUTION_Title2:mylangfile@chiffrage:$user->rights->othermodule->read:/chiffrage/mynewtab2.php?id=__ID__',  	// To add another new tab identified by code tabname2. Label will be result of calling all substitution functions on 'Title2' key.
+		// $this->tabs[] = array('data'=>'objecttype:+tabname1:Title1:mylangfile@voyage:$user->rights->voyage->read:/voyage/mynewtab1.php?id=__ID__');  					// To add a new tab identified by code tabname1
+		// $this->tabs[] = array('data'=>'objecttype:+tabname2:SUBSTITUTION_Title2:mylangfile@voyage:$user->rights->othermodule->read:/voyage/mynewtab2.php?id=__ID__',  	// To add another new tab identified by code tabname2. Label will be result of calling all substitution functions on 'Title2' key.
 		// $this->tabs[] = array('data'=>'objecttype:-tabname:NU:conditiontoremove');                                                     										// To remove an existing tab identified by code tabname
 		//
 		// Where objecttype can be
@@ -212,7 +212,7 @@ class modChiffrage extends DolibarrModules
 		$this->dictionaries = array();
 		/* Example:
 		$this->dictionaries=array(
-			'langs'=>'chiffrage@chiffrage',
+			'langs'=>'voyage@voyage',
 			// List of tables we want to see into dictonnary editor
 			'tabname'=>array(MAIN_DB_PREFIX."table1", MAIN_DB_PREFIX."table2", MAIN_DB_PREFIX."table3"),
 			// Label of tables
@@ -230,16 +230,16 @@ class modChiffrage extends DolibarrModules
 			// Name of columns with primary key (try to always name it 'rowid')
 			'tabrowid'=>array("rowid", "rowid", "rowid"),
 			// Condition to show each dictionary
-			'tabcond'=>array($conf->chiffrage->enabled, $conf->chiffrage->enabled, $conf->chiffrage->enabled)
+			'tabcond'=>array($conf->voyage->enabled, $conf->voyage->enabled, $conf->voyage->enabled)
 		);
 		*/
 
 		// Boxes/Widgets
-		// Add here list of php file(s) stored in chiffrage/core/boxes that contains a class to show a widget.
+		// Add here list of php file(s) stored in voyage/core/boxes that contains a class to show a widget.
 		$this->boxes = array(
 			//  0 => array(
-			//      'file' => 'chiffragewidget1.php@chiffrage',
-			//      'note' => 'Widget provided by Chiffrage',
+			//      'file' => 'voyagewidget1.php@voyage',
+			//      'note' => 'Widget provided by Voyage',
 			//      'enabledbydefaulton' => 'Home',
 			//  ),
 			//  ...
@@ -251,21 +251,21 @@ class modChiffrage extends DolibarrModules
 			//  0 => array(
 			//      'label' => 'MyJob label',
 			//      'jobtype' => 'method',
-			//      'class' => '/chiffrage/class/chiffrage.class.php',
-			//      'objectname' => 'Chiffrage',
+			//      'class' => '/voyage/class/voyage.class.php',
+			//      'objectname' => 'Voyage',
 			//      'method' => 'doScheduledJob',
 			//      'parameters' => '',
 			//      'comment' => 'Comment',
 			//      'frequency' => 2,
 			//      'unitfrequency' => 3600,
 			//      'status' => 0,
-			//      'test' => '$conf->chiffrage->enabled',
+			//      'test' => '$conf->voyage->enabled',
 			//      'priority' => 50,
 			//  ),
 		);
 		// Example: $this->cronjobs=array(
-		//    0=>array('label'=>'My label', 'jobtype'=>'method', 'class'=>'/dir/class/file.class.php', 'objectname'=>'MyClass', 'method'=>'myMethod', 'parameters'=>'param1, param2', 'comment'=>'Comment', 'frequency'=>2, 'unitfrequency'=>3600, 'status'=>0, 'test'=>'$conf->chiffrage->enabled', 'priority'=>50),
-		//    1=>array('label'=>'My label', 'jobtype'=>'command', 'command'=>'', 'parameters'=>'param1, param2', 'comment'=>'Comment', 'frequency'=>1, 'unitfrequency'=>3600*24, 'status'=>0, 'test'=>'$conf->chiffrage->enabled', 'priority'=>50)
+		//    0=>array('label'=>'My label', 'jobtype'=>'method', 'class'=>'/dir/class/file.class.php', 'objectname'=>'MyClass', 'method'=>'myMethod', 'parameters'=>'param1, param2', 'comment'=>'Comment', 'frequency'=>2, 'unitfrequency'=>3600, 'status'=>0, 'test'=>'$conf->voyage->enabled', 'priority'=>50),
+		//    1=>array('label'=>'My label', 'jobtype'=>'command', 'command'=>'', 'parameters'=>'param1, param2', 'comment'=>'Comment', 'frequency'=>1, 'unitfrequency'=>3600*24, 'status'=>0, 'test'=>'$conf->voyage->enabled', 'priority'=>50)
 		// );
 
 		// Permissions provided by this module
@@ -274,19 +274,19 @@ class modChiffrage extends DolibarrModules
 		// Add here entries to declare new permissions
 		/* BEGIN MODULEBUILDER PERMISSIONS */
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = $langs->trans("ReadobjectsofChiffrage"); // Permission label
-		$this->rights[$r][4] = 'chiffrage';
-		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->chiffrage->chiffrage->read)
+		$this->rights[$r][1] = 'label'; // Permission label
+		$this->rights[$r][4] = 'voyage';
+		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->voyage->voyage->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = $langs->trans("CreateUpdateobjectsofChiffrage"); // Permission label
-		$this->rights[$r][4] = 'chiffrage';
-		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->chiffrage->chiffrage->write)
+		$this->rights[$r][1] = $langs->trans("CreateUpdateobjectsofVoyage"); // Permission label
+		$this->rights[$r][4] = 'voyage';
+		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->voyage->voyage->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = $langs->trans("DeleteobjectsofChiffrage"); // Permission label
-		$this->rights[$r][4] = 'chiffrage';
-		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->chiffrage->chiffrage->delete)
+		$this->rights[$r][1] = $langs->trans("DeleteobjectsofVoyage"); // Permission label
+		$this->rights[$r][4] = 'voyage';
+		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->voyage->voyage->delete)
 		$r++;
 		/* END MODULEBUILDER PERMISSIONS */
 
@@ -295,144 +295,144 @@ class modChiffrage extends DolibarrModules
 		$r = 0;
 		// Add here entries to declare new menus
 		/* BEGIN MODULEBUILDER TOPMENU */
-//		$this->menu[$r++] = array(
-//			'fk_menu'=>'', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-//			'type'=>'top', // This is a Top menu entry
-//			'titre'=>'ModuleChiffrageName',
-//			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
-//			'mainmenu'=>'chiffrage',
-//			'leftmenu'=>'',
-//			'url'=>'/chiffrage/chiffrageindex.php',
-//			'langs'=>'chiffrage@chiffrage', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-//			'position'=>1000 + $r,
-//			'enabled'=>'$conf->chiffrage->enabled', // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled.
-//			'perms'=>'1', // Use 'perms'=>'$user->rights->chiffrage->chiffrage->read' if you want your menu with a permission rules
-//			'target'=>'',
-//			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
-//		);
+		$this->menu[$r++] = array(
+			'fk_menu'=>'', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'type'=>'top', // This is a Top menu entry
+			'titre'=>'Mes voyages',
+			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
+			'mainmenu'=>'voyage',
+			'leftmenu'=>'',
+			'url'=>'/voyage/voyageindex.php',
+			'langs'=>'voyage@voyage', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'position'=>1000 + $r,
+			'enabled'=>'$conf->voyage->enabled', // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled.
+			'perms'=>'1', // Use 'perms'=>'$user->rights->voyage->voyage->read' if you want your menu with a permission rules
+			'target'=>'',
+			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
+		);
 		/* END MODULEBUILDER TOPMENU */
 
-		// BEGIN MODULEBUILDER LEFTMENU CHIFFRAGE
+		// BEGIN MODULEBUILDER LEFTMENU VOYAGE
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=project',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=voyage',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',                          // This is a Top menu entry
-			'titre'=>'Chiffrage',
+			'titre'=>'Voyage',
 			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
 			'mainmenu'=>'project',
-			'leftmenu'=>'chiffrage',
-            'url'=>'/chiffrage/chiffrage_list.php',
-			'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'leftmenu'=>'voyage',
+            'url'=>'/voyage/voyage_list.php',
+			'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
-			'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled.
-			'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+			'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled.
+			'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
 			'target'=>'',
-            'prefix' => '<span class="fas fa-comment-dollar em092 pictofixedwidth chiffrage-left-menu-picto" style="color: #7e7772;"></span>',
+            'prefix' => '<span class="fas fa-comment-dollar em092 pictofixedwidth voyage-left-menu-picto" style="color: #7e7772;"></span>',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
-			'titre'=>'NewChiffrage',
+			'titre'=>'NewVoyage',
 			'mainmenu'=>'project',
-			'leftmenu'=>'chiffrage_chiffrage_new',
-			'url'=>'/chiffrage/chiffrage_card.php?action=create',
-			'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'leftmenu'=>'voyage_voyage_new',
+			'url'=>'/voyage/voyage_card.php?action=create',
+			'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
-			'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->rights->chiffrage->chiffrage->write',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+			'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'perms'=>'$user->rights->voyage->voyage->write',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 
         $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',			                // This is a Left menu entry
-            'titre'=>'List_Chiffrage',
+            'titre'=>'List_Voyage',
             'mainmenu'=>'project',
-            'leftmenu'=>'chiffrage_chiffrage_list',
-            'url'=>'/chiffrage/chiffrage_list.php',
-            'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'leftmenu'=>'voyage_voyage_list',
+            'url'=>'/voyage/voyage_list.php',
+            'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'position'=>1000+$r,
-            'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+            'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
             'target'=>'',
             'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
         );
 
         $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage_chiffrage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',			                // This is a Left menu entry
             'titre'=>'Draft',
             'mainmenu'=>'project',
-            'leftmenu'=>'chiffrage_chiffrage_list_draft',
-            'url'=>'/chiffrage/chiffrage_list.php?leftmenu=chiffrage&search_status=0',
-            'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'leftmenu'=>'voyage_voyage_list_draft',
+            'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=0',
+            'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'position'=>1000+$r,
-            'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+            'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
             'target'=>'',
             'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
         );
 
         $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage_chiffrage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',			                // This is a Left menu entry
             'titre'=>'CHIValidated',
             'mainmenu'=>'project',
-            'leftmenu'=>'chiffrage_chiffrage_list_validate',
-            'url'=>'/chiffrage/chiffrage_list.php?leftmenu=chiffrage&search_status=1',
-            'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'leftmenu'=>'voyage_voyage_list_validate',
+            'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=1',
+            'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'position'=>1000+$r,
-            'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+            'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
             'target'=>'',
             'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
         );
 
 
         $this->menu[$r++]=array(
-            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage_chiffrage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'type'=>'left',			                // This is a Left menu entry
             'titre'=>'CHIEstimated',
             'mainmenu'=>'project',
-            'leftmenu'=>'chiffrage_chiffrage_list_estimated',
-            'url'=>'/chiffrage/chiffrage_list.php?leftmenu=chiffrage&search_status=10',
-            'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'leftmenu'=>'voyage_voyage_list_estimated',
+            'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=10',
+            'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'position'=>1000+$r,
-            'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+            'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
             'target'=>'',
             'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
         );
 
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage_chiffrage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
 			'titre'=>'CHIConverted',
 			'mainmenu'=>'project',
-			'leftmenu'=>'chiffrage_chiffrage_list_converted',
-			'url'=>'/chiffrage/chiffrage_list.php?leftmenu=chiffrage&search_status=13',
-			'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'leftmenu'=>'voyage_voyage_list_converted',
+			'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=13',
+			'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
-			'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+			'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 
 
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=chiffrage_chiffrage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=project,fk_leftmenu=voyage_voyage_list',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
 			'titre'=>'CHIRealized',
 			'mainmenu'=>'project',
-			'leftmenu'=>'chiffrage_chiffrage_list_realized',
-			'url'=>'/chiffrage/chiffrage_list.php?leftmenu=chiffrage&search_status=14',
-			'langs'=>'chiffrage@chiffrage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'leftmenu'=>'voyage_voyage_list_realized',
+			'url'=>'/voyage/voyage_list.php?leftmenu=voyage&search_status=14',
+			'langs'=>'voyage@voyage',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
-			'enabled'=>'$conf->chiffrage->enabled',  // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->rights->chiffrage->chiffrage->read',			                // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+			'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
@@ -440,19 +440,19 @@ class modChiffrage extends DolibarrModules
 
 //        $this->menu[$r++]=array(
 //            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-//            'fk_menu'=>'fk_mainmenu=chiffrage',
+//            'fk_menu'=>'fk_mainmenu=voyage',
 //            // This is a Left menu entry
 //            'type'=>'left',
-//            'titre'=>'Chiffrage',
-//            'mainmenu'=>'chiffrage',
-//            'leftmenu'=>'chiffrage_chiffrage',
-//            'url'=>'/chiffrage/chiffrageindex.php',
+//            'titre'=>'Voyage',
+//            'mainmenu'=>'voyage',
+//            'leftmenu'=>'voyage_voyage',
+//            'url'=>'/voyage/voyageindex.php',
 //            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-//            'langs'=>'chiffrage@chiffrage',
+//            'langs'=>'voyage@voyage',
 //            'position'=>1100+$r,
-//            // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-//            'enabled'=>'$conf->chiffrage->enabled',
-//            // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+//            // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+//            'enabled'=>'$conf->voyage->enabled',
+//            // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
 //            'perms'=>'1',
 //            'target'=>'',
 //            // 0=Menu for internal users, 1=external users, 2=both
@@ -460,19 +460,19 @@ class modChiffrage extends DolibarrModules
 //        );
 //        $this->menu[$r++]=array(
 //            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-//            'fk_menu'=>'fk_mainmenu=chiffrage,fk_leftmenu=chiffrage_chiffrage',
+//            'fk_menu'=>'fk_mainmenu=voyage,fk_leftmenu=voyage_voyage',
 //            // This is a Left menu entry
 //            'type'=>'left',
-//            'titre'=>'Nouveau Chiffrage',
-//            'mainmenu'=>'chiffrage',
-//            'leftmenu'=>'chiffrage',
-//            'url'=>'/chiffrage/chiffrage_card.php?action=create',
+//            'titre'=>'Nouveau Voyage',
+//            'mainmenu'=>'voyage',
+//            'leftmenu'=>'voyage',
+//            'url'=>'/voyage/voyage_card.php?action=create',
 //            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-//            'langs'=>'chiffrage@chiffrage',
+//            'langs'=>'voyage@voyage',
 //            'position'=>1100+$r,
-//            // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-//            'enabled'=>'$conf->chiffrage->enabled',
-//            // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+//            // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+//            'enabled'=>'$conf->voyage->enabled',
+//            // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
 //            'perms'=>'1',
 //            'target'=>'',
 //            // 0=Menu for internal users, 1=external users, 2=both
@@ -481,19 +481,19 @@ class modChiffrage extends DolibarrModules
 
 //        $this->menu[$r++]=array(
 //            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-//            'fk_menu'=>'fk_mainmenu=chiffrage,fk_leftmenu=chiffrage_chiffrage',
+//            'fk_menu'=>'fk_mainmenu=voyage,fk_leftmenu=voyage_voyage',
 //            // This is a Left menu entry
 //            'type'=>'left',
 //            'titre'=>'Liste',
-//            'mainmenu'=>'chiffrage',
-//            'leftmenu'=>'chiffrage',
-//            'url'=>'/chiffrage/chiffrage_list.php',
+//            'mainmenu'=>'voyage',
+//            'leftmenu'=>'voyage',
+//            'url'=>'/voyage/voyage_list.php',
 //            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-//            'langs'=>'chiffrage@chiffrage',
+//            'langs'=>'voyage@voyage',
 //            'position'=>1100+$r,
-//            // Define condition to show or hide menu entry. Use '$conf->chiffrage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-//            'enabled'=>'$conf->chiffrage->enabled',
-//            // Use 'perms'=>'$user->rights->chiffrage->level1->level2' if you want your menu with a permission rules
+//            // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+//            'enabled'=>'$conf->voyage->enabled',
+//            // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
 //            'perms'=>'1',
 //            'target'=>'',
 //            // 0=Menu for internal users, 1=external users, 2=both
@@ -506,8 +506,8 @@ class modChiffrage extends DolibarrModules
 //            'fk_menu'=>'fk_mainmenu=chifrage',			                // Put 0 if this is a top menu
 //            'type'=>'left',			                // This is a Top menu entry
 //            'titre'=>$langs->trans('TopMenuWebInstance'),
-//            'mainmenu'=>'chiffrage',
-//            'leftmenu'=>'chiffrage',
+//            'mainmenu'=>'voyage',
+//            'leftmenu'=>'voyage',
 //            'url'=>'/webhost/webinstance_list.php',
 //            'langs'=>'webhost@webhost',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 //            'position'=>1100+$r,
@@ -522,57 +522,57 @@ class modChiffrage extends DolibarrModules
 
 
 
-		/* END MODULEBUILDER LEFTMENU CHIFFRAGE */
+		/* END MODULEBUILDER LEFTMENU VOYAGE */
 		// Exports profiles provided by this module
 		$r = 1;
-		/* BEGIN MODULEBUILDER EXPORT CHIFFRAGE */
+		/* BEGIN MODULEBUILDER EXPORT VOYAGE */
 		/*
-		$langs->load("chiffrage@chiffrage");
+		$langs->load("voyage@voyage");
 		$this->export_code[$r]=$this->rights_class.'_'.$r;
-		$this->export_label[$r]='ChiffrageLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
-		$this->export_icon[$r]='chiffrage@chiffrage';
+		$this->export_label[$r]='VoyageLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
+		$this->export_icon[$r]='voyage@voyage';
 		// Define $this->export_fields_array, $this->export_TypeFields_array and $this->export_entities_array
-		$keyforclass = 'Chiffrage'; $keyforclassfile='/chiffrage/class/chiffrage.class.php'; $keyforelement='chiffrage@chiffrage';
+		$keyforclass = 'Voyage'; $keyforclassfile='/voyage/class/voyage.class.php'; $keyforelement='voyage@voyage';
 		include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
 		//$this->export_fields_array[$r]['t.fieldtoadd']='FieldToAdd'; $this->export_TypeFields_array[$r]['t.fieldtoadd']='Text';
 		//unset($this->export_fields_array[$r]['t.fieldtoremove']);
-		//$keyforclass = 'ChiffrageLine'; $keyforclassfile='/chiffrage/class/chiffrage.class.php'; $keyforelement='chiffrageline@chiffrage'; $keyforalias='tl';
+		//$keyforclass = 'VoyageLine'; $keyforclassfile='/voyage/class/voyage.class.php'; $keyforelement='voyageline@voyage'; $keyforalias='tl';
 		//include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		$keyforselect='chiffrage'; $keyforaliasextra='extra'; $keyforelement='chiffrage@chiffrage';
+		$keyforselect='voyage'; $keyforaliasextra='extra'; $keyforelement='voyage@voyage';
 		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$keyforselect='chiffrageline'; $keyforaliasextra='extraline'; $keyforelement='chiffrageline@chiffrage';
+		//$keyforselect='voyageline'; $keyforaliasextra='extraline'; $keyforelement='voyageline@voyage';
 		//include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$this->export_dependencies_array[$r] = array('chiffrageline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
+		//$this->export_dependencies_array[$r] = array('voyageline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
 		//$this->export_special_array[$r] = array('t.field'=>'...');
 		//$this->export_examplevalues_array[$r] = array('t.field'=>'Example');
 		//$this->export_help_array[$r] = array('t.field'=>'FieldDescHelp');
 		$this->export_sql_start[$r]='SELECT DISTINCT ';
-		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'chiffrage as t';
-		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'chiffrage_line as tl ON tl.fk_chiffrage = t.rowid';
+		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'voyage as t';
+		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'voyage_line as tl ON tl.fk_voyage = t.rowid';
 		$this->export_sql_end[$r] .=' WHERE 1 = 1';
-		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('chiffrage').')';
+		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('voyage').')';
 		$r++; */
-		/* END MODULEBUILDER EXPORT CHIFFRAGE */
+		/* END MODULEBUILDER EXPORT VOYAGE */
 
 		// Imports profiles provided by this module
 		$r = 1;
-		/* BEGIN MODULEBUILDER IMPORT CHIFFRAGE */
+		/* BEGIN MODULEBUILDER IMPORT VOYAGE */
 		/*
-		 $langs->load("chiffrage@chiffrage");
+		 $langs->load("voyage@voyage");
 		 $this->export_code[$r]=$this->rights_class.'_'.$r;
-		 $this->export_label[$r]='ChiffrageLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
-		 $this->export_icon[$r]='chiffrage@chiffrage';
-		 $keyforclass = 'Chiffrage'; $keyforclassfile='/chiffrage/class/chiffrage.class.php'; $keyforelement='chiffrage@chiffrage';
+		 $this->export_label[$r]='VoyageLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
+		 $this->export_icon[$r]='voyage@voyage';
+		 $keyforclass = 'Voyage'; $keyforclassfile='/voyage/class/voyage.class.php'; $keyforelement='voyage@voyage';
 		 include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		 $keyforselect='chiffrage'; $keyforaliasextra='extra'; $keyforelement='chiffrage@chiffrage';
+		 $keyforselect='voyage'; $keyforaliasextra='extra'; $keyforelement='voyage@voyage';
 		 include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
 		 //$this->export_dependencies_array[$r]=array('mysubobject'=>'ts.rowid', 't.myfield'=>array('t.myfield2','t.myfield3')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
 		 $this->export_sql_start[$r]='SELECT DISTINCT ';
-		 $this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'chiffrage as t';
+		 $this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'voyage as t';
 		 $this->export_sql_end[$r] .=' WHERE 1 = 1';
-		 $this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('chiffrage').')';
+		 $this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('voyage').')';
 		 $r++; */
-		/* END MODULEBUILDER IMPORT CHIFFRAGE */
+		/* END MODULEBUILDER IMPORT VOYAGE */
 	}
 
 	/**
@@ -587,7 +587,7 @@ class modChiffrage extends DolibarrModules
 	{
 		global $conf, $langs;
 
-		$result = $this->_load_tables('/chiffrage/sql/');
+		$result = $this->_load_tables('/voyage/sql/');
 		if ($result < 0) {
 			return -1; // Do not activate module if error 'not allowed' returned when loading module SQL queries (the _load_table run sql with run_sql with the error allowed parameter set to 'default')
 		}
@@ -596,16 +596,16 @@ class modChiffrage extends DolibarrModules
 		include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
 		$extrafields = new ExtraFields($this->db);
 
-		$param = array ( 'options' => array ( 'Chiffrage:chiffrage/class/chiffrage.class.php' => NULL, ), );
-		$extrafields->addExtraField('fk_chiffrage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'commandedet', 0, 0, '', $param, 1);
-		$extrafields->addExtraField('fk_chiffrage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'propaldet', 0, 0, '', $param, 1);
-		$extrafields->addExtraField('fk_chiffrage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'projet_task', 0, 0, '', $param, 1);
+		$param = array ( 'options' => array ( 'Voyage:voyage/class/voyage.class.php' => NULL, ), );
+		$extrafields->addExtraField('fk_voyage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'commandedet', 0, 0, '', $param, 1);
+		$extrafields->addExtraField('fk_voyage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'propaldet', 0, 0, '', $param, 1);
+		$extrafields->addExtraField('fk_voyage', $langs->trans("CHIAssociatedEstimated"), 'link', 100, '', 'projet_task', 0, 0, '', $param, 1);
 
-		//$result1=$extrafields->addExtraField('chiffrage_myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
-		//$result2=$extrafields->addExtraField('chiffrage_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
-		//$result3=$extrafields->addExtraField('chiffrage_myattr3', "New Attr 3 label", 'varchar', 1, 10, 'bank_account', 0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
-		//$result4=$extrafields->addExtraField('chiffrage_myattr4', "New Attr 4 label", 'select',  1,  3, 'thirdparty',   0, 1, '', array('options'=>array('code1'=>'Val1','code2'=>'Val2','code3'=>'Val3')), 1,'', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
-		//$result5=$extrafields->addExtraField('chiffrage_myattr5', "New Attr 5 label", 'text',    1, 10, 'user',         0, 0, '', '', 1, '', 0, 0, '', '', 'chiffrage@chiffrage', '$conf->chiffrage->enabled');
+		//$result1=$extrafields->addExtraField('voyage_myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'voyage@voyage', '$conf->voyage->enabled');
+		//$result2=$extrafields->addExtraField('voyage_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'voyage@voyage', '$conf->voyage->enabled');
+		//$result3=$extrafields->addExtraField('voyage_myattr3', "New Attr 3 label", 'varchar', 1, 10, 'bank_account', 0, 0, '', '', 1, '', 0, 0, '', '', 'voyage@voyage', '$conf->voyage->enabled');
+		//$result4=$extrafields->addExtraField('voyage_myattr4', "New Attr 4 label", 'select',  1,  3, 'thirdparty',   0, 1, '', array('options'=>array('code1'=>'Val1','code2'=>'Val2','code3'=>'Val3')), 1,'', 0, 0, '', '', 'voyage@voyage', '$conf->voyage->enabled');
+		//$result5=$extrafields->addExtraField('voyage_myattr5', "New Attr 5 label", 'text',    1, 10, 'user',         0, 0, '', '', 1, '', 0, 0, '', '', 'voyage@voyage', '$conf->voyage->enabled');
 
 		// Permissions
 		$this->remove($options);
@@ -613,18 +613,18 @@ class modChiffrage extends DolibarrModules
 		$sql = array();
 
 		// Document templates
-		$moduledir = 'chiffrage';
+		$moduledir = 'voyage';
 		$myTmpObjects = array();
-		$myTmpObjects['Chiffrage'] = array('includerefgeneration'=>0, 'includedocgeneration'=>0);
+		$myTmpObjects['Voyage'] = array('includerefgeneration'=>0, 'includedocgeneration'=>0);
 
 		foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {
-			if ($myTmpObjectKey == 'Chiffrage') {
+			if ($myTmpObjectKey == 'Voyage') {
 				continue;
 			}
 			if ($myTmpObjectArray['includerefgeneration']) {
-				$src = DOL_DOCUMENT_ROOT.'/install/doctemplates/chiffrage/template_chiffrages.odt';
-				$dirodt = DOL_DATA_ROOT.'/doctemplates/chiffrage';
-				$dest = $dirodt.'/template_chiffrages.odt';
+				$src = DOL_DOCUMENT_ROOT.'/install/doctemplates/voyage/template_voyages.odt';
+				$dirodt = DOL_DATA_ROOT.'/doctemplates/voyage';
+				$dest = $dirodt.'/template_voyages.odt';
 
 				if (file_exists($src) && !file_exists($dest)) {
 					require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';

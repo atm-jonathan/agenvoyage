@@ -21,18 +21,18 @@
  */
 
 /**
- * \file       htdocs/core/modules/chiffrage/mod_chiffrage_advanced.php
- * \ingroup    chiffrage
- * \brief      File containing class for advanced numbering model of Chiffrage
+ * \file       htdocs/core/modules/voyage/mod_voyage_advanced.php
+ * \ingroup    voyage
+ * \brief      File containing class for advanced numbering model of Voyage
  */
 
-dol_include_once('/chiffrage/core/modules/chiffrage/modules_chiffrage.php');
+dol_include_once('/voyage/core/modules/voyage/modules_voyage.php');
 
 
 /**
  *	Class to manage customer Bom numbering rules advanced
  */
-class mod_chiffrage_advanced extends ModeleNumRefChiffrage
+class mod_voyage_advanced extends ModeleNumRefvoyage
 {
 	/**
 	 * Dolibarr version of the loaded document
@@ -68,18 +68,18 @@ class mod_chiffrage_advanced extends ModeleNumRefChiffrage
 		$texte .= '<form action="'.$_SERVER["PHP_SELF"].'" method="POST">';
 		$texte .= '<input type="hidden" name="token" value="'.newToken().'">';
 		$texte .= '<input type="hidden" name="action" value="updateMask">';
-		$texte .= '<input type="hidden" name="maskconst" value="CHIFFRAGE_CHIFFRAGE_ADVANCED_MASK">';
+		$texte .= '<input type="hidden" name="maskconst" value="VOYAGE_VOYAGE_ADVANCED_MASK">';
 		$texte .= '<table class="nobordernopadding" width="100%">';
 
-		$tooltip = $langs->trans("GenericMaskCodes", $langs->transnoentities("Chiffrage"), $langs->transnoentities("Chiffrage"));
+		$tooltip = $langs->trans("GenericMaskCodes", $langs->transnoentities("Voyage"), $langs->transnoentities("Voyage"));
 		$tooltip .= $langs->trans("GenericMaskCodes2");
 		$tooltip .= $langs->trans("GenericMaskCodes3");
-		$tooltip .= $langs->trans("GenericMaskCodes4a", $langs->transnoentities("Chiffrage"), $langs->transnoentities("Chiffrage"));
+		$tooltip .= $langs->trans("GenericMaskCodes4a", $langs->transnoentities("Voyage"), $langs->transnoentities("Voyage"));
 		$tooltip .= $langs->trans("GenericMaskCodes5");
 
 		// Parametrage du prefix
 		$texte .= '<tr><td>'.$langs->trans("Mask").':</td>';
-		$texte .= '<td class="right">'.$form->textwithpicto('<input type="text" class="flat minwidth175" name="maskvalue" value="'.$conf->global->CHIFFRAGE_CHIFFRAGE_ADVANCED_MASK.'">', $tooltip, 1, 1).'</td>';
+		$texte .= '<td class="right">'.$form->textwithpicto('<input type="text" class="flat minwidth175" name="maskvalue" value="'.$conf->global->VOYAGE_VOYAGE_ADVANCED_MASK.'">', $tooltip, 1, 1).'</td>';
 
 		$texte .= '<td class="left" rowspan="2">&nbsp; <input type="submit" class="button" value="'.$langs->trans("Modify").'" name="Button"></td>';
 
@@ -100,7 +100,7 @@ class mod_chiffrage_advanced extends ModeleNumRefChiffrage
 	{
 		global $conf, $db, $langs, $mysoc;
 
-		$object = new Chiffrage($db);
+		$object = new Voyage($db);
 		$object->initAsSpecimen();
 
 		/*$old_code_client = $mysoc->code_client;
@@ -132,7 +132,7 @@ class mod_chiffrage_advanced extends ModeleNumRefChiffrage
 		require_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
 
 		// We get cursor rule
-		$mask = $conf->global->CHIFFRAGE_CHIFFRAGE_ADVANCED_MASK;
+		$mask = $conf->global->VOYAGE_VOYAGE_ADVANCED_MASK;
 
 		if (!$mask) {
 			$this->error = 'NotConfigured';
@@ -141,7 +141,7 @@ class mod_chiffrage_advanced extends ModeleNumRefChiffrage
 
 		$date = $object->date;
 
-		$numFinal = get_next_value($db, $mask, 'chiffrage_chiffrage', 'ref', '', null, $date);
+		$numFinal = get_next_value($db, $mask, 'voyage_voyage', 'ref', '', null, $date);
 
 		return  $numFinal;
 	}

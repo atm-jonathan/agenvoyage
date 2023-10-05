@@ -16,17 +16,17 @@
  */
 
 /**
- * \file    chiffrage/class/actions_chiffrage.class.php
- * \ingroup chiffrage
+ * \file    voyage/class/actions_voyage.class.php
+ * \ingroup voyage
  * \brief   Example hook overload.
  *
  * Put detailed description here.
  */
 
 /**
- * Class ActionsChiffrage
+ * Class ActionsVoyage
  */
-class ActionsChiffrage
+class ActionsVoyage
 {
 	/**
 	 * @var DoliDB Database handler.
@@ -114,7 +114,7 @@ class ActionsChiffrage
 
 		/* print_r($parameters); print_r($object); echo "action: " . $action; */
 		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
-			$this->resprints = '<option value="0"'.($disabled ? ' disabled="disabled"' : '').'>'.$langs->trans("ChiffrageMassAction").'</option>';
+			$this->resprints = '<option value="0"'.($disabled ? ' disabled="disabled"' : '').'>'.$langs->trans("VoyageMassAction").'</option>';
 		}
 
 		if (!$error) {
@@ -149,7 +149,7 @@ class ActionsChiffrage
 			// utilisé si on veut faire disparaitre des onglets.
 			return 0;
 		} elseif ($parameters['mode'] == 'add') {
-			$langs->load('chiffrage@chiffrage');
+			$langs->load('voyage@voyage');
 			// utilisé si on veut ajouter des onglets.
 			$counter = count($parameters['head']);
 			$element = $parameters['object']->element;
@@ -159,12 +159,12 @@ class ActionsChiffrage
 			if (in_array($element, ['context1', 'context2'])) {
 				$datacount = 0;
 
-				$parameters['head'][$counter][0] = dol_buildpath('/chiffrage/chiffrage_tab.php', 1) . '?id=' . $id . '&amp;module='.$element;
-				$parameters['head'][$counter][1] = $langs->trans('ChiffrageTab');
+				$parameters['head'][$counter][0] = dol_buildpath('/voyage/voyage_tab.php', 1) . '?id=' . $id . '&amp;module='.$element;
+				$parameters['head'][$counter][1] = $langs->trans('VoyageTab');
 				if ($datacount > 0) {
 					$parameters['head'][$counter][1] .= '<span class="badge marginleftonlyshort">' . $datacount . '</span>';
 				}
-				$parameters['head'][$counter][2] = 'chiffrageemails';
+				$parameters['head'][$counter][2] = 'voyageemails';
 				$counter++;
 			}
 			if ($counter > 0 && (int) DOL_VERSION < 14) {
@@ -194,9 +194,9 @@ class ActionsChiffrage
 
 		$context = explode(':', $parameters['context']);
 		if (in_array('ticketcard', $context)) {
-			$descriptionTicketChiffrage = $langs->trans('ChiffrageAskTicketTitle', $object->ref);
+			$descriptionTicketVoyage = $langs->trans('VoyageAskTicketTitle', $object->ref);
 			$urlTicket = dol_buildpath('/ticket/card.php?id='.$object->id,1);
-			print '<a class="butAction" href="'.dol_buildpath('/chiffrage/chiffrage_card.php?action=create', 1). '&fk_soc='.$object->fk_soc.'&module_name='.$object->array_options['options_fk_webmodule'].'&commercial_text='.urlencode($descriptionTicketChiffrage).'&fk_ticket='.$object->id.'&backtopage='.urlencode($urlTicket).'">'.$langs->trans("NewChiffrage").'</a>';
+			print '<a class="butAction" href="'.dol_buildpath('/voyage/voyage_card.php?action=create', 1). '&fk_soc='.$object->fk_soc.'&module_name='.$object->array_options['options_fk_webmodule'].'&commercial_text='.urlencode($descriptionTicketVoyage).'&fk_ticket='.$object->id.'&backtopage='.urlencode($urlTicket).'">'.$langs->trans("NewVoyage").'</a>';
 		}
 
 		return 0;

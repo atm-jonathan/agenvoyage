@@ -32,7 +32,7 @@ global $db,$user;
 $langs = $GLOBALS['langs'];
 $linkedObjectBlock = $GLOBALS['linkedObjectBlock'];
 
-$langs->load("chiffrage@chiffrage");
+$langs->load("voyage@voyage");
 ?>
 
 
@@ -42,10 +42,10 @@ $total=0;
 foreach($linkedObjectBlock as $key => $objectlink)
 {
 	$var=!$var;
-	/** @var Chiffrage $objectlink */
+	/** @var Voyage $objectlink */
 ?>
 <tr <?php echo $GLOBALS['bc'][$var]; ?> >
-    <td><?php echo $langs->trans('Chiffrage') ?></td>
+    <td><?php echo $langs->trans('Voyage') ?></td>
 	<td class="left"><?php echo $objectlink->getNomUrl(1); ?></td>
 	<td class="left"></td>
 	<td class="center"><?php print $objectlink->showOutputField($objectlink->fields['estimate_date'],'estimate_date', $objectlink->estimate_date) ?></td>
