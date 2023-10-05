@@ -247,120 +247,11 @@ if (empty($reshook)) {
 		}
 	}
 
-	// Action Création d'une tâche depuis un voyage
-	if ($action == 'confirm_create_task') {
-		$taskFromVoyage = new Task($db);
-		$taskFromVoyage->fk_project = GETPOST('fk_projet', 'int');
-		$labelTaskFromVoyage = new Product($db);
-		$resLabel = $labelTaskFromVoyage->fetch($object->fk_product);
 
-		if($resLabel > 0){
-			$projectFromVoyage = new Project($db);
-			$resProjectFromVoyage = $projectFromVoyage->fetch($taskFromVoyage->fk_project);
-			if ($resLabel > 0){
-				if ($projectFromVoyage->statut == Project::STATUS_CLOSED) {
-					setEventMessage($langs->trans("CHIErrorProjectClosed"), 'errors');
-				} else {
-					//Permet de générer le prochain numéro de référence
-					$obj = empty($conf->global->PROJECT_TASK_ADDON) ? 'mod_task_simple' : $conf->global->PROJECT_TASK_ADDON;
-					if (!empty($conf->global->PROJECT_TASK_ADDON) && is_readable(DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . ".php")) {
-						require_once DOL_DOCUMENT_ROOT . "/core/modules/project/task/" . $conf->global->PROJECT_TASK_ADDON . '.php';
-						$modTask = new $obj;
-						$defaultref = $modTask->getNextValue(0, $taskFromvoyage);
-					}
-
-					$taskFromvoyage->ref = $defaultref;
-					$taskFromvoyage->label = $labelTaskFromvoyage->label;
-					$taskFromvoyage->fk_task_parent = 0;
-
-					if(!empty($object->commercial_text)) {
-						if(!empty($taskFromvoyage->description)){
-							$taskFromvoyage->description.= "\n";
-						}
-						$taskFromvoyage->description .= '<h4>' . $langs->trans('CHICommercialText') . '</h4>'."\n";
-						$taskFromvoyage->description .= $object->commercial_text;
-					}
-
-					if(!empty($object->detailed_feature_specification)){
-						if(!empty($taskFromvoyage->description)){
-							$taskFromvoyage->description.= "\n";
-						}
-						$taskFromvoyage->description.= '<h4>'.$langs->trans('DetailedFeatureSpecification').'</h4>'."\n";
-						$taskFromvoyage->description.= $object->detailed_feature_specification;
-					}
-
-					if(!empty($object->tech_detail)){
-						if(!empty($taskFromvoyage->description)){
-							$taskFromvoyage->description.= "\n";
-						}
-						$taskFromvoyage->description.= '<h4>'.$langs->trans('CHITechDetail').'</h4>'."\n";
-						$taskFromvoyage->description.= $object->tech_detail;
-					}
-
-
-					//Ajout de l'extrafield voyage sur tâche en cours de création
-					$taskFromvoyage->array_options['options_fk_voyage'] = $object->id;
-
-					$taskFromvoyage->planned_workload = ($conf->global->VOYAGE_DEFAULT_MULTIPLICATOR_FOR_TASK * 3600) * $object->qty;
-					if($taskFromvoyage->fk_project != -1){
-						$res = $taskFromvoyage->create($user);
-						if ($res > 0) {
-
-							$object->add_object_linked('project_task', $taskFromvoyage->id);
-
-							$object->setStatut($object::STATUS_CONVERTED);
-							$backtopage = dol_buildpath('/projet/tasks/task.php', 1) . '?id=' . $taskFromvoyage->id;
-							header("Location: " . $backtopage);
-							exit;
-						} else {
-							setEventMessage($langs->trans("CHIErrorCreateTask"), 'errors');
-						}
-					}else{
-						setEventMessage($langs->trans("CHIErrorNoProject"), 'errors');
-					}
-				}
-			}else{
-				setEventMessage($langs->trans("CHIErrorFetchProject"), 'errors');
-			}
-		}else{
-			setEventMessage($langs->trans("CHIErrorFetchLabelProduct"), 'errors');
-		}
-	}
-
-
-    if ($action == 'create') {
-		$object->fields['po_estimate']['default'] = $user->id;
-		$object->fields['fk_product']['default'] = $conf->global->VOYAGE_DEFAULT_PRODUCT;
-		$object->fields['tech_detail']['visible'] = 5;
-    }
 	if($action == 'add' && $addCancel){
 		header("Location: " . $backtopage); // Open record of new object
 		exit;
 	}
-
-    if ($action == 'add') {
-        $object->fields['tech_detail']['visible'] = 5;
-		if($fk_ticket > 0){
-			$object->fk_ticket = $fk_ticket;
-			$backtopage = 'voyage_card.php?id=__ID__';
-		}
-    }
-	if($action == 'set_ticket'){
-		$object->add_object_linked('ticket',$fk_ticket);
-		$url = $backtopage;
-		if(empty($backtopage)){
-			$url = dol_buildpath('/voyage/voyage_card.php', 1) . '?id='. $object->id;
-		}
-		header("Location: " . $url); // Open record of new object
-		exit;
-	}
-    if ($action == 'add' && $addNew) {
-        $backtopage = dol_buildpath('/voyage/voyage_card.php', 1) . '?action=create';
-        $backtopage .= '&po_estimated=' . GETPOST('po_estimated');
-        $backtopage .= '&fk_soc=' . GETPOST('fk_soc');
-        $backtopage .= '&fk_project=' . GETPOST('fk_project');
-        $backtopage .= '&fk_product=' . GETPOST('fk_product');
-    }
 
     $saveAddNew = GETPOSTISSET('saveaddnew');
     $redirectBackToPage = null;
@@ -368,38 +259,8 @@ if (empty($reshook)) {
         $redirectBackToPage = true;
     }
 
-    if ($action === 'update') {
-
-        $qty = GETPOST('qty', 'int');
-        $dev = GETPOST('dev_estimate', 'int');
-        $textDev = GETPOST('tech_detail');
-        $textCommercial = GETPOST('commercial_text');
-
-        if ($qty > 0 && $dev == -1) {
-            setEventMessage($langs->trans("CHIErrorDevEstimate"), 'errors');
-            $action = 'edit';
-        }
-
-        if ($qty > 0 && empty($textDev)) {
-            setEventMessage($langs->trans("CHIErrorTechDetail"), 'errors');
-            $action = 'edit';
-        }
-        if ($qty < 0 && $qty != '') {
-            setEventMessage($langs->trans("CHIErrorQty"), 'errors');
-            $action = 'edit';
-        }
-    }
     // Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
     include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
-
-
-	if($action == 'add' && $fk_ticket > 0){
-		$object->add_object_linked('ticket',$fk_ticket);
-	}
-
-	if($action == 'confirm_create_task'){
-		$object->add_object_linked('project_task',$fk_task);
-	}
 
     // Actions when linking object each other
     include DOL_DOCUMENT_ROOT . '/core/actions_dellink.inc.php';
@@ -430,10 +291,6 @@ if (empty($reshook)) {
 $saveAddNew = GETPOSTISSET('saveaddnew');
 if ($redirectBackToPage == true && $textCommercial == ! null) {
     $backtopage = dol_buildpath('/voyage/voyage_card.php', 1) . '?action=create';
-    $backtopage .= '&po_estimated=' . GETPOST('po_estimated');
-    $backtopage .= '&fk_soc=' . GETPOST('fk_soc');
-    $backtopage .= '&fk_project=' . GETPOST('fk_project');
-    $backtopage .= '&fk_product=' . GETPOST('fk_product');
     header("Location: " . $backtopage); // Open record of new object
     exit;
 }
@@ -453,7 +310,6 @@ llxHeader('', $title, $help_url,'','','','',array("voyage/css/voyage.css"));
 
 // fields fk_soc & fk_project in view
 $object->fields['fk_soc']['visible'] = 0;
-$object->fields['fk_project']['visible'] = 0;
 
 // Example : Adding jquery code
 // print '<script type="text/javascript" language="javascript">
@@ -472,10 +328,8 @@ $object->fields['fk_project']['visible'] = 0;
 
 // Part to create
 if ($action == 'create') {
-    $object->fields['amount']['visible'] = 1;
-    $object->fields['fk_product']['visible'] = 0;
+    $object->fields['ref']['visible'] = 0;
     print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("Voyage")), '', 'object_' . $object->picto);
-
     print '<form method="POST" action="' . $_SERVER["PHP_SELF"] . '">';
     print '<input type="hidden" name="token" value="' . newToken() . '">';
     print '<input type="hidden" name="action" value="add">';
@@ -524,10 +378,9 @@ if ($action == 'create') {
 
 // Part to edit record
 if (($id || $ref) && $action == 'edit') {
-    $object->fields['fk_soc']['visible'] = 1;
-    $object->fields['fk_project']['visible'] = 1;
     print load_fiche_titre($langs->trans("Voyage"), '', 'object_' . $object->picto);
-
+    $object->fields['ref']['visible'] = 0;
+    print '<tr><td>'.$object->ref.'</td></tr>';
     print '<form method="POST" action="' . $_SERVER["PHP_SELF"] . '">';
     print '<input type="hidden" name="token" value="' . newToken() . '">';
     print '<input type="hidden" name="action" value="update">';
@@ -539,16 +392,6 @@ if (($id || $ref) && $action == 'edit') {
         print '<input type="hidden" name="backtopageforcancel" value="' . $backtopageforcancel . '">';
     }
 
-    // Make qty field visible if status is validated or estimated
-    if ($object->status == $object::STATUS_VALIDATED || $object->status == $object::STATUS_ESTIMATED) {
-        $object->fields['qty']['visible'] = 1;
-        $object->fields['dev_estimate']['visible'] = 1;
-        $object->fields['tech_detail']['visible'] = 1;
-    } else {
-        $object->fields['qty']['visible'] = 5;
-        $object->fields['dev_estimate']['visible'] = 5;
-        $object->fields['tech_detail']['visible'] = 5;
-    }
 
     print dol_get_fiche_head();
 
@@ -575,31 +418,11 @@ if (($id || $ref) && $action == 'edit') {
 // Part to show record
 if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'create'))) {
     $res = $object->fetch_optionals();
-    $object->fields['commercial_text']['position'] = 999;
-    $object->fields['detailed_feature_specification']['position'] = 1000;
-    $object->fields['tech_detail']['position'] = 1001;
-
     $head = voyagePrepareHead($object);
     print dol_get_fiche_head($head, 'card', $langs->trans("Workstation"), -1, $object->picto);
 
     $formconfirm = '';
 
-	// Action Création d'une tâche depuis un voyage
-	if ($action == 'create_task_from_voyage') {
-		include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
-		$form = new Form($db);
-		$refProjectvoyage = new Project($db);
-		$resProject = $refProjectvoyage->fetch($object->fk_project);
-		$formquestion = array(
-			array(
-				'type' => 'other',
-				'name' => 'fk_projet',
-			'label' => $langs->trans("CHISelectProject"),
-			'value' => $form->selectForForms('Project:projet/class/project.class.php:1:(t.fk_statut:!=:' . Project::STATUS_CLOSED . ')', 'fk_projet',$object->fk_project, 1, '', '', "form-project")
-		)
-		);
-		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('CHITaskCreate'), $langs->trans('ConfirmCreateObject'), 'confirm_create_task', $formquestion, 0, 1);
-	}
 
     // Confirmation to delete
     if ($action == 'delete') {
@@ -654,36 +477,8 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
     //$morehtmlref .= $form->editfieldkey("RefCustomer", 'ref_client', $object->ref_client, $object, 0, 'string', '', 0, 1);
     //$morehtmlref .= $form->editfieldval("RefCustomer", 'ref_client', $object->ref_client, $object, 0, 'string', '', null, null, '', 1);
     // Thirdparty
-    $morehtmlref .= '<br>' . $langs->trans('ThirdParty') . ' : ' . (is_object($object->thirdparty) ? $object->thirdparty->getNomUrl(1) : '');
-    // Project
-    if (! empty($conf->projet->enabled)) {
-        $langs->load("projects");
-        $morehtmlref .= '<br>' . $langs->trans('Project') . ' ';
-        if ($permissiontoadd) {
-            //if ($action != 'classify') $morehtmlref.='<a class="editfielda" href="' . $_SERVER['PHP_SELF'] . '?action=classify&amp;id=' . $object->id . '">' . img_edit($langs->transnoentitiesnoconv('SetProject')) . '</a> ';
-            $morehtmlref .= ' : ';
-            if ($action == 'classify') {
-                //$morehtmlref .= $form->form_project($_SERVER['PHP_SELF'] . '?id=' . $object->id, $object->socid, $object->fk_project, 'projectid', 0, 0, 1, 1);
-                $morehtmlref .= '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '">';
-                $morehtmlref .= '<input type="hidden" name="action" value="classin">';
-                $morehtmlref .= '<input type="hidden" name="token" value="' . newToken() . '">';
-                $morehtmlref .= $formproject->select_projects($object->socid, $object->fk_project, 'projectid', $maxlength, 0, 1, 0, 1, 0, 0, '', 1);
-                $morehtmlref .= '<input type="submit" class="button valignmiddle" value="' . $langs->trans("Modify") . '">';
-                $morehtmlref .= '</form>';
-            } else {
-                $morehtmlref .= $form->form_project($_SERVER['PHP_SELF'] . '?id=' . $object->id, $object->socid, $object->fk_project, 'none', 0, 0, 0, 1);
-            }
-        } else {
-            if (! empty($object->fk_project)) {
-                $proj = new Project($db);
-                $proj->fetch($object->fk_project);
-                $morehtmlref .= ': ' . $proj->getNomUrl();
-            } else {
-                $morehtmlref .= '';
-            }
-        }
-    }
-    $morehtmlref .= '</div>';
+//    $morehtmlref .= '<br>' . $langs->trans('ThirdParty') . ' : ' . (is_object($object->thirdparty) ? $object->thirdparty->getNomUrl(1) : '');
+//    $morehtmlref .= '</div>';
 
     dol_banner_tab($object, 'ref', $linkback, 1, 'ref', 'ref', $morehtmlref);
 
@@ -791,15 +586,6 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
                     print dolGetButtonAction($langs->trans("ErrorAddAtLeastOneLineFirst"), $langs->trans("Validate"), 'default', '#', '', 0);
                 }
             }
-			// Bouton Créer Devis (action = create_propal_from_voyage)
-			if ($object->status == $object::STATUS_ESTIMATED && !empty($object->fk_soc)) {
-				print dolGetButtonAction($langs->trans('CHICreatePropal'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $object->socid . '&action=create_propal_from_voyage&token=' . newToken(), '', !empty($user->rights->propal->creer));
-			}
-
-			// Bouton Créer Tâche (action = create_task_from_voyage)
-			if ($object->status == $object::STATUS_ESTIMATED) {
-				print dolGetButtonAction($langs->trans('CHICreateTask'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&fk_project=' . $object->fk_project . '&action=create_task_from_voyage&token=' . newToken(), '', $permissiontoadd);
-			}
 
             // Clone
             print dolGetButtonAction($langs->trans('ToClone'), '', 'default', $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $object->socid . '&action=clone&token=' . newToken(), '', $permissiontoadd);

@@ -109,13 +109,13 @@ class Voyage extends CommonObject
 		'ref' => array('type'=>'varchar(40)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>1, 'notsseditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
         'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>1, 'visible'=>0, 'notnull'=> 1, 'default'=>0, 'index'=>1, 'position'=>20),
 		'group_title' => array('type'=>'varchar(160)', 'label'=>'GroupTitle', 'enabled'=>'1', 'position'=>52, 'notnull'=>0, 'visible'=>0, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'0', 'help'=>"CHIHelpGroupTitle"),
-		'amount' => array('type'=>'price', 'label'=>'Tarif', 'enabled'=>'1', 'position'=>2, 'notnull'=>1, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
+		'amount' => array('type'=>'price', 'label'=>'Tarif', 'enabled'=>'1', 'position'=>2, 'notnull'=>1, 'visible'=>1),
 		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:(status:=:1)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>40, 'notnull'=>-1, 'visible'=>0, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
 		'qty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0, 'default'=>0, 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"CHIHelpQty"),
         'fk_country' =>array('type'=>'integer:Ccountry:core/class/ccountry.class.php', 'label'=>'Pays de destination', 'enabled'=>1, 'notnull'=>1, 'visible'=>-1, 'position'=>3),
         'date_dep' => array('type'=>'date', 'label'=>'Date / heure départ', 'enabled'=>'1', 'position'=>5, 'notnull'=>0, 'visible'=>1,),
         'date_arr' => array('type'=>'date', 'label'=>'Date / heure arrivée', 'enabled'=>'1', 'position'=>6, 'notnull'=>0, 'visible'=>1,),
-        'fk_mode_transport' => array('type'=>'integer', 'label'=>'Type', 'enabled'=>1, 'position'=>5, 'notnull'=>1, 'visible'=>-1, 'foreignkey'=>'c_mode_transport.rowid', 'arrayofkeyval'=>array(),),
+        'fk_mode_transport' => array('type'=>'integer', 'label'=>'Mode de transport', 'enabled'=>1, 'position'=>5, 'notnull'=>1, 'visible'=>-1, 'foreignkey'=>'c_mode_transport.rowid', 'arrayofkeyval'=>array(),),
 		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>7, 'notnull'=>0, 'visible'=>0,),
 		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>8, 'notnull'=>0, 'visible'=>0,),
 		'date_creation' => array('type'=>'date', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>9, 'notnull'=>1, 'visible'=>-2,),
@@ -141,6 +141,8 @@ class Voyage extends CommonObject
 	public $note_public;
 	public $note_private;
 	public $date_creation;
+    public $date_arr;
+    public $date_dep;
 	public $tms;
 	public $fk_user_creat;
 	public $fk_user_modif;
@@ -148,13 +150,8 @@ class Voyage extends CommonObject
 	public $import_key;
 	public $model_pdf;
 	public $status;
-	public $commercial_text;
-	public $detailed_feature_specification;
-	public $tech_detail;
-	public $dev_estimate;
 	public $module_name;
 	public $keywords;
-	public $estimate_date;
     public $entity;
 	// END MODULEBUILDER PROPERTIES
 
@@ -217,7 +214,7 @@ class Voyage extends CommonObject
 		}
 
 		if ( version_compare(DOL_VERSION,'17.0.0') > 0 ) {
-			$this->fields['dev_estimate']['type'] = 'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))';
+//			$this->fields['dev_estimate']['type'] = 'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))';
 			$this->fields['fk_soc']['type'] = 'integer:Societe:societe/class/societe.class.php:1:(status:=:1)';
 		}
 
@@ -341,17 +338,8 @@ class Voyage extends CommonObject
 		if (property_exists($object, 'date_modification')) {
 			$object->date_modification = null;
 		}
-        if (property_exists($object, 'tech_detail')) {
-            $object->tech_detail = null;
-        }
-        if (property_exists($object, 'estimate_date')) {
-            $object->estimate_date = null;
-        }
         if (property_exists($object, 'qty')) {
             $object->qty = null;
-        }
-        if (property_exists($object, 'dev_estimate')) {
-            $object->dev_estimate = null;
         }
         if (property_exists($object, 'module_name')) {
             $object->module_name = null;

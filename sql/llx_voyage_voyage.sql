@@ -30,8 +30,8 @@ CREATE TABLE llx_voyage_voyage(
 	note_public text,
 	note_private text,
 	date_creation datetime NOT NULL,
-    date_arr datetime NOT NULL,
-    date_dep datetime NOT NULL,
+    date_arr datetime,
+    date_dep datetime,
 	tms timestamp,
 	fk_user_creat integer NOT NULL, 
 	fk_user_modif integer, 
@@ -39,13 +39,8 @@ CREATE TABLE llx_voyage_voyage(
 	import_key varchar(14),
 	model_pdf varchar(255),
 	status smallint DEFAULT 0,
-	commercial_text text,
-    detailed_feature_specification text,
-	tech_detail text,
-	dev_estimate integer,
 	module_name integer,
-	keywords varchar(128),
-	estimate_date date
+	keywords varchar(128)
 
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;
