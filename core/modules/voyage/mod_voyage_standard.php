@@ -36,7 +36,7 @@ class mod_voyage_standard extends ModeleNumRefvoyage
 	 */
 	public $version = 'dolibarr'; // 'development', 'experimental', 'dolibarr'
 
-	public $prefix = 'CHI';
+	public $prefix = 'VOY';
 
 	/**
 	 * @var string Error code (or message)

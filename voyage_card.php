@@ -185,7 +185,7 @@ if (empty($reshook)) {
                 $newid = 0;
                 if (is_object($result)) $newid = $result->id;
                 else $newid = $result;
-                header("Location: " . $_SERVER['PHP_SELF'] . '?id=' . $newid . '&action=edit'); // Open record of new object
+                header("Location: " . 'voyage_card.php?id=' .$result->id); // Open record of new object
                 exit;
             } else {
                 setEventMessages($objectutil->error, $objectutil->errors, 'errors');
@@ -252,6 +252,15 @@ if (empty($reshook)) {
 		header("Location: " . $backtopage); // Open record of new object
 		exit;
 	}
+    if ($action == 'add' && $addNew) {
+        $backtopage = dol_buildpath('/voyage/voyage_card.php', 1) . '?action=create';
+    }
+
+    $saveAddNew = GETPOSTISSET('saveaddnew');
+    $redirectBackToPage = null;
+    if ($action == 'update' && $saveAddNew) {
+        $redirectBackToPage = true;
+    }
 
     $saveAddNew = GETPOSTISSET('saveaddnew');
     $redirectBackToPage = null;
@@ -380,7 +389,6 @@ if ($action == 'create') {
 if (($id || $ref) && $action == 'edit') {
     print load_fiche_titre($langs->trans("Voyage"), '', 'object_' . $object->picto);
     $object->fields['ref']['visible'] = 0;
-    print '<tr><td>'.$object->ref.'</td></tr>';
     print '<form method="POST" action="' . $_SERVER["PHP_SELF"] . '">';
     print '<input type="hidden" name="token" value="' . newToken() . '">';
     print '<input type="hidden" name="action" value="update">';
@@ -396,6 +404,7 @@ if (($id || $ref) && $action == 'edit') {
     print dol_get_fiche_head();
 
     print '<table class="border centpercent tableforfieldedit">' . "\n";
+    print '<tr class="field_libelle"><td class="titlefieldcreate fieldrequired tdtop">'.$object->fields['ref']['label'].'</td><td class="valuefieldcreate">'.$object->getNomUrl().'</td></tr>';
 
     // Common attributes
     include DOL_DOCUMENT_ROOT . '/core/tpl/commonfields_edit.tpl.php';
@@ -408,7 +417,9 @@ if (($id || $ref) && $action == 'edit') {
     print dol_get_fiche_end();
 
     print '<div class="center"><input type="submit" class="button button-save" name="save" value="' . $langs->trans("Save") . '">';
-    print '<input type="submit" class="button" name="saveaddnew" value="' . dol_escape_htmltag($langs->trans("CHISaveAddNew")) . '">';
+    if($action != 'edit'){
+        print '<input type="submit" class="button" name="saveaddnew" value="' . dol_escape_htmltag($langs->trans("CHISaveAddNew")) . '">';
+    }
     print ' &nbsp; <input type="submit" class="button button-cancel" name="cancel" value="' . $langs->trans("Cancel") . '">';
     print '</div>';
 

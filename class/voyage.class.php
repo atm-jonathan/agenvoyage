@@ -115,7 +115,7 @@ class Voyage extends CommonObject
         'fk_country' =>array('type'=>'integer:Ccountry:core/class/ccountry.class.php', 'label'=>'Pays de destination', 'enabled'=>1, 'notnull'=>1, 'visible'=>-1, 'position'=>3),
         'date_dep' => array('type'=>'date', 'label'=>'Date / heure départ', 'enabled'=>'1', 'position'=>5, 'notnull'=>0, 'visible'=>1,),
         'date_arr' => array('type'=>'date', 'label'=>'Date / heure arrivée', 'enabled'=>'1', 'position'=>6, 'notnull'=>0, 'visible'=>1,),
-        'fk_mode_transport' => array('type'=>'integer', 'label'=>'Mode de transport', 'enabled'=>1, 'position'=>5, 'notnull'=>1, 'visible'=>-1, 'foreignkey'=>'c_mode_transport.rowid', 'arrayofkeyval'=>array(),),
+        'fk_mode_transport' => array('type'=>'sellist:c_mode_transport:label:rowid::active=1', 'label'=>'Type de transport', 'enabled'=>'1', 'position'=>5, 'notnull'=>0,  'visible'=>1),
 		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>7, 'notnull'=>0, 'visible'=>0,),
 		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>8, 'notnull'=>0, 'visible'=>0,),
 		'date_creation' => array('type'=>'date', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>9, 'notnull'=>1, 'visible'=>-2,),
@@ -213,12 +213,6 @@ class Voyage extends CommonObject
 			$this->fields['module_name']['enabled'] = 0;
 		}
 
-		if ( version_compare(DOL_VERSION,'17.0.0') > 0 ) {
-//			$this->fields['dev_estimate']['type'] = 'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))';
-			$this->fields['fk_soc']['type'] = 'integer:Societe:societe/class/societe.class.php:1:(status:=:1)';
-		}
-
-
 		// Example to show how to set values of fields definition dynamically
 		/*if ($user->rights->voyage->voyage->read) {
 			$this->fields['myfield']['visible'] = 1;
@@ -242,34 +236,6 @@ class Voyage extends CommonObject
 				}
 			}
 		}
-        $sql = 'SELECT c.rowid, c.code, c.label, c.active';
-        $sql.= ' FROM '.MAIN_DB_PREFIX.'c_mode_transport as c';
-        $sql.= ' WHERE c.active = 1';
-        $sql.= ' ORDER BY c.label ASC';
-
-        $resql = $db->query($sql);
-
-        if ($resql)
-        {
-            $num = $db->num_rows($resql);
-            if ($num > 0)
-            {
-                $arrayofkeyval = array();
-                $i = 0;
-                while ($i < $num)
-                {
-                    $obj = $db->fetch_object($resql);
-                    $arrayofkeyval[$obj->rowid] = $obj->label;
-                    $i = $i +1;
-                }
-                $this->fields['fk_mode_transport']['arrayofkeyval'] = $arrayofkeyval;
-            }
-            $db->free($resql);
-        }
-        else
-        {
-            dol_print_error($db);
-        }
 	}
 
 	/**

@@ -229,7 +229,8 @@ class modVoyage extends DolibarrModules
 			// Name of columns with primary key (try to always name it 'rowid')
 			'tabrowid'=>array("rowid"),
 			// Condition to show each dictionary
-			'tabcond'=>array($conf->voyage->enabled, $conf->voyage->enabled, $conf->voyage->enabled)
+			'tabcond'=>array($conf->voyage->enabled),
+            'tabhelp' => array(array())
 		);
 
 		// Boxes/Widgets
@@ -300,7 +301,7 @@ class modVoyage extends DolibarrModules
 			'fk_menu'=>'', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'top', // This is a Top menu entry
 			'titre'=>'Mes voyages',
-			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
+//			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
 			'mainmenu'=>'voyage',
 			'leftmenu'=>'',
 			'url'=>'/voyage/voyage_list.php',
@@ -314,6 +315,7 @@ class modVoyage extends DolibarrModules
 		/* END MODULEBUILDER TOPMENU */
 
 		// BEGIN MODULEBUILDER LEFTMENU VOYAGE
+
 		$this->menu[$r++]=array(
 			'fk_menu'=>'fk_mainmenu=voyage',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',                          // This is a Top menu entry
@@ -327,7 +329,6 @@ class modVoyage extends DolibarrModules
 			'enabled'=>'$conf->voyage->enabled',  // Define condition to show or hide menu entry. Use '$conf->voyage->enabled' if entry must be visible if module is enabled.
 			'perms'=>'$user->rights->voyage->voyage->read',			                // Use 'perms'=>'$user->rights->voyage->level1->level2' if you want your menu with a permission rules
 			'target'=>'',
-            'prefix' => '<span class="fas fa-comment-dollar em092 pictofixedwidth voyage-left-menu-picto" style="color: #7e7772;"></span>',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 

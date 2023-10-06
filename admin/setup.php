@@ -75,8 +75,8 @@ $scandir = GETPOST('scan_dir', 'alpha');
 $type = 'myobject';
 
 $arrayofparameters = array(
-	'VOYAGE_DEFAULT_PRODUCT'=>array('type'=>'product', 'enabled'=>1),
-	'VOYAGE_DEFAULT_MULTIPLICATOR_FOR_TASK'=>array('type'=>'task', 'enabled'=>1),
+//	'VOYAGE_DEFAULT_PRODUCT'=>array('type'=>'product', 'enabled'=>1),
+//	'VOYAGE_DEFAULT_MULTIPLICATOR_FOR_TASK'=>array('type'=>'task', 'enabled'=>1),
 	//'VOYAGE_MYPARAM1'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
 	//'VOYAGE_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
 	//'VOYAGE_MYPARAM3'=>array('type'=>'category:'.Categorie::TYPE_CUSTOMER, 'enabled'=>1),
@@ -207,7 +207,7 @@ if ($action == 'updateMask') {
 $form = new Form($db);
 
 $help_url = '';
-$page_name = "VoyageSetup";
+$page_name = "Module Voyage";
 
 llxHeader('', $langs->trans($page_name), $help_url);
 
