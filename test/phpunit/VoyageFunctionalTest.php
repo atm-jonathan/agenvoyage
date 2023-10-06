@@ -17,8 +17,8 @@
  */
 
 /**
- * \file    test/phpunit/ChiffrageFunctionalTest.php
- * \ingroup chiffrage
+ * \file    test/phpunit/VoyageFunctionalTest.php
+ * \ingroup voyage
  * \brief   Example Selenium test.
  *
  * Put detailed description here.
@@ -29,7 +29,7 @@ namespace test\functional;
 use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
 
 /**
- * Class ChiffrageFunctionalTest
+ * Class VoyageFunctionalTest
  *
  * Requires chromedriver for Google Chrome
  * Requires geckodriver for Mozilla Firefox
@@ -39,9 +39,9 @@ use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
  * @todo Windows support (IE, Google Chrome, Mozilla Firefox, Safari)
  * @todo OSX support (Safari, Google Chrome, Mozilla Firefox)
  *
- * @package Testchiffrage
+ * @package Testvoyage
  */
-class ChiffrageFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
+class VoyageFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 {
 	// TODO: move to a global configuration file?
 	/** @var string Base URL of the webserver under test */
@@ -176,12 +176,12 @@ class ChiffrageFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 		$module_status_image = $this->byXPath($module_status_image_path);
 		if (strstr($module_status_image->attribute('src'), 'switch_off.png')) {
 			// Enable the module
-			$this->byHref('modChiffrage')->click();
+			$this->byHref('modVoyage')->click();
 		} else {
 			// Disable the module
-			$this->byHref('modChiffrage')->click();
+			$this->byHref('modVoyage')->click();
 			// Reenable the module
-			$this->byHref('modChiffrage')->click();
+			$this->byHref('modVoyage')->click();
 		}
 		// Page reloaded, we need a new Xpath
 		$module_status_image = $this->byXPath($module_status_image_path);
@@ -196,9 +196,9 @@ class ChiffrageFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 	 */
 	public function testConfigurationPage()
 	{
-		$this->url('/custom/chiffrage/admin/setup.php');
+		$this->url('/custom/voyage/admin/setup.php');
 		$this->authenticate();
-		return $this->assertContains('chiffrage/admin/setup.php', $this->url(), 'Configuration page');
+		return $this->assertContains('voyage/admin/setup.php', $this->url(), 'Configuration page');
 	}
 
 	/**
@@ -209,9 +209,9 @@ class ChiffrageFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 	 */
 	public function testAboutPage()
 	{
-		$this->url('/custom/chiffrage/admin/about.php');
+		$this->url('/custom/voyage/admin/about.php');
 		$this->authenticate();
-		return $this->assertContains('chiffrage/admin/about.php', $this->url(), 'About page');
+		return $this->assertContains('voyage/admin/about.php', $this->url(), 'About page');
 	}
 
 	/**
@@ -222,7 +222,7 @@ class ChiffrageFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 	 */
 	public function testAboutPageRendersMarkdownReadme()
 	{
-		$this->url('/custom/chiffrage/admin/about.php');
+		$this->url('/custom/voyage/admin/about.php');
 		$this->authenticate();
 		return $this->assertEquals(
 			'Dolibarr Module Template (aka My Module)',
@@ -241,7 +241,7 @@ class ChiffrageFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 	{
 		$this->url('/admin/boxes.php');
 		$this->authenticate();
-		return $this->assertContains('chiffragewidget1', $this->source(), "Box enabled");
+		return $this->assertContains('voyagewidget1', $this->source(), "Box enabled");
 	}
 
 	/**
@@ -255,7 +255,7 @@ class ChiffrageFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 		$this->url('/admin/triggers.php');
 		$this->authenticate();
 		return $this->assertContains(
-			'interface_99_modChiffrage_ChiffrageTriggers.class.php',
+			'interface_99_modVoyage_VoyageTriggers.class.php',
 			$this->byTag('body')->text(),
 			"Trigger declared"
 		);
@@ -273,7 +273,7 @@ class ChiffrageFunctionalTest extends \PHPUnit_Extensions_Selenium2TestCase
 		$this->authenticate();
 		return $this->assertContains(
 			'tick.png',
-			$this->byXPath('//td[text()="interface_99_modChiffrage_MyTrigger.class.php"]/following::img')->attribute('src'),
+			$this->byXPath('//td[text()="interface_99_modVoyage_MyTrigger.class.php"]/following::img')->attribute('src'),
 			"Trigger enabled"
 		);
 	}

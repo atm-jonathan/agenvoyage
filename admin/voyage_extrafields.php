@@ -21,9 +21,9 @@
  */
 
 /**
- *      \file       admin/chiffrage_extrafields.php
- *		\ingroup    chiffrage
- *		\brief      Page to setup extra fields of chiffrage
+ *      \file       admin/voyage_extrafields.php
+ *		\ingroup    voyage
+ *		\brief      Page to setup extra fields of voyage
  */
 
 // Load Dolibarr environment
@@ -55,10 +55,10 @@ if (!$res) {
 }
 
 require_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
-require_once '../lib/chiffrage.lib.php';
+require_once '../lib/voyage.lib.php';
 
 // Load translation files required by the page
-$langs->loadLangs(array('chiffrage@chiffrage', 'admin'));
+$langs->loadLangs(array('voyage@voyage', 'admin'));
 
 $extrafields = new ExtraFields($db);
 $form = new Form($db);
@@ -72,7 +72,7 @@ foreach ($tmptype2label as $key => $val) {
 
 $action = GETPOST('action', 'aZ09');
 $attrname = GETPOST('attrname', 'alpha');
-$elementtype = 'chiffrage_chiffrage'; //Must be the $table_element of the class that manage extrafield
+$elementtype = 'voyage_voyage'; //Must be the $table_element of the class that manage extrafield
 
 if (!$user->admin) {
 	accessforbidden();
@@ -92,18 +92,18 @@ require DOL_DOCUMENT_ROOT.'/core/actions_extrafields.inc.php';
  */
 
 $help_url = '';
-$page_name = "ChiffrageSetup";
+$page_name = "VoyageSetup";
 
-llxHeader('', $langs->trans("ChiffrageSetup"), $help_url);
+llxHeader('', $langs->trans("VoyageSetup"), $help_url);
 
 
 $linkback = '<a href="'.DOL_URL_ROOT.'/admin/modules.php?restore_lastsearch_values=1">'.$langs->trans("BackToModuleList").'</a>';
 print load_fiche_titre($langs->trans($page_name), $linkback, 'title_setup');
 
 
-$head = chiffrageAdminPrepareHead();
+$head = voyageAdminPrepareHead();
 
-print dol_get_fiche_head($head, 'chiffrage_extrafields', $langs->trans($page_name), -1, 'chiffrage@chiffrage');
+print dol_get_fiche_head($head, 'voyage_extrafields', $langs->trans($page_name), -1, 'voyage@voyage');
 
 require DOL_DOCUMENT_ROOT.'/core/tpl/admin_extrafields_view.tpl.php';
 

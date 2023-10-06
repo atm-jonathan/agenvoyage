@@ -17,9 +17,9 @@
  */
 
 /**
- * \file        class/chiffrage.class.php
- * \ingroup     chiffrage
- * \brief       This file is a CRUD class file for Chiffrage (Create/Read/Update/Delete)
+ * \file        class/voyage.class.php
+ * \ingroup     voyage
+ * \brief       This file is a CRUD class file for Voyage (Create/Read/Update/Delete)
  */
 
 // Put here all includes required by your class file
@@ -28,24 +28,24 @@ require_once DOL_DOCUMENT_ROOT.'/core/class/commonobject.class.php';
 //require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
 
 /**
- * Class for Chiffrage
+ * Class for Voyage
  */
-class Chiffrage extends CommonObject
+class Voyage extends CommonObject
 {
 	/**
 	 * @var string ID of module.
 	 */
-	public $module = 'chiffrage';
+	public $module = 'voyage';
 
 	/**
 	 * @var string ID to identify managed object.
 	 */
-	public $element = 'chiffrage';
+	public $element = 'voyage';
 
 	/**
 	 * @var string Name of table without prefix where object is stored. This is also the key used for extrafields management.
 	 */
-	public $table_element = 'chiffrage_chiffrage';
+	public $table_element = 'voyage_voyage';
 
 	/**
 	 * @var int  Does this object support multicompany module ?
@@ -59,9 +59,9 @@ class Chiffrage extends CommonObject
 	public $isextrafieldmanaged = 1;
 
 	/**
-	 * @var string String with name of icon for chiffrage. Must be the part after the 'object_' into object_chiffrage.png
+	 * @var string String with name of icon for voyage. Must be the part after the 'object_' into object_voyage.png
 	 */
-	public $picto = 'chiffrage@chiffrage';
+	public $picto = 'voyage@voyage';
 
 
 	const STATUS_DRAFT = 0;
@@ -106,46 +106,43 @@ class Chiffrage extends CommonObject
 	 */
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
-		'ref' => array('type'=>'varchar(40)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>1, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
-        'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>1, 'visible'=>0, 'notnull'=> 1, 'default'=>1, 'index'=>1, 'position'=>20),
+		'ref' => array('type'=>'varchar(40)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>1, 'notsseditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
+        'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>1, 'visible'=>0, 'notnull'=> 1, 'default'=>0, 'index'=>1, 'position'=>20),
 		'group_title' => array('type'=>'varchar(160)', 'label'=>'GroupTitle', 'enabled'=>'1', 'position'=>52, 'notnull'=>0, 'visible'=>0, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'0', 'help'=>"CHIHelpGroupTitle"),
-		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>0, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
-		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:(status:=:1)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>40, 'notnull'=>-1, 'visible'=>1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
-		'qty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>5, 'default'=>0, 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"CHIHelpQty"),
-		'fk_project' => array('type'=>'integer:Project:projet/class/project.class.php:1', 'label'=>'Project', 'enabled'=>'1', 'position'=>50, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
-		'fk_product' => array('type'=>'integer:Product:product/class/product.class.php:1', 'label'=>'CHIProductService', 'enabled'=>'1', 'position'=>51, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
-		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>0,),
-		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
-		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>62, 'notnull'=>0, 'visible'=>0,),
-		'date_creation' => array('type'=>'date', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>500, 'notnull'=>1, 'visible'=>-2,),
-		'tms' => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>501, 'notnull'=>0, 'visible'=>-2,),
-		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'enabled'=>'1', 'position'=>510, 'notnull'=>1, 'visible'=>-2, 'foreignkey'=>'user.rowid',),
-		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
-		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
-		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
-		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'notnull'=>1, 'position'=>1000, 'visible'=>5, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;','10'=>'CHIEstimated','13'=>'CHIConverted','14'=>'CHIRealized'),),
-		'commercial_text' => array('type'=>'html', 'label'=>'CHICommercialText', 'enabled'=>'1', 'position'=>53, 'notnull'=>1, 'visible'=>-1,'csslist'=>'fieldkeytoswitchonsecondcolumn'),
-		'detailed_feature_specification' => array('type'=>'html', 'label'=>'DetailedFeatureSpecification', 'enabled'=>'1', 'position'=>55, 'notnull'=>-1, 'visible'=>-1,'csslist'=>'fieldkeytoswitchonsecondcolumn'),
-		'tech_detail' => array('type'=>'html', 'label'=>'CHITechDetail', 'enabled'=>'1', 'position'=>65, 'notnull'=>-1, 'visible'=>-1),
-		'dev_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))', 'label'=>'CHIDevEstimate','css'=>'minwidth200 maxwidth300 widthcentpercentminusx', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>5,),
-		'po_estimate' => array('type'=>'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))', 'label'=>'CHIPOEstimate', 'enabled'=>'1','css'=>'minwidth200 maxwidth300 widthcentpercentminusx', 'position'=>30, 'notnull'=>1, 'visible'=>1,),
-		'module_name' => array('type'=>'integer:WebModule:webhost/class/webmodule.class.php', 'label'=>'CHIModuleName', 'enabled'=>'1', 'position'=>58, 'notnull'=>0, 'visible'=>1, 'searchall'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
-		'keywords' => array('type'=>'varchar(128)', 'label'=>'CHIKeywords', 'enabled'=>'1', 'position'=>56, 'notnull'=>0, 'visible'=>1,'showoncombobox'=>'0','css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
-		'estimate_date' => array('type'=>'date', 'label'=>'CHIEstimateDate', 'enabled'=>'1', 'position'=>72, 'notnull'=>0, 'visible'=>5, 'help'=>"CHIHelpEstimateDate",),
-	);
+		'amount' => array('type'=>'price', 'label'=>'Tarif', 'enabled'=>'1', 'position'=>2, 'notnull'=>1, 'visible'=>1),
+		'fk_soc' => array('type'=>'integer:Societe:societe/class/societe.class.php:1:(status:=:1)', 'label'=>'ThirdParty', 'enabled'=>'1', 'position'=>40, 'notnull'=>-1, 'visible'=>0, 'index'=>1,'css'=>'minwidth200 maxwidth500 widthcentpercentminusx',),
+		'qty' => array('type'=>'real', 'label'=>'CHIDayQty', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0, 'default'=>0, 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"CHIHelpQty"),
+        'fk_country' =>array('type'=>'integer:Ccountry:core/class/ccountry.class.php', 'label'=>'Pays de destination', 'enabled'=>1, 'notnull'=>1, 'visible'=>-1, 'position'=>3),
+        'date_dep' => array('type'=>'date', 'label'=>'Date / heure départ', 'enabled'=>'1', 'position'=>5, 'notnull'=>0, 'visible'=>1,),
+        'date_arr' => array('type'=>'date', 'label'=>'Date / heure arrivée', 'enabled'=>'1', 'position'=>6, 'notnull'=>0, 'visible'=>1,),
+        'fk_mode_transport' => array('type'=>'sellist:c_mode_transport:label:rowid::active=1', 'label'=>'Type de transport', 'enabled'=>'1', 'position'=>5, 'notnull'=>0,  'visible'=>1),
+		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>7, 'notnull'=>0, 'visible'=>0,),
+		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>8, 'notnull'=>0, 'visible'=>0,),
+		'date_creation' => array('type'=>'date', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>9, 'notnull'=>1, 'visible'=>-2,),
+		'tms' => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>10, 'notnull'=>0, 'visible'=>-2,),
+		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'enabled'=>'1', 'position'=>11, 'notnull'=>1, 'visible'=>-2, 'foreignkey'=>'user.rowid',),
+		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'enabled'=>'1', 'position'=>12, 'notnull'=>-1, 'visible'=>-2,),
+		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>13, 'notnull'=>0, 'visible'=>0,),
+		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>14, 'notnull'=>-1, 'visible'=>-2,),
+		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>15, 'notnull'=>-1, 'visible'=>0,),
+		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'notnull'=>1, 'position'=>16, 'visible'=>5, 'default'=>0,'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;','10'=>'CHIEstimated','13'=>'CHIConverted','14'=>'CHIRealized'),),
+		'libelle' => array('type'=>'text', 'label'=>'Libellé', 'enabled'=>'1', 'position'=>2, 'notnull'=>1, 'visible'=>-1),
+        );
 
 	public $rowid;
 	public $ref;
 	public $amount;
 	public $qty;
-	public $fk_soc;
+    public $fk_country;
+    public $fk_soc;
 	public $fk_project;
 	public $fk_product;
 	public $description;
 	public $note_public;
 	public $note_private;
 	public $date_creation;
+    public $date_arr;
+    public $date_dep;
 	public $tms;
 	public $fk_user_creat;
 	public $fk_user_modif;
@@ -153,14 +150,8 @@ class Chiffrage extends CommonObject
 	public $import_key;
 	public $model_pdf;
 	public $status;
-	public $commercial_text;
-	public $detailed_feature_specification;
-	public $tech_detail;
-	public $dev_estimate;
-	public $po_estimate;
 	public $module_name;
 	public $keywords;
-	public $estimate_date;
     public $entity;
 	// END MODULEBUILDER PROPERTIES
 
@@ -170,17 +161,17 @@ class Chiffrage extends CommonObject
 	// /**
 	//  * @var string    Name of subtable line
 	//  */
-	// public $table_element_line = 'chiffrage_chiffrageline';
+	// public $table_element_line = 'voyage_voyageline';
 
 	// /**
 	//  * @var string    Field with ID of parent key if this object has a parent
 	//  */
-	// public $fk_element = 'fk_chiffrage';
+	// public $fk_element = 'fk_voyage';
 
 	// /**
 	//  * @var string    Name of subtable class that manage subtable lines
 	//  */
-	// public $class_element_line = 'Chiffrageline';
+	// public $class_element_line = 'voyageline';
 
 	// /**
 	//  * @var array	List of child tables. To test if we can delete object.
@@ -192,10 +183,10 @@ class Chiffrage extends CommonObject
 	//  *               If name matches '@ClassNAme:FilePathClass;ParentFkFieldName' it will
 	//  *               call method deleteByParentField(parentId, ParentFkFieldName) to fetch and delete child object
 	//  */
-	// protected $childtablesoncascade = array('chiffrage_chiffragedet');
+	// protected $childtablesoncascade = array('voyage_voyagedet');
 
 	// /**
-	//  * @var ChiffrageLine[]     Array of subtable lines
+	//  * @var voyageLine[]     Array of subtable lines
 	//  */
 	// public $lines = array();
 
@@ -222,17 +213,8 @@ class Chiffrage extends CommonObject
 			$this->fields['module_name']['enabled'] = 0;
 		}
 
-
-		if ( version_compare(DOL_VERSION,'17.0.0') > 0 ) {
-
-			$this->fields['po_estimate']['type'] = 'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))';
-			$this->fields['dev_estimate']['type'] = 'integer:User:user/class/user.class.php:1:((employee:=:1) AND (statut:=:1))';
-			$this->fields['fk_soc']['type'] = 'integer:Societe:societe/class/societe.class.php:1:(status:=:1)';
-		}
-
-
 		// Example to show how to set values of fields definition dynamically
-		/*if ($user->rights->chiffrage->chiffrage->read) {
+		/*if ($user->rights->voyage->voyage->read) {
 			$this->fields['myfield']['visible'] = 1;
 			$this->fields['myfield']['noteditable'] = 0;
 		}*/
@@ -322,17 +304,8 @@ class Chiffrage extends CommonObject
 		if (property_exists($object, 'date_modification')) {
 			$object->date_modification = null;
 		}
-        if (property_exists($object, 'tech_detail')) {
-            $object->tech_detail = null;
-        }
-        if (property_exists($object, 'estimate_date')) {
-            $object->estimate_date = null;
-        }
         if (property_exists($object, 'qty')) {
             $object->qty = null;
-        }
-        if (property_exists($object, 'dev_estimate')) {
-            $object->dev_estimate = null;
         }
         if (property_exists($object, 'module_name')) {
             $object->module_name = null;
@@ -566,7 +539,7 @@ class Chiffrage extends CommonObject
 		//return $this->deleteCommon($user, $notrigger, 1);
 	}
 
-    public function addChiffrageToPropal(User $user, $notrigger = false)
+    public function addvoyageToPropal(User $user, $notrigger = false)
     {
         return $this->deleteCommon($user, $notrigger);
         //return $this->deleteCommon($user, $notrigger, 1);
@@ -616,8 +589,8 @@ class Chiffrage extends CommonObject
 			return 0;
 		}
 
-		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->chiffrage->write))
-		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->chiffrage->chiffrage_advance->validate))))
+		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->voyage->voyage->write))
+		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->voyage->voyage->voyage_advance->validate))))
 		 {
 		 $this->error='NotEnoughPermissions';
 		 dol_syslog(get_class($this)."::valid ".$this->error, LOG_ERR);
@@ -659,7 +632,7 @@ class Chiffrage extends CommonObject
 
 			if (!$error && !$notrigger) {
 				// Call trigger
-				$result = $this->call_trigger('CHIFFRAGE_VALIDATE', $user);
+				$result = $this->call_trigger('VOYAGE_VALIDATE', $user);
 				if ($result < 0) {
 					$error++;
 				}
@@ -673,8 +646,8 @@ class Chiffrage extends CommonObject
 			// Rename directory if dir was a temporary ref
 			if (preg_match('/^[\(]?PROV/i', $this->ref)) {
 				// Now we rename also files into index
-				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filename = CONCAT('".$this->db->escape($this->newref)."', SUBSTR(filename, ".(strlen($this->ref) + 1).")), filepath = 'chiffrage/".$this->db->escape($this->newref)."'";
-				$sql .= " WHERE filename LIKE '".$this->db->escape($this->ref)."%' AND filepath = 'chiffrage/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
+				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filename = CONCAT('".$this->db->escape($this->newref)."', SUBSTR(filename, ".(strlen($this->ref) + 1).")), filepath = 'voyage/".$this->db->escape($this->newref)."'";
+				$sql .= " WHERE filename LIKE '".$this->db->escape($this->ref)."%' AND filepath = 'voyage/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
 				$resql = $this->db->query($sql);
 				if (!$resql) {
 					$error++; $this->error = $this->db->lasterror();
@@ -683,15 +656,15 @@ class Chiffrage extends CommonObject
 				// We rename directory ($this->ref = old ref, $num = new ref) in order not to lose the attachments
 				$oldref = dol_sanitizeFileName($this->ref);
 				$newref = dol_sanitizeFileName($num);
-				$dirsource = $conf->chiffrage->dir_output.'/chiffrage/'.$oldref;
-				$dirdest = $conf->chiffrage->dir_output.'/chiffrage/'.$newref;
+				$dirsource = $conf->voyage->dir_output.'/voyage/'.$oldref;
+				$dirdest = $conf->voyage->dir_output.'/voyage/'.$newref;
 				if (!$error && file_exists($dirsource)) {
 					dol_syslog(get_class($this)."::validate() rename dir ".$dirsource." into ".$dirdest);
 
 					if (@rename($dirsource, $dirdest)) {
 						dol_syslog("Rename ok");
 						// Rename docs starting with $oldref with $newref
-						$listoffiles = dol_dir_list($conf->chiffrage->dir_output.'/chiffrage/'.$newref, 'files', 1, '^'.preg_quote($oldref, '/'));
+						$listoffiles = dol_dir_list($conf->voyage->dir_output.'/voyage/'.$newref, 'files', 1, '^'.preg_quote($oldref, '/'));
 						foreach ($listoffiles as $fileentry) {
 							$dirsource = $fileentry['name'];
 							$dirdest = preg_replace('/^'.preg_quote($oldref, '/').'/', $newref, $dirsource);
@@ -734,14 +707,14 @@ class Chiffrage extends CommonObject
 			return 0;
 		}
 
-		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->write))
-		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->chiffrage_advance->validate))))
+		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->voyage->write))
+		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->voyage->voyage_advance->validate))))
 		 {
 		 $this->error='Permission denied';
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'CHIFFRAGE_UNVALIDATE');
+		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'VOYAGE_UNVALIDATE');
 	}
 
 	/**
@@ -758,14 +731,14 @@ class Chiffrage extends CommonObject
 			return 0;
 		}
 
-		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->write))
-		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->chiffrage_advance->validate))))
+		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->voyage->write))
+		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->voyage->voyage_advance->validate))))
 		 {
 		 $this->error='Permission denied';
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'CHIFFRAGE_CANCEL');
+		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'VOYAGE_CANCEL');
 	}
 
 	/**
@@ -782,14 +755,14 @@ class Chiffrage extends CommonObject
 			return 0;
 		}
 
-		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->write))
-		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->chiffrage->chiffrage_advance->validate))))
+		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->voyage->write))
+		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->voyage->voyage_advance->validate))))
 		 {
 		 $this->error='Permission denied';
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'CHIFFRAGE_REOPEN');
+		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'VOYAGE_REOPEN');
 	}
 
 	/**
@@ -816,7 +789,7 @@ class Chiffrage extends CommonObject
 
 			$result = '';
 
-			$label = img_picto('', $this->picto) . ' <u>' . $langs->trans("Chiffrage") . '</u>';
+			$label = img_picto('', $this->picto) . ' <u>' . $langs->trans("Voyage") . '</u>';
 			if (isset($this->status)) {
 				$label .= ' ' . $this->getLibStatut(5);
 			}
@@ -833,7 +806,7 @@ class Chiffrage extends CommonObject
 //				$label .= '<b>' . $langs->trans($this->fields['keywords']['label']) . ':</b> ' . str_replace("\r\n", "", $this->keywords);
 			}
 
-			$url = dol_buildpath('/chiffrage/chiffrage_card.php', 1) . '?id=' . $this->id;
+			$url = dol_buildpath('/voyage/voyage_card.php', 1) . '?id=' . $this->id;
 
 			if ($option != 'nolink') {
 				// Add param to save lastsearch_values or not
@@ -849,7 +822,7 @@ class Chiffrage extends CommonObject
 			$linkclose = '';
 			if (empty($notooltip)) {
 				if (! empty($conf->global->MAIN_OPTIMIZEFORTEXTBROWSER)) {
-					$label = $langs->trans("ShowChiffrage");
+					$label = $langs->trans("Showvoyage");
 					$linkclose .= ' alt="' . dol_escape_htmltag($label, 1) . '"';
 				}
 				$linkclose .= ' title="' . dol_escape_htmltag($label, 1) . '"';
@@ -910,7 +883,7 @@ class Chiffrage extends CommonObject
 			//if ($withpicto != 2) $result.=(($addlabel && $this->label) ? $sep . dol_trunc($this->label, ($addlabel > 1 ? $addlabel : 0)) : '');
 
 			global $action, $hookmanager;
-			$hookmanager->initHooks(array('chiffragedao'));
+			$hookmanager->initHooks(array('voyagedao'));
 			$parameters = array('id' => $this->id, 'getnomurl' => $result);
 			$reshook = $hookmanager->executeHooks('getNomUrl', $parameters, $this, $action); // Note that $action and $object may have been modified by some hooks
 			if ($reshook > 0) {
@@ -947,7 +920,7 @@ class Chiffrage extends CommonObject
 		// phpcs:enable
 		if (empty($this->labelStatus) || empty($this->labelStatusShort)) {
 			global $langs;
-			//$langs->load("chiffrage@chiffrage");
+			//$langs->load("voyage@voyage");
 			$this->labelStatus[self::STATUS_DRAFT] = $langs->trans('Draft');
 			$this->labelStatus[self::STATUS_VALIDATED] = $langs->trans('CHIValidated');
 			$this->labelStatus[self::STATUS_CANCELED] = $langs->trans('Disabled');
@@ -1054,8 +1027,8 @@ class Chiffrage extends CommonObject
 	{
 		$this->lines = array();
 
-		$objectline = new ChiffrageLine($this->db);
-		$result = $objectline->fetchAll('ASC', 'position', 0, 0, array('customsql'=>'fk_chiffrage = '.$this->id));
+		$objectline = new voyageLine($this->db);
+		$result = $objectline->fetchAll('ASC', 'position', 0, 0, array('customsql'=>'fk_voyage = '.$this->id));
 
 		if (is_numeric($result)) {
 			$this->error = $this->error;
@@ -1075,22 +1048,22 @@ class Chiffrage extends CommonObject
 	public function getNextNumRef()
 	{
 		global $langs, $conf;
-		$langs->load("chiffrage@chiffrage");
+		$langs->load("voyage@voyage");
 
-		if (empty($conf->global->CHIFFRAGE_CHIFFRAGE_ADDON)) {
-			$conf->global->CHIFFRAGE_CHIFFRAGE_ADDON = 'mod_chiffrage_standard';
+		if (empty($conf->global->VOYAGE_VOYAGE_ADDON)) {
+			$conf->global->VOYAGE_VOYAGE_ADDON = 'mod_voyage_standard';
 		}
 
-		if (!empty($conf->global->CHIFFRAGE_CHIFFRAGE_ADDON)) {
+		if (!empty($conf->global->VOYAGE_VOYAGE_ADDON)) {
 			$mybool = false;
 
-			$file = $conf->global->CHIFFRAGE_CHIFFRAGE_ADDON.".php";
-			$classname = $conf->global->CHIFFRAGE_CHIFFRAGE_ADDON;
+			$file = $conf->global->VOYAGE_VOYAGE_ADDON.".php";
+			$classname = $conf->global->VOYAGE_VOYAGE_ADDON;
 
 			// Include file with class
 			$dirmodels = array_merge(array('/'), (array) $conf->modules_parts['models']);
 			foreach ($dirmodels as $reldir) {
-				$dir = dol_buildpath($reldir."core/modules/chiffrage/");
+				$dir = dol_buildpath($reldir."core/modules/voyage/");
 
 				// Load file with numbering class (if found)
 				$mybool |= @include_once $dir.$file;
@@ -1140,19 +1113,19 @@ class Chiffrage extends CommonObject
 		$result = 0;
 		$includedocgeneration = 0;
 
-		$langs->load("chiffrage@chiffrage");
+		$langs->load("voyage@voyage");
 
 		if (!dol_strlen($modele)) {
-			$modele = 'standard_chiffrage';
+			$modele = 'standard_voyage';
 
 			if (!empty($this->model_pdf)) {
 				$modele = $this->model_pdf;
-			} elseif (!empty($conf->global->CHIFFRAGE_ADDON_PDF)) {
-				$modele = $conf->global->CHIFFRAGE_ADDON_PDF;
+			} elseif (!empty($conf->global->VOYAGE_ADDON_PDF)) {
+				$modele = $conf->global->VOYAGE_ADDON_PDF;
 			}
 		}
 
-		$modelpath = "core/modules/chiffrage/doc/";
+		$modelpath = "core/modules/voyage/doc/";
 
 		if ($includedocgeneration && !empty($modele)) {
 			$result = $this->commonGenerateDocument($modelpath, $modele, $outputlangs, $hidedetails, $hidedesc, $hideref, $moreparams);
@@ -1214,12 +1187,12 @@ class Chiffrage extends CommonObject
 require_once DOL_DOCUMENT_ROOT.'/core/class/commonobjectline.class.php';
 
 /**
- * Class ChiffrageLine. You can also remove this and generate a CRUD class for lines objects.
+ * Class voyageLine. You can also remove this and generate a CRUD class for lines objects.
  */
-class ChiffrageLine extends CommonObjectLine
+class voyageLine extends CommonObjectLine
 {
-	// To complete with content of an object ChiffrageLine
-	// We should have a field rowid, fk_chiffrage and position
+	// To complete with content of an object voyageLine
+	// We should have a field rowid, fk_voyage and position
 
 	/**
 	 * @var int  Does object support extrafields ? 0=No, 1=Yes

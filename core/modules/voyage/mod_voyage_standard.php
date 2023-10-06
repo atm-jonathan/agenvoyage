@@ -18,17 +18,17 @@
  */
 
 /**
- *  \file       htdocs/core/modules/chiffrage/mod_chiffrage_standard.php
- *  \ingroup    chiffrage
- *  \brief      File of class to manage Chiffrage numbering rules standard
+ *  \file       htdocs/core/modules/voyage/mod_voyage_standard.php
+ *  \ingroup    voyage
+ *  \brief      File of class to manage Voyage numbering rules standard
  */
-dol_include_once('/chiffrage/core/modules/chiffrage/modules_chiffrage.php');
+dol_include_once('/voyage/core/modules/voyage/modules_voyage.php');
 
 
 /**
  *	Class to manage customer order numbering rules standard
  */
-class mod_chiffrage_standard extends ModeleNumRefChiffrage
+class mod_voyage_standard extends ModeleNumRefvoyage
 {
 	/**
 	 * Dolibarr version of the loaded document
@@ -36,7 +36,7 @@ class mod_chiffrage_standard extends ModeleNumRefChiffrage
 	 */
 	public $version = 'dolibarr'; // 'development', 'experimental', 'dolibarr'
 
-	public $prefix = 'CHI';
+	public $prefix = 'VOY';
 
 	/**
 	 * @var string Error code (or message)
@@ -87,7 +87,7 @@ class mod_chiffrage_standard extends ModeleNumRefChiffrage
 
 		$posindice = strlen($this->prefix) + 6;
 		$sql = "SELECT MAX(CAST(SUBSTRING(ref FROM ".$posindice.") AS SIGNED)) as max";
-		$sql .= " FROM ".MAIN_DB_PREFIX."chiffrage_chiffrage";
+		$sql .= " FROM ".MAIN_DB_PREFIX."voyage_voyage";
 		$sql .= " WHERE ref LIKE '".$db->escape($this->prefix)."____-%'";
 		if ($object->ismultientitymanaged == 1) {
 			$sql .= " AND entity = ".$conf->entity;
@@ -124,7 +124,7 @@ class mod_chiffrage_standard extends ModeleNumRefChiffrage
 		// first we get the max value
 		$posindice = strlen($this->prefix) + 6;
 		$sql = "SELECT MAX(CAST(SUBSTRING(ref FROM ".$posindice.") AS SIGNED)) as max";
-		$sql .= " FROM ".MAIN_DB_PREFIX."chiffrage_chiffrage";
+		$sql .= " FROM ".MAIN_DB_PREFIX."voyage_voyage";
 		$sql .= " WHERE ref LIKE '".$db->escape($this->prefix)."____-%'";
 		if ($object->ismultientitymanaged == 1) {
 			$sql .= " AND entity = ".$conf->entity;
@@ -141,7 +141,7 @@ class mod_chiffrage_standard extends ModeleNumRefChiffrage
 				$max = 0;
 			}
 		} else {
-			dol_syslog("mod_chiffrage_standard::getNextValue", LOG_DEBUG);
+			dol_syslog("mod_voyage_standard::getNextValue", LOG_DEBUG);
 			return -1;
 		}
 
@@ -155,7 +155,7 @@ class mod_chiffrage_standard extends ModeleNumRefChiffrage
 			$num = sprintf("%04s", $max + 1);
 		}
 
-		dol_syslog("mod_chiffrage_standard::getNextValue return ".$this->prefix.$yymm."-".$num);
+		dol_syslog("mod_voyage_standard::getNextValue return ".$this->prefix.$yymm."-".$num);
 		return $this->prefix.$yymm."-".$num;
 	}
 }

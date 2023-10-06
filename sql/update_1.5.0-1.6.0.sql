@@ -1,1 +1,1 @@
-ALTER TABLE llx_chiffrage_chiffrage ADD detailed_feature_specification text;
+ALTER TABLE llx_voyage_voyage ADD detailed_feature_specification text;

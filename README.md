@@ -1,13 +1,13 @@
-# [DOLIBARR MODULE](https://www.dolibarr.org) CHIFFRAGE
+# [DOLIBARR MODULE](https://www.dolibarr.org) VOYAGE
 Last published version :
 
-![Last realease](https://img.shields.io/github/v/release/ATM-Consulting/dolibarr_module_chiffrage)
+![Last realease](https://img.shields.io/github/v/release/ATM-Consulting/dolibarr_module_voyage)
 
-Chiffrage is a Dolibarr module usefull to create a costing rule and be able to use it later as reference
+Voyage is a Dolibarr module usefull to create a costing rule and be able to use it later as reference
 
 ## LICENSE
 Copyright (C) 2019 ATM Consulting <contact@atm-consulting.fr>
-Chiffrage is released under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version (GPL-3+).
+Voyage is released under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version (GPL-3+).
 
 See the [COPYING](https://github.com/Dolibarr/dolibarr/blob/develop/COPYING) file for a full copy of the license.
 
@@ -49,11 +49,11 @@ Note: If this screen tells you there is no custom directory, check your setup is
 
 ### From a GIT repository
 
-- Clone the repository in ```$dolibarr_main_document_root_alt/chiffrage```
+- Clone the repository in ```$dolibarr_main_document_root_alt/voyage```
 
 ```sh
 cd ....../custom
-git clone git@github.com:gitlogin/chiffrage.git chiffrage
+git clone git@github.com:gitlogin/voyage.git voyage
 ```
 
 ### <a name="final_steps"></a>Final steps
@@ -112,11 +112,11 @@ Note: If this screen tell you there is no custom directory, check your setup is 
 
 ### From a GIT repository
 
-- Clone the repository in ```$dolibarr_main_document_root_alt/chiffrage```
+- Clone the repository in ```$dolibarr_main_document_root_alt/voyage```
 
 ```sh
 cd ....../custom
-git clone git@github.com:gitlogin/chiffrage.git chiffrage
+git clone git@github.com:gitlogin/voyage.git voyage
 ```
 
 ### <a name="final_steps"></a>Final steps

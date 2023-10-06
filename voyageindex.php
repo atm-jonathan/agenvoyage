@@ -19,9 +19,9 @@
  */
 
 /**
- *	\file       chiffrage/chiffrageindex.php
- *	\ingroup    chiffrage
- *	\brief      Home page of chiffrage top menu
+ *	\file       voyage/voyageindex.php
+ *	\ingroup    voyage
+ *	\brief      Home page of voyage top menu
  */
 
 // Load Dolibarr environment
@@ -58,13 +58,13 @@ if (!$res) {
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formfile.class.php';
 
 // Load translation files required by the page
-$langs->loadLangs(array("chiffrage@chiffrage"));
+$langs->loadLangs(array("voyage@voyage"));
 
 $action = GETPOST('action', 'aZ09');
 
 
 // Security check
-// if (! $user->rights->chiffrage->myobject->read) {
+// if (! $user->rights->voyage->myobject->read) {
 // 	accessforbidden();
 // }
 $socid = GETPOST('socid', 'int');
@@ -91,16 +91,16 @@ $now = dol_now();
 $form = new Form($db);
 $formfile = new FormFile($db);
 
-llxHeader("", $langs->trans("ChiffrageArea"));
+llxHeader("", $langs->trans("VoyageArea"));
 
-print load_fiche_titre($langs->trans("ChiffrageArea"), '', 'chiffrage.png@chiffrage');
+print load_fiche_titre($langs->trans("VoyageArea"), '', 'voyage.png@voyage');
 
 print '<div class="fichecenter"><div class="fichethirdleft">';
 
 
 /* BEGIN MODULEBUILDER DRAFT MYOBJECT
 // Draft MyObject
-if (! empty($conf->chiffrage->enabled) && $user->rights->chiffrage->read)
+if (! empty($conf->voyage->enabled) && $user->rights->voyage->read)
 {
 	$langs->load("orders");
 
@@ -181,10 +181,10 @@ $max = $conf->global->MAIN_SIZE_SHORTLIST_LIMIT;
 
 /* BEGIN MODULEBUILDER LASTMODIFIED MYOBJECT
 // Last modified myobject
-if (! empty($conf->chiffrage->enabled) && $user->rights->chiffrage->read)
+if (! empty($conf->voyage->enabled) && $user->rights->voyage->read)
 {
 	$sql = "SELECT s.rowid, s.ref, s.label, s.date_creation, s.tms";
-	$sql.= " FROM ".MAIN_DB_PREFIX."chiffrage_myobject as s";
+	$sql.= " FROM ".MAIN_DB_PREFIX."voyage_myobject as s";
 	//if (! $user->rights->societe->client->voir && ! $socid) $sql.= ", ".MAIN_DB_PREFIX."societe_commerciaux as sc";
 	$sql.= " WHERE s.entity IN (".getEntity($myobjectstatic->element).")";
 	//if (! $user->rights->societe->client->voir && ! $socid) $sql.= " AND s.rowid = sc.fk_soc AND sc.fk_user = " .$user->id;

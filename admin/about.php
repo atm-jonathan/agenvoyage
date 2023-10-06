@@ -17,9 +17,9 @@
  */
 
 /**
- * \file    chiffrage/admin/about.php
- * \ingroup chiffrage
- * \brief   About page of module Chiffrage.
+ * \file    voyage/admin/about.php
+ * \ingroup voyage
+ * \brief   About page of module Voyage.
  */
 
 // Load Dolibarr environment
@@ -53,10 +53,10 @@ if (!$res) {
 // Libraries
 require_once DOL_DOCUMENT_ROOT.'/core/lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
-require_once '../lib/chiffrage.lib.php';
+require_once '../lib/voyage.lib.php';
 
 // Translations
-$langs->loadLangs(array("errors", "admin", "chiffrage@chiffrage"));
+$langs->loadLangs(array("errors", "admin", "voyage@voyage"));
 
 // Access control
 if (!$user->admin) {
@@ -82,7 +82,7 @@ $backtopage = GETPOST('backtopage', 'alpha');
 $form = new Form($db);
 
 $help_url = '';
-$page_name = "ChiffrageAbout";
+$page_name = "VoyageAbout";
 
 llxHeader('', $langs->trans($page_name), $help_url);
 
@@ -92,14 +92,14 @@ $linkback = '<a href="'.($backtopage ? $backtopage : DOL_URL_ROOT.'/admin/module
 print load_fiche_titre($langs->trans($page_name), $linkback, 'title_setup');
 
 // Configuration header
-$head = chiffrageAdminPrepareHead();
-print dol_get_fiche_head($head, 'about', $langs->trans($page_name), 0, 'chiffrage@chiffrage');
+$head = voyageAdminPrepareHead();
+print dol_get_fiche_head($head, 'about', $langs->trans($page_name), 0, 'voyage@voyage');
 
 require_once __DIR__ . '/../class/techatm.class.php';
-$techATM = new \chiffrage\TechATM($db);
+$techATM = new \voyage\TechATM($db);
 
-require_once __DIR__ . '/../core/modules/modChiffrage.class.php';
-$moduleDescriptor = new modChiffrage($db);
+require_once __DIR__ . '/../core/modules/modVoyage.class.php';
+$moduleDescriptor = new modVoyage($db);
 
 print $techATM->getAboutPage($moduleDescriptor);
 

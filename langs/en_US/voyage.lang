@@ -17,30 +17,30 @@
 # Generic
 #
 
-# Module label 'ModuleChiffrageName'
-ModuleChiffrageName = Chiffrage
-# Module description 'ModuleChiffrageDesc'
-ModuleChiffrageDesc = Chiffrage description
+# Module label 'ModulevoyageName'
+ModulevoyageName = Voyage
+# Module description 'ModulevoyageDesc'
+ModulevoyageDesc = Voyage description
 
 #
 # Admin page
 #
-ChiffrageSetup = Chiffrage setup
+voyageSetup = Voyage setup
 Settings = Settings
-ChiffrageSetupPage = Chiffrage setup page
-CHIFFRAGE_MYPARAM1 = My param 1
-CHIFFRAGE_MYPARAM1Tooltip = My param 1 tooltip
-CHIFFRAGE_MYPARAM2=My param 2
-CHIFFRAGE_MYPARAM2Tooltip=My param 2 tooltip
-CHIFFRAGE_DEFAULT_PRODUCT = Default product
+voyageSetupPage = Voyage setup page
+VOYAGE_MYPARAM1 = My param 1
+VOYAGE_MYPARAM1Tooltip = My param 1 tooltip
+VOYAGE_MYPARAM2=My param 2
+VOYAGE_MYPARAM2Tooltip=My param 2 tooltip
+VOYAGE_DEFAULT_PRODUCT = Default product
 
 
 #
 # About page
 #
 About = About
-ChiffrageAbout = About Chiffrage
-ChiffrageAboutPage = Chiffrage about page
+voyageAbout = About Voyage
+voyageAboutPage = Voyage about page
 
 #
 # Sample page

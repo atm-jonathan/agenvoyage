@@ -23,9 +23,9 @@
  */
 
 /**
- *  \file			htdocs/core/modules/chiffrage/modules_chiffrage.php
- *  \ingroup		chiffrage
- *  \brief			File that contains parent class for chiffrages document models and parent class for chiffrages numbering models
+ *  \file			htdocs/core/modules/voyage/modules_voyage.php
+ *  \ingroup		voyage
+ *  \brief			File that contains parent class for voyages document models and parent class for voyages numbering models
  */
 
 require_once DOL_DOCUMENT_ROOT.'/core/class/commondocgenerator.class.php';
@@ -35,7 +35,7 @@ require_once DOL_DOCUMENT_ROOT.'/compta/bank/class/account.class.php'; // requir
 /**
  *	Parent class for documents models
  */
-abstract class ModelePDFChiffrage extends CommonDocGenerator
+abstract class ModelePDFvoyage extends CommonDocGenerator
 {
 
 	// phpcs:disable PEAR.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
@@ -51,7 +51,7 @@ abstract class ModelePDFChiffrage extends CommonDocGenerator
 		// phpcs:enable
 		global $conf;
 
-		$type = 'chiffrage';
+		$type = 'voyage';
 		$list = array();
 
 		include_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
@@ -64,9 +64,9 @@ abstract class ModelePDFChiffrage extends CommonDocGenerator
 
 
 /**
- *  Parent class to manage numbering of Chiffrage
+ *  Parent class to manage numbering of Voyage
  */
-abstract class ModeleNumRefChiffrage
+abstract class ModeleNumRefvoyage
 {
 	/**
 	 * @var string Error code (or message)
@@ -91,7 +91,7 @@ abstract class ModeleNumRefChiffrage
 	public function info()
 	{
 		global $langs;
-		$langs->load("chiffrage@chiffrage");
+		$langs->load("voyage@voyage");
 		return $langs->trans("NoDescription");
 	}
 
@@ -103,7 +103,7 @@ abstract class ModeleNumRefChiffrage
 	public function getExample()
 	{
 		global $langs;
-		$langs->load("chiffrage@chiffrage");
+		$langs->load("voyage@voyage");
 		return $langs->trans("NoExample");
 	}
 
